@@ -8,7 +8,7 @@
 # - The current menu page should be set to the as the "tankempty" page so it does not cause a jump
 
 # TODO #2 - fonts
-# - Add a wrapper for load_font that takes font name, weight and size, and maintains a cache of fonts as required.
+# - Remove metric_load_font if John adopts the improvements into the standard load_font function in utils.tcl
 # - Add new symbols for clean, empty, etc.
 
 # TODO #3 - post shot screen
@@ -24,7 +24,8 @@
 
 # release notes
 # v0.4 
-# - Rewrote load_font function so that each font only needs to be included once
+# - Rewrote Decent load_font function so that each font only needs to be included once (temporarily included as a Metric function, but hope to get adopted in utils.tcl)
+# - Added metric_get_font wrapper function so we can load fonts at any size on the fly.
 
 # v0.3 15/01/2020
 # - Added message to status bar during heating
@@ -55,23 +56,13 @@ package ifneeded metric_functions 1.0 [list source [file join "[skin_directory]/
 package require metric_functions 1.0
 
 # fonts
-metric_load_font "Mazzard Regular 12" "[skin_directory]/fonts/MazzardM-Regular.otf" 12
-metric_load_font "Mazzard Regular 14" "[skin_directory]/fonts/MazzardM-Regular.otf" 14
-metric_load_font "Mazzard Regular 20" "[skin_directory]/fonts/MazzardM-Regular.otf" 20
-metric_load_font "Mazzard Regular 24" "[skin_directory]/fonts/MazzardM-Regular.otf" 24
-metric_load_font "Mazzard Regular 36" "[skin_directory]/fonts/MazzardM-Regular.otf" 36
-metric_load_font "Mazzard Medium 12" "[skin_directory]/fonts/MazzardM-Medium.otf" 12
-metric_load_font "Mazzard Medium 18" "[skin_directory]/fonts/MazzardM-Medium.otf" 18
-metric_load_font "Mazzard Medium 22" "[skin_directory]/fonts/MazzardM-Medium.otf" 22
-metric_load_font "Mazzard SemiBold 48" "[skin_directory]/fonts/MazzardM-SemiBold.otf" 48
-metric_load_font "Mazzard SemiBold 80" "[skin_directory]/fonts/MazzardM-SemiBold.otf" 80
-
-set font_setting_heading "Mazzard Regular 24"
-set font_setting_description "Mazzard Regular 14"
-set font_setting "Mazzard Regular 36"
-set font_button "Mazzard Regular 24"
-set font_action_button "Mazzard SemiBold 80"
-set font_list "Mazzard Regular 24"
+set font_setting_heading [metric_get_font "Regular" 24]
+set font_setting_description [metric_get_font "Regular" 14]
+set font_setting [metric_get_font "Regular" 36]
+set font_button [metric_get_font "Regular" 24]
+set font_list [metric_get_font "Regular" 24]
+set font_action_button [metric_get_font "SemiBold" 80]
+set ::font_main_menu [metric_get_font "SemiBold" 48]
 
 # special characters
 set ::symbol_espresso "\u00A2"
@@ -259,14 +250,14 @@ add_de1_variable $status_bar_contexts 2560 0 -anchor "ne" -text "" -font $font_s
 ### back button / page title
 set item_id [.can create line [rescale_x_skin 120] [rescale_y_skin  60] [rescale_x_skin 60] [rescale_y_skin 120] [rescale_x_skin 120] [rescale_y_skin 180] -width [rescale_x_skin 24] -fill $color_text]
 add_visual_items_to_contexts "espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu descale_menu descaling empty_menu travel_do tankempty refill" $item_id
-add_de1_text "espresso_menu espresso" 180 120 -text [translate "Espresso"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "espresso_config" 180 120 -text [translate "Espresso weights"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "machine_menu" 180 120 -text [translate "Menu"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 120 -text [translate "Descale"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
-add_de1_text "empty_menu travel_do tankempty refill" 180 120 -text [translate "Empty"] -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
+add_de1_text "espresso_menu espresso" 180 120 -text [translate "Espresso"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "espresso_config" 180 120 -text [translate "Espresso weights"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "machine_menu" 180 120 -text [translate "Menu"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "descale_menu descaling" 180 120 -text [translate "Descale"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "empty_menu travel_do tankempty refill" 180 120 -text [translate "Empty"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu tankempty refill" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "off"; page_show "off"; start_idle } 0 0 1280 240
 add_de1_button "espresso_config" {say [translate "espresso"] $::settings(sound_button_in); set_next_page "off" "espresso_menu"; page_show "off" } 0 0 1280 240
 add_de1_button "flush_menu descale_menu empty_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "machine_menu"; page_show "off" } 0 0 1280 240
@@ -276,8 +267,8 @@ add_de1_button "flush_menu descale_menu empty_menu" {say [translate "menu"] $::s
 
 proc add_home_button { contexts yoffset symbol text color_menu_background color_text action} {
 	rounded_rectangle $contexts .can [rescale_x_skin 680] [rescale_y_skin $yoffset] [rescale_x_skin 1880] [rescale_y_skin [expr $yoffset + 240]] [rescale_x_skin 80] $color_menu_background
-	add_de1_text $contexts 780 [expr $yoffset + 120] -text $symbol -font "Mazzard SemiBold 48" -fill $color_text -anchor "center" 
-	add_de1_text $contexts 880 [expr $yoffset + 120] -text $text -font "Mazzard SemiBold 48" -fill $color_text -anchor "w" 
+	add_de1_text $contexts 780 [expr $yoffset + 120] -text $symbol -font $::font_main_menu -fill $color_text -anchor "center" 
+	add_de1_text $contexts 880 [expr $yoffset + 120] -text $text -font $::font_main_menu -fill $color_text -anchor "w" 
 	.can create line [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 60]] [rescale_x_skin 1780] [rescale_y_skin [expr $yoffset + 120]] [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 180]] -width [rescale_x_skin 24] -fill $color_text -tag "menu_arrow" -state hidden
 	add_de1_button $contexts $action 680 $yoffset 1880 [expr $yoffset + 240]
 	add_visual_items_to_contexts $contexts "menu_arrow"
