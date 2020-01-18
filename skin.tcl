@@ -55,16 +55,16 @@ package ifneeded metric_functions 1.0 [list source [file join "[skin_directory]/
 package require metric_functions 1.0
 
 # fonts
-metric_load_font "Mazzard Regular 12" "[skin_directory]/MazzardM-Regular.otf" 12
-metric_load_font "Mazzard Regular 14" "[skin_directory]/MazzardM-Regular.otf" 14
-metric_load_font "Mazzard Regular 20" "[skin_directory]/MazzardM-Regular.otf" 20
-metric_load_font "Mazzard Regular 24" "[skin_directory]/MazzardM-Regular.otf" 24
-metric_load_font "Mazzard Regular 36" "[skin_directory]/MazzardM-Regular.otf" 36
-metric_load_font "Mazzard Medium 12" "[skin_directory]/MazzardM-Medium.otf" 12
-metric_load_font "Mazzard Medium 18" "[skin_directory]/MazzardM-Medium.otf" 18
-metric_load_font "Mazzard Medium 22" "[skin_directory]/MazzardM-Medium.otf" 22
-metric_load_font "Mazzard SemiBold 48" "[skin_directory]/MazzardM-SemiBold.otf" 48
-metric_load_font "Mazzard SemiBold 80" "[skin_directory]/MazzardM-SemiBold.otf" 80
+metric_load_font "Mazzard Regular 12" "[skin_directory]/fonts/MazzardM-Regular.otf" 12
+metric_load_font "Mazzard Regular 14" "[skin_directory]/fonts/MazzardM-Regular.otf" 14
+metric_load_font "Mazzard Regular 20" "[skin_directory]/fonts/MazzardM-Regular.otf" 20
+metric_load_font "Mazzard Regular 24" "[skin_directory]/fonts/MazzardM-Regular.otf" 24
+metric_load_font "Mazzard Regular 36" "[skin_directory]/fonts/MazzardM-Regular.otf" 36
+metric_load_font "Mazzard Medium 12" "[skin_directory]/fonts/MazzardM-Medium.otf" 12
+metric_load_font "Mazzard Medium 18" "[skin_directory]/fonts/MazzardM-Medium.otf" 18
+metric_load_font "Mazzard Medium 22" "[skin_directory]/fonts/MazzardM-Medium.otf" 22
+metric_load_font "Mazzard SemiBold 48" "[skin_directory]/fonts/MazzardM-SemiBold.otf" 48
+metric_load_font "Mazzard SemiBold 80" "[skin_directory]/fonts/MazzardM-SemiBold.otf" 80
 
 set font_setting_heading "Mazzard Regular 24"
 set font_setting_description "Mazzard Regular 14"
