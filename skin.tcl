@@ -309,7 +309,7 @@ add_de1_variable "espresso_menu" -100 -100 -textvariable {[update_espresso_butto
 ### espresso
 proc get_target_pressure {} { return $::de1(goal_pressure) }
 set ::espresso_pressure_meter [meter new -x [rescale_x_skin 480] -y [rescale_y_skin 200] -width [rescale_x_skin 750] -minvalue 0.0 -maxvalue 12.0 -get_meter_value pressure -get_target_value get_target_pressure -tick_frequency 1.0 -label_frequency 1 -needle_color $color_pressure -label_color $color_grey_text -tick_color $color_background -contexts "espresso" -title [translate "Pressure"] -units "bar"]
-add_de1_variable "espresso_menu espresso" -100 -100 -text "" -textvariable {[$::espresso_pressure_meter update]} 
+add_de1_variable "espresso" -100 -100 -text "" -textvariable {[$::espresso_pressure_meter update]} 
 
 proc get_target_flow {} {
 	if { $::de1(substate) == 4 || $::de1(substate) == 5 } {
