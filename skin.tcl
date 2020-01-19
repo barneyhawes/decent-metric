@@ -283,11 +283,11 @@ add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_backgrou
 ### espresso_menu
 
 
-add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable { [translate "1. Grind $::metric_settings(bean_weight)g coffee into the portafilter."] }
-add_de1_text "espresso_menu" 180 480 -text [translate "2. Distribute grounds evenly, tamp and replace portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
+add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable { [translate "1. Grind $::metric_settings(bean_weight)g dose into the portafilter."] }
+add_de1_text "espresso_menu" 180 480 -text [translate "2. Distribute grounds evenly, tamp and lock in the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 600 -text [translate "3. Place cup on scale and tare."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 720 -text [translate "4. Press $::symbol_espresso to start espresso."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_variable "espresso_menu" 180 840 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable {[translate "5. Target weight $::metric_settings(cup_weight)g."]}
+add_de1_variable "espresso_menu" 180 840 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable {[translate "5. Target yield $::metric_settings(cup_weight)g."]}
 create_button "espresso_menu" 180 1020 780 1200 [translate "change weights"] $font_button $color_button $color_button_text { say [translate "weights"] $::settings(sound_button_in); set_next_page "off" "espresso_config"; page_show "off" }
 
 add_de1_text "espresso_menu" 2380 720 -text [translate "Profile:"] -font $font_setting_heading -fill $color_text -anchor "e" 
@@ -344,7 +344,7 @@ proc get_weight {} {
 	}
 }
 
-set ::espresso_weight_meter [meter new -x [rescale_x_skin 1980] -y [rescale_y_skin 780] -width [rescale_x_skin 500] -minvalue 0.0 -maxvalue 50.0 -get_meter_value get_weight -get_target_value get_target_weight -tick_frequency 5 -label_frequency 10 -needle_color $color_weight -label_color $color_grey_text -tick_color $color_background -contexts "espresso" -title [translate "Weight"] -units "g"]
+set ::espresso_weight_meter [meter new -x [rescale_x_skin 1980] -y [rescale_y_skin 780] -width [rescale_x_skin 500] -minvalue 0.0 -maxvalue 50.0 -get_meter_value get_weight -get_target_value get_target_weight -tick_frequency 5 -label_frequency 10 -needle_color $color_weight -label_color $color_grey_text -tick_color $color_background -contexts "espresso" -title [translate "Yield"] -units "g"]
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[$::espresso_weight_meter update]} 
 
 create_action_button "espresso" 1280 1020 $::symbol_hand $font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
@@ -362,7 +362,7 @@ add_de1_text "espresso_config" 980 720 -text "x" -font $font_setting -fill $colo
 add_de1_text "espresso_config" 1580 720 -text "=" -font $font_setting -fill $color_text -anchor "center" 
 
 # Bean weight
-add_de1_text "espresso_config" 680 390 -text [translate "Bean weight"] -font $font_setting_heading -fill $color_text -anchor "center" 
+add_de1_text "espresso_config" 680 390 -text [translate "Dose"] -font $font_setting_heading -fill $color_text -anchor "center" 
 add_de1_text "espresso_config" 680 730 -text "." -font $font_setting -fill $color_text -anchor "center" 
 add_de1_variable "espresso_config" 640 730 -text "" -font $font_setting -fill $color_text -anchor "e" -textvariable {[ get_mantissa $::metric_settings(bean_weight) ]}
 add_de1_variable "espresso_config" 720 730 -text "" -font $font_setting -fill $color_text -anchor "w" -textvariable {[ get_exponent $::metric_settings(bean_weight) ]}
@@ -399,7 +399,7 @@ add_de1_button "espresso_config" {say "" $::settings(sound_button_in); adjust_se
 
 
 # Cup weight
-add_de1_text "espresso_config" 1880 390 -text [translate "Cup weight"] -font $font_setting_heading -fill $color_text -anchor "center" 
+add_de1_text "espresso_config" 1880 390 -text [translate "Yield"] -font $font_setting_heading -fill $color_text -anchor "center" 
 add_de1_text "espresso_config" 1880 720 -text "." -font $font_setting -fill $color_text -anchor "center" 
 add_de1_variable "espresso_config" 1840 720 -text "" -font $font_setting -fill $color_text -anchor "e" -textvariable {[ get_mantissa $::metric_settings(cup_weight) ]}
 add_de1_variable "espresso_config" 1920 720 -text "" -font $font_setting -fill $color_text -anchor "w" -textvariable {[ get_exponent $::metric_settings(cup_weight) ]}
