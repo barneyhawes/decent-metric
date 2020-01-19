@@ -147,11 +147,11 @@ add_visual_items_to_contexts $metric_contexts "background"
 if {$::showgrid == 1} {
     for {set x 80} {$x < 2560} {incr x 100} {
         .can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts $x 0 -text $x -font "Mazzard Regular 12" -fill $color_text -anchor "nw" 
+        add_de1_text $metric_contexts $x 0 -text $x -font [metric_get_font "Regular" 12] -fill $color_text -anchor "nw" 
     }
     for {set y 60} {$y < 1600} {incr y 60} {
         .can create line [rescale_x_skin 0] [rescale_y_skin $y] [rescale_x_skin 2560] [rescale_y_skin $y] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts 0 $y -text $y -font "Mazzard Regular 12" -fill $color_text -anchor "sw" 
+        add_de1_text $metric_contexts 0 $y -text $y -font [metric_get_font "Regular" 12] -fill $color_text -anchor "sw" 
     }
 }
 
@@ -281,8 +281,6 @@ add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_backgrou
 
 
 ### espresso_menu
-
-
 add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable { [translate "1. Grind $::metric_settings(bean_weight)g dose into the portafilter."] }
 add_de1_text "espresso_menu" 180 480 -text [translate "2. Distribute grounds evenly, tamp and lock in the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 600 -text [translate "3. Place cup on scale and tare."] -font $font_setting_heading -fill $color_text -anchor "w" 
@@ -307,6 +305,8 @@ add_de1_variable "espresso_menu" -100 -100 -textvariable {[update_espresso_butto
 
 
 ### espresso
+add_de1_variable "espresso" 2480 120 -text "" -font $font_setting_heading -fill $color_text -anchor "e" -textvariable { $::settings(profile_title) }
+
 proc get_target_pressure {} { return $::de1(goal_pressure) }
 set ::espresso_pressure_meter [meter new -x [rescale_x_skin 480] -y [rescale_y_skin 200] -width [rescale_x_skin 750] -minvalue 0.0 -maxvalue 12.0 -get_meter_value pressure -get_target_value get_target_pressure -tick_frequency 1.0 -label_frequency 1 -needle_color $color_pressure -label_color $color_grey_text -tick_color $color_background -contexts "espresso" -title [translate "Pressure"] -units "bar"]
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[$::espresso_pressure_meter update]} 
