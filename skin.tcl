@@ -1,11 +1,11 @@
 # Barney's Metric skin
 # Standing on the shoulders of giants: thanks to John (Insight), Damian (DSV), Sheldon (SWDark)
 
-# Notes
 # TODO #1 - menu subsystem
 # - Keep track of the current and previous menu page
 # - Add "jump back" function
-# - The current menu page should be set to the as the "tankempty" page so it does not cause a jump
+# - The current menu page should be set to the destination for "tankempty" so it does not cause a jump when the water runs out
+# - Test / reinstate standard Decent menu pages
 
 # TODO #2 - fonts
 # - Remove metric_load_font if John adopts the improvements into the standard load_font function in utils.tcl
@@ -13,20 +13,22 @@
 
 # TODO #3 - post shot screen
 # - Add a post shot screen
-# - Show the key stats (dose, yield, time, temp)
-# - Show the shot graph
+# - Show the key stats (profile, dose, yield, time, temp, date & time)
+# - Show the shot graph? (options to show different data?) (option to compare with historic shot?)
 # - Show buttons for Steam and Flush
 
 # TODO #4 - espresso screen
 # - Yield chart should show weight if a scale is connected
+# - Test functionality of GHC somehow
 
-# Feature ideas
-# - Access to shot history
-# - Custom UI for selecting presets
+# TODO #5 - shot history
+# - Display history list as a table showing the key stats (profile, dose, yield, time, temp, date & time)
+# - Could offer sorting and filtering?
+# - Could offer "tick to compare" - allow up to 2 selections
 
 
 
-# release notes
+# Release notes
 # v0.4 
 # - Added a timer to the Espresso page
 # - Rewrote Decent load_font function so that each font only needs to be included once (temporarily included as a Metric function, but hope to get adopted in utils.tcl)
@@ -61,13 +63,13 @@ package ifneeded metric_functions 1.0 [list source [file join "[skin_directory]/
 package require metric_functions 1.0
 
 # fonts
-set font_setting_heading [metric_get_font "Regular" 24]
-set font_setting_description [metric_get_font "Regular" 14]
-set font_setting [metric_get_font "Regular" 36]
-set font_button [metric_get_font "Regular" 24]
-set font_list [metric_get_font "Regular" 24]
-set font_action_button [metric_get_font "SemiBold" 80]
-set ::font_main_menu [metric_get_font "SemiBold" 48]
+set font_setting_heading [metric_get_font "Mazzard Regular" 24]
+set font_setting_description [metric_get_font "Mazzard Regular" 14]
+set font_setting [metric_get_font "Mazzard Regular" 36]
+set font_button [metric_get_font "Mazzard Regular" 24]
+set font_list [metric_get_font "Mazzard Regular" 24]
+set font_action_button [metric_get_font "Mazzard SemiBold" 80]
+set ::font_main_menu [metric_get_font "Mazzard SemiBold" 48]
 
 # special characters
 set ::symbol_espresso "\u00A2"
@@ -152,11 +154,11 @@ add_visual_items_to_contexts $metric_contexts "background"
 if {$::showgrid == 1} {
     for {set x 80} {$x < 2560} {incr x 100} {
         .can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts $x 0 -text $x -font [metric_get_font "Regular" 12] -fill $color_text -anchor "nw" 
+        add_de1_text $metric_contexts $x 0 -text $x -font [metric_get_font "Mazzard Regular" 12] -fill $color_text -anchor "nw" 
     }
     for {set y 60} {$y < 1600} {incr y 60} {
         .can create line [rescale_x_skin 0] [rescale_y_skin $y] [rescale_x_skin 2560] [rescale_y_skin $y] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts 0 $y -text $y -font [metric_get_font "Regular" 12] -fill $color_text -anchor "sw" 
+        add_de1_text $metric_contexts 0 $y -text $y -font [metric_get_font "Mazzard Regular" 12] -fill $color_text -anchor "sw" 
     }
 }
 

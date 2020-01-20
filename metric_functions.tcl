@@ -39,20 +39,15 @@ proc metric_load_font {name fn pcsize {androidsize {}} } {
     msg "added font name: \"$name\" family: \"$familyname\" size: $platform_font_size filename: \"$fn\""
 }
 
-proc metric_get_font { weight size } {
+proc metric_get_font { font_name size } {
 	if {[info exists ::metric_fonts] != 1} {
         set ::metric_fonts list
     }
 
-	set font_name "Mazzard"
-	if {$weight != "Medium" && $weight != "Regular" && $weight != "SemiBold"} {
-		msg "Invalid font weight $weight"
-	}
-
-	set font_key "$font_name $weight $size"
+	set font_key "$font_name $size"
 	set font_index [lsearch $::metric_fonts $font_key]
 	if {$font_index == -1} {
-		metric_load_font $font_key "[skin_directory]/fonts/MazzardM-$weight.otf" $size
+		metric_load_font $font_key "[skin_directory]/fonts/$font_name.otf" $size
 		lappend ::metric_fonts $font_key
 	}
 
@@ -310,14 +305,14 @@ oo::class create meter {
 		named $args $defaults
 
 		if {$_width < [rescale_x_skin 300]} {
-			set _label_font [metric_get_font "Medium" 12]
-			set _title_font [metric_get_font "Regular" 12]
+			set _label_font [metric_get_font "Mazzard Medium" 12]
+			set _title_font [metric_get_font "Mazzard Regular" 12]
 		} elseif {$_width < [rescale_x_skin 600]} {
-			set _label_font [metric_get_font "Medium" 18]
-			set _title_font [metric_get_font "Regular" 20]
+			set _label_font [metric_get_font "Mazzard Medium" 18]
+			set _title_font [metric_get_font "Mazzard Regular" 20]
 		} else {
-			set _label_font [metric_get_font "Medium" 22]
-			set _title_font [metric_get_font "Regular" 24]
+			set _label_font [metric_get_font "Mazzard Medium" 22]
+			set _title_font [metric_get_font "Mazzard Regular" 24]
 		}
 		set _arc_width [expr [reverse_scale_x $_width] * 0.035]
 		set _center_x [expr ($_x + ($_width / 2.0))]
