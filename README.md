@@ -8,6 +8,7 @@ TODO #1 - menu subsystem
 - Add "jump back" function
 - The current menu page should be set to the destination for "tankempty" so it does not cause a jump when the water runs out
 - Test / reinstate standard Decent menu pages
+- Skin colours (dark / light theme)
 
 TODO #2 - fonts
 - Remove metric_load_font if John adopts the improvements into the standard load_font function in utils.tcl
@@ -22,6 +23,7 @@ TODO #3 - post shot screen
 TODO #4 - espresso screen
 - Yield chart should show weight if a scale is connected
 - Test functionality of GHC somehow
+- Disable start buttons when machine is not connected (status is "ready" so need to check connection)
 
 TODO #5 - shot history
 - Display history list as a table showing the key stats (profile, dose, yield, time, temp, date & time)
