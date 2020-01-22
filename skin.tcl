@@ -33,6 +33,7 @@
 # - Added a timer to the Espresso page
 # - Rewrote Decent load_font function so that each font only needs to be included once (temporarily included as a Metric function, but hope to get adopted in utils.tcl)
 # - Added metric_get_font wrapper function so we can load fonts at any size on the fly.
+# - Swapped water and temp meters on status bar so that they are closer to corresponding meters in Espresso window
 
 # v0.3 15/01/2020
 # - Added message to status bar during heating
@@ -170,23 +171,23 @@ set status_bar_contexts "off espresso_menu espresso_config espresso steam_menu s
 add_visual_items_to_contexts $status_bar_contexts "status_background" 
 
 # Water
-set ::refill_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 30] [rescale_y_skin 1290] [rescale_x_skin 780] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
-set ::refill_message_text_id [ add_de1_text $status_bar_contexts 570 1430 -text "" -font $font_setting_heading -fill $color_water -anchor "center" ]
+set ::refill_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 1780] [rescale_y_skin 1290] [rescale_x_skin 2530] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
+set ::refill_message_text_id [ add_de1_text $status_bar_contexts 1990 1430 -text "" -font $font_setting_heading -fill $color_water -anchor "center" ]
 
 #TODO: embed this in the water meter command below.
 proc get_water_level {} { return $::de1(water_level) }
 proc get_min_water_level {} { return $::settings(water_refill_point) }
 
-set ::water_meter [meter new -x [rescale_x_skin 80] -y [rescale_y_skin 1310] -width [rescale_x_skin 280] -minvalue 0.0 -maxvalue [expr $::settings(water_level_sensor_max) * 0.9] -get_meter_value get_water_level -get_target_value get_min_water_level -show_empty_full 1 _tick_frequency [expr ($::settings(water_level_sensor_max) * 0.9 * 0.25)] -needle_color $color_water -label_color $color_grey_text -tick_color $color_status_bar -contexts $status_bar_contexts -title [translate "Water"]]
+set ::water_meter [meter new -x [rescale_x_skin 2200] -y [rescale_y_skin 1310] -width [rescale_x_skin 280] -minvalue 0.0 -maxvalue [expr $::settings(water_level_sensor_max) * 0.9] -get_meter_value get_water_level -get_target_value get_min_water_level -show_empty_full 1 _tick_frequency [expr ($::settings(water_level_sensor_max) * 0.9 * 0.25)] -needle_color $color_water -label_color $color_grey_text -tick_color $color_status_bar -contexts $status_bar_contexts -title [translate "Water"]]
 add_de1_variable $status_bar_contexts -100 -100 -text "" -textvariable {[$::water_meter update]} 
 
 # Temperature
-set ::heating_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 1780] [rescale_y_skin 1290] [rescale_x_skin 2530] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
-set ::heating_message_text_id [ add_de1_text $status_bar_contexts 1990 1430 -text "" -font $font_setting_heading -fill $color_temperature -anchor "center" ]
+set ::heating_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 30] [rescale_y_skin 1290] [rescale_x_skin 780] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
+set ::heating_message_text_id [ add_de1_text $status_bar_contexts 570 1430 -text "" -font $font_setting_heading -fill $color_temperature -anchor "center" ]
 
 #TODO: should be group_head_heater_temperature but this is not useful in the simulator
 proc get_min_temperature {} { return $::settings(minimum_water_temperature) }
-set ::temperature_meter [meter new -x [rescale_x_skin 2200] -y [rescale_y_skin 1310] -width [rescale_x_skin 280] -minvalue 0.0 -maxvalue 100.0 -get_meter_value watertemp -get_target_value get_min_temperature -tick_frequency 10.0 -label_frequency 20 -needle_color $color_temperature -label_color $color_grey_text -tick_color $color_status_bar -contexts $status_bar_contexts -title [translate "Head temperature"] -units [return_html_temperature_units]]
+set ::temperature_meter [meter new -x [rescale_x_skin 80] -y [rescale_y_skin 1310] -width [rescale_x_skin 280] -minvalue 0.0 -maxvalue 100.0 -get_meter_value watertemp -get_target_value get_min_temperature -tick_frequency 10.0 -label_frequency 20 -needle_color $color_temperature -label_color $color_grey_text -tick_color $color_status_bar -contexts $status_bar_contexts -title [translate "Head temperature"] -units [return_html_temperature_units]]
 add_de1_variable $status_bar_contexts -100 -100 -text "" -textvariable {[$::temperature_meter update]} 
 
 
