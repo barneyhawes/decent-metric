@@ -50,10 +50,15 @@ set ::color_action_button_text "#eee"
 add_de1_page "sleep" "sleep.jpg" "default"
 add_de1_page "tankfilling" "filling_tank.jpg" "default"
 add_de1_page "tankempty refill" "fill_tank.jpg" "default"
-add_de1_page "message calibrate infopage" "settings_message.png" "default"
-add_de1_page "create_preset" "settings_3_choices.png" "default"
-add_de1_page "descalewarning" "descalewarning.jpg" "default"
 add_de1_page "cleaning" "cleaning.jpg" "default"
+add_de1_page "message calibrate infopage tabletstyles languages measurements" "settings_message.png" "default"
+add_de1_page "create_preset" "settings_3_choices.png" "default"
+add_de1_page "descaling" "descaling.jpg" "default"
+add_de1_page "descale_prepare" "descale_prepare.jpg" "default"
+add_de1_page "ghc" "ghc.jpg" "default"
+add_de1_page "travel_prepare" "travel_prepare.jpg" "default"
+add_de1_page "travel_do" "travel_do.jpg" "default"
+add_de1_page "descalewarning" "descalewarning.jpg" "default"
 
 add_de1_page "ghc_steam ghc_espresso ghc_flush ghc_hotwater" "ghc.jpg" "default"
 add_de1_text "ghc_steam" 1990 680 -text "\[      \]\n[translate {Tap here for steam}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 950
@@ -62,27 +67,32 @@ add_de1_text "ghc_flush" 1520 840 -text "\[      \]\n[translate {Tap here to flu
 add_de1_text "ghc_hotwater" 1630 600 -text "\[      \]\n[translate {Tap here for hot water}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 820
 add_de1_button "ghc_steam ghc_espresso ghc_flush ghc_hotwater" {say [translate {Ok}] $::settings(sound_button_in); page_show off;} 0 0 2560 1600 
 
-# out of water page
-
 # when tank is empty, just return to menu
 # TODO: track the most recent menu page and use that (so stay on the same page effectively)
 set_next_page "tankempty" "off"
 
-#add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 0 0 2560 1400 
-#add_de1_text "tankempty refill" 1280 750 -text [translate "Please add water"] -font Helv_20_bold -fill "#CCCCCC" -justify "center" -anchor "center" -width 900
-#add_de1_variable "tankempty refill" 1280 900 -justify center -anchor "center" -text "" -font Helv_10 -fill "#CCCCCC" -width 520 -textvariable {[refill_kit_retry_button]} 
-#add_de1_text "tankempty" 340 1504 -text [translate "Exit App"] -font Helv_10_bold -fill "#AAAAAA" -anchor "center" 
-#add_de1_text "tankempty" 2220 1504 -text [translate "Ok"] -font Helv_10_bold -fill "#AAAAAA" -anchor "center" 
-#add_de1_button "tankempty" {say [translate {Exit}] $::settings(sound_button_in); .can itemconfigure $::message_label -text [translate "Going to sleep"]; .can itemconfigure $::message_button_label -text [translate "Wait"]; after 10000 {.can itemconfigure $::message_button_label -text [translate "Ok"]; }; set_next_page off message; page_show message; after 500 app_exit} 0 1402 800 1600
-#add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 1760 1402 2560 1600
+add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 0 0 2560 1400 
+add_de1_text "tankempty refill" 1280 750 -text [translate "Please add water"] -font Helv_20_bold -fill "#CCCCCC" -justify "center" -anchor "center" -width 900
+add_de1_variable "tankempty refill" 1280 900 -justify center -anchor "center" -text "" -font Helv_10 -fill "#CCCCCC" -width 520 -textvariable {[refill_kit_retry_button]} 
+add_de1_text "tankempty" 340 1504 -text [translate "Exit App"] -font Helv_10_bold -fill "#AAAAAA" -anchor "center" 
+add_de1_text "tankempty" 2220 1504 -text [translate "Ok"] -font Helv_10_bold -fill "#AAAAAA" -anchor "center" 
+add_de1_button "tankempty" {say [translate {Exit}] $::settings(sound_button_in); .can itemconfigure $::message_label -text [translate "Going to sleep"]; .can itemconfigure $::message_button_label -text [translate "Wait"]; after 10000 {.can itemconfigure $::message_button_label -text [translate "Ok"]; }; set_next_page off message; page_show message; after 500 app_exit} 0 1402 800 1600
+add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 1760 1402 2560 1600
 
-# show descale warning after steam, if clogging of the steam wand is detected
+# cleaning and descaling
+add_de1_text "cleaning" 1280 80 -text [translate "Cleaning"] -font Helv_20_bold -fill "#EEEEEE" -justify "center" -anchor "center" -width 900
+add_de1_text "descaling" 1280 80 -text [translate "Descaling"] -font Helv_20_bold -fill "#CCCCCC" -justify "center" -anchor "center" -width 900
 add_de1_text "descalewarning" 1280 1310 -text [translate "Your steam wand is clogging up"] -font Helv_17_bold -fill "#FFFFFF" -justify "center" -anchor "center" -width 900
 add_de1_text "descalewarning" 1280 1480 -text [translate "It needs to be descaled soon"] -font Helv_15_bold -fill "#FFFFFF" -justify "center" -anchor "center" -width 900
 add_de1_button "descalewarning" {say [translate {descale}] $::settings(sound_button_in); show_settings descale_prepare} 0 0 2560 1600 
 
-# cleaning and descaling
-add_de1_text "cleaning" 1280 80 -text [translate "Cleaning"] -font Helv_20_bold -fill "#EEEEEE" -justify "center" -anchor "center" -width 900
+# group head controller FYI messages
+add_de1_page "ghc_steam ghc_espresso ghc_flush ghc_hotwater" "ghc.jpg" "default"
+add_de1_text "ghc_steam" 1990 680 -text "\[      \]\n[translate {Tap here for steam}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 950
+add_de1_text "ghc_espresso" 1936 950 -text "\[      \]\n[translate {Tap here for espresso}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 950
+add_de1_text "ghc_flush" 1520 840 -text "\[      \]\n[translate {Tap here to flush}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 750
+add_de1_text "ghc_hotwater" 1630 600 -text "\[      \]\n[translate {Tap here for hot water}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 820
+add_de1_button "ghc_steam ghc_espresso ghc_flush ghc_hotwater" {say [translate {Ok}] $::settings(sound_button_in); page_show off;} 0 0 2560 1600 
 
 set_de1_screen_saver_directory "[homedir]/saver"
 
@@ -93,7 +103,7 @@ source "[homedir]/skins/default/de1_skin_settings.tcl"
 load_metric_settings
 
 # complete list of contexts
-set metric_contexts "off espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu descale_menu descaling empty_menu travel_do tankempty refill"
+set metric_contexts "off espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu"
 
 ### background
 .can create rect 0 0 [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $color_background -width 0 -tag "background" -state "hidden"
@@ -112,7 +122,7 @@ if {$::showgrid == 1} {
 
 
 ### status bar
-set status_bar_contexts "off espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu tankempty refill"
+set status_bar_contexts "off espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu"
 
 .can create rect 0 [rescale_y_skin 1260] [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $color_status_bar -width 0 -tag "status_background"
 add_visual_items_to_contexts $status_bar_contexts "status_background" 
@@ -204,18 +214,16 @@ add_de1_variable $status_bar_contexts 2560 0 -anchor "ne" -text "" -font $font_s
 
 ### back button / page title
 set item_id [.can create line [rescale_x_skin 120] [rescale_y_skin  60] [rescale_x_skin 60] [rescale_y_skin 120] [rescale_x_skin 120] [rescale_y_skin 180] -width [rescale_x_skin 24] -fill $color_text]
-add_visual_items_to_contexts "espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu descale_menu descaling empty_menu travel_do tankempty refill" $item_id
+add_visual_items_to_contexts "espresso_menu espresso_config espresso steam_menu steam water_menu water flush_menu flush machine_menu" $item_id
 add_de1_text "espresso_menu espresso" 180 120 -text [translate "Espresso"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "espresso_config" 180 120 -text [translate "Espresso weights"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "machine_menu" 180 120 -text [translate "Menu"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 120 -text [translate "Descale"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "empty_menu travel_do tankempty refill" 180 120 -text [translate "Empty"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu tankempty refill" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "off"; page_show "off"; start_idle } 0 0 1280 240
+add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "off"; page_show "off"; start_idle } 0 0 1280 240
 add_de1_button "espresso_config" {say [translate "espresso"] $::settings(sound_button_in); set_next_page "off" "espresso_menu"; page_show "off" } 0 0 1280 240
-add_de1_button "flush_menu descale_menu empty_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "machine_menu"; page_show "off" } 0 0 1280 240
+add_de1_button "flush_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "machine_menu"; page_show "off" } 0 0 1280 240
 
 
 #### Home page
@@ -474,15 +482,6 @@ add_de1_text "machine_menu" 730 780 -text [translate "Open the DECENT settings m
 create_button "machine_menu" 480 840 980 1020 [translate "sleep"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); start_sleep }
 add_de1_text "machine_menu" 730 1080 -text [translate "Turn off the coffee machine."] -font $font_setting_description -fill $color_text -anchor "s" 
 
-create_button "machine_menu" 1580 240 2080 420 [translate "descale"] $font_button $color_button $color_button_text { say [translate "clean"] $::settings(sound_button_in); set_next_page "off" "descale_menu"; page_show "off" }
-add_de1_text "machine_menu" 1830 480 -text [translate "Clean the inside of the coffee machine."] -font $font_setting_description -fill $color_text -anchor "s" 
-
-create_button "machine_menu" 1580 540 2080 720 [translate "empty"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); set_next_page "off" "empty_menu"; page_show "off" }
-add_de1_text "machine_menu" 1830 780 -text [translate "Remove the water from the coffee machine."] -font $font_setting_description -fill $color_text -anchor "s" 
-
-
-
-
 ### flush
 add_de1_text "flush_menu flush" 180 360 -text [translate "1. Remove the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "flush_menu flush" 180 480 -text [translate "2. Press $::symbol_flush to run water through the head."] -font $font_setting_heading -fill $color_text -anchor "w" 
@@ -497,26 +496,6 @@ proc update_flush_button {} {
 	}
 }
 add_de1_variable "flush_menu" -100 -100 -textvariable {[update_flush_button]} 
-
-### descale
-add_de1_text "descale_menu descaling" 180 360 -text [translate "1. Remove the drip tray and cover."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 480 -text [translate "2. Mix 1.5 litres hot water with 75g citric acid."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 600 -text [translate "3. Put a blind basket in the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 720 -text [translate "4. Replace the drip tray but not the cover (it may discolour)."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 840 -text [translate "5. Put the steam wand into a jug a fill with enough water to cover the tip."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "descale_menu descaling" 180 960 -text [translate "6. Press GO to start."] -font $font_setting_heading -fill $color_text -anchor "w" 
-
-create_action_button "descale_menu" 1280 1200 "GO" $font_action_button $::color_action_button_start $::color_action_button_text {say [translate "descale"] $::settings(sound_button_in); start_decaling} ""
-create_action_button "descaling" 1280 1200 $::symbol_hand $font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
-
-### empty
-add_de1_text "empty_menu travel_do" 180 360 -text [translate "1. Remove the drip tray."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "empty_menu travel_do" 180 480 -text [translate "2. Pull the water tray to the front."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "empty_menu travel_do" 180 600 -text [translate "3. Press GO to start emptying machine."] -font $font_setting_heading -fill $color_text -anchor "w" 
-add_de1_text "empty_menu travel_do" 180 720 -text [translate "4. Wait for the 'out of water' message."] -font $font_setting_heading -fill $color_text -anchor "w" 
-
-create_action_button "empty_menu" 1280 1200 "GO" $font_action_button $::color_action_button_start $::color_action_button_text {say [translate "empty"] $::settings(sound_button_in); start_air_purge} ""
-create_action_button "travel_do" 1280 1200 $::symbol_hand $font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
 
 ### sleep
 add_de1_button "saver" {say [translate "wake"] $::settings(sound_button_in); set_next_page "off" "off"; page_show "off"; start_idle; de1_send_waterlevel_settings} 0 0 2560 1600
