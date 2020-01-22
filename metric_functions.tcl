@@ -104,7 +104,15 @@ proc metric_go_to_page { pagename } {
 
 ### helper functions ###
 
+proc is_connected {} { return [expr {[clock seconds] - $::de1(last_ping)} < 5] }
+proc is_heating {} { return [expr [is_connected] && $::de1(substate) == 1] }
+proc has_water {} { return [expr ![is_connected] || $::de1(water_level) > $::settings(water_refill_point)] }
+
 proc get_status_text {} {
+	if {[expr ![is_connected]]} {
+		return [translate "disconnected"]
+	}
+
 	switch $::de1(substate) {
 		"-" { 
 			return "starting"
@@ -139,12 +147,8 @@ proc get_status_text {} {
 
 }
 
-# some handy boolean status functions
-proc is_heating {} { return [expr $::de1(substate) == 1] }
-proc has_water {} { return [expr $::de1(water_level) > $::settings(water_refill_point)] }
-
 # for the main functions (espresso, steam, water, flush), each has can_start_action and do_start_action functions
-proc can_start_espresso {} { return [expr ($::de1(substate) == 0) && [has_water]] }
+proc can_start_espresso {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_espresso {} {
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
@@ -161,7 +165,7 @@ proc do_start_espresso {} {
 	start_espresso
 }
 
-proc can_start_steam {} { return [expr ($::de1(substate) == 0) && [has_water]] }
+proc can_start_steam {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_steam {} {
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
@@ -178,7 +182,7 @@ proc do_start_steam {} {
 	start_steam
 }
 
-proc can_start_water {} { return [expr ($::de1(substate) == 0) && [has_water]] }
+proc can_start_water {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_water {} {
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
@@ -195,7 +199,7 @@ proc do_start_water {} {
 	start_water
 }
 
-proc can_start_flush {} { return [expr ($::de1(substate) == 0) && [has_water]] }
+proc can_start_flush {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_flush {} {
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]

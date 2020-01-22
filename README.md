@@ -19,7 +19,6 @@ TODO #3 - post shot screen
 TODO #4 - espresso screen
 - Yield chart should show weight if a scale is connected
 - Test functionality of GHC somehow
-- Disable start buttons when machine is not connected (status is "ready" so need to check connection)
 
 TODO #5 - shot history
 - Display history list as a table showing the key stats (profile, dose, yield, time, temp, date & time)
@@ -35,6 +34,7 @@ v0.4
 - Added metric_get_font wrapper function so we can load fonts at any size on the fly.
 - Swapped water and temp meters on status bar so that they are closer to corresponding meters in Espresso window
 - When the water level runs out, it will stay on the most recent menu page
+- Detect when DE1 is not connected and disable start buttons (also prevents temp/water warnings and shows in status text)
 
 v0.3 15/01/2020
 - Added message to status bar during heating
