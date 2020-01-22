@@ -68,7 +68,6 @@ add_de1_text "ghc_hotwater" 1630 600 -text "\[      \]\n[translate {Tap here for
 add_de1_button "ghc_steam ghc_espresso ghc_flush ghc_hotwater" {say [translate {Ok}] $::settings(sound_button_in); page_show off;} 0 0 2560 1600 
 
 # when tank is empty, just return to menu
-# TODO: track the most recent menu page and use that (so stay on the same page effectively)
 set_next_page "tankempty" "off"
 
 add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 0 0 2560 1400 
@@ -185,9 +184,9 @@ add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font $::font_
 add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "machine_menu" 180 120 -text [translate "Menu"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "off"; page_show "off"; start_idle } 0 0 1280 240
-add_de1_button "espresso_config" {say [translate "espresso"] $::settings(sound_button_in); set_next_page "off" "espresso_menu"; page_show "off" } 0 0 1280 240
-add_de1_button "flush_menu" {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "machine_menu"; page_show "off" } 0 0 1280 240
+add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu" {say [translate "menu"] $::settings(sound_button_in); metric_go_to_page "off" } 0 0 1280 240
+add_de1_button "espresso_config" {say [translate "espresso"] $::settings(sound_button_in); metric_go_to_page "espresso_menu" } 0 0 1280 240
+add_de1_button "flush_menu" {say [translate "menu"] $::settings(sound_button_in); metric_go_to_page "machine_menu" } 0 0 1280 240
 
 
 #### Home page
@@ -201,10 +200,10 @@ proc add_home_button { contexts yoffset symbol text color_menu_background color_
 	add_visual_items_to_contexts $contexts "menu_arrow"
 }
 
-add_home_button "off" 60 $::symbol_espresso [translate "Espresso"] $color_menu_background $color_text {say [translate "espresso"] $::settings(sound_button_in); set_next_page "off" "espresso_menu"; page_show "off"; start_idle }
-add_home_button "off" 360 $::symbol_steam [translate "Steam"] $color_menu_background $color_text {say [translate "steam"] $::settings(sound_button_in); set_next_page "off" "steam_menu"; page_show "off"; start_idle }
-add_home_button "off" 660 $::symbol_water [translate "Hot water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); set_next_page "off" "water_menu"; page_show "off"; start_idle }
-add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_background $color_text {say [translate "menu"] $::settings(sound_button_in); set_next_page "off" "machine_menu"; page_show "off"; start_idle }
+add_home_button "off" 60 $::symbol_espresso [translate "Espresso"] $color_menu_background $color_text {say [translate "espresso"] $::settings(sound_button_in); metric_go_to_page "espresso_menu" }
+add_home_button "off" 360 $::symbol_steam [translate "Steam"] $color_menu_background $color_text {say [translate "steam"] $::settings(sound_button_in); metric_go_to_page "steam_menu" }
+add_home_button "off" 660 $::symbol_water [translate "Hot water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); metric_go_to_page "water_menu" }
+add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_background $color_text {say [translate "menu"] $::settings(sound_button_in); metric_go_to_page "machine_menu" }
 
 
 ### espresso_menu
@@ -213,7 +212,7 @@ add_de1_text "espresso_menu" 180 480 -text [translate "2. Distribute grounds eve
 add_de1_text "espresso_menu" 180 600 -text [translate "3. Place cup on scale and tare."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 720 -text [translate "4. Press $::symbol_espresso to start espresso."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_variable "espresso_menu" 180 840 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable {[translate "5. Target yield $::metric_settings(cup_weight)g."]}
-create_button "espresso_menu" 180 1020 780 1200 [translate "change weights"] $font_button $color_button $color_button_text { say [translate "weights"] $::settings(sound_button_in); set_next_page "off" "espresso_config"; page_show "off" }
+create_button "espresso_menu" 180 1020 780 1200 [translate "change weights"] $font_button $color_button $color_button_text { say [translate "weights"] $::settings(sound_button_in); metric_go_to_page "espresso_config" }
 
 add_de1_text "espresso_menu" 2380 720 -text [translate "Profile:"] -font $font_setting_heading -fill $color_text -anchor "e" 
 add_de1_variable "espresso_menu" 2380 840 -text "" -font $font_setting_heading -fill $color_text -anchor "e" -textvariable { $::settings(profile_title) }

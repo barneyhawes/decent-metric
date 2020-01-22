@@ -3,11 +3,7 @@ Metric skin for Decent Espresso
 
 Standing on the shoulders of giants: thanks to John (Insight), Damian (DSV), Sheldon (SWDark)
 
-TODO #1 - menu subsystem
-- Keep track of the current and previous menu page
-- Add "jump back" function
-- The current menu page should be set to the destination for "tankempty" so it does not cause a jump when the water runs out
-- Test / reinstate standard Decent menu pages
+TODO #1 - general
 - Skin colours (dark / light theme)
 
 TODO #2 - fonts
@@ -38,6 +34,7 @@ v0.4
 - Rewrote Decent load_font function so that each font only needs to be included once (temporarily included as a Metric function, but hope to get adopted in utils.tcl)
 - Added metric_get_font wrapper function so we can load fonts at any size on the fly.
 - Swapped water and temp meters on status bar so that they are closer to corresponding meters in Espresso window
+- When the water level runs out, it will stay on the most recent menu page
 
 v0.3 15/01/2020
 - Added message to status bar during heating

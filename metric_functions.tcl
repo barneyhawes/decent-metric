@@ -93,7 +93,14 @@ proc load_metric_settings {} {
     array set ::metric_settings [encoding convertfrom utf-8 [read_binary_file [metric_filename]]]
 }
 
+proc metric_go_to_page { pagename } {
+	set_next_page "off" $pagename
+	page_show "off"
+	start_idle
 
+	# when tank is empty, stay on current page
+	set_next_page "tankempty" $pagename
+}
 
 ### helper functions ###
 
