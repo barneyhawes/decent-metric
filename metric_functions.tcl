@@ -93,13 +93,41 @@ proc load_metric_settings {} {
     array set ::metric_settings [encoding convertfrom utf-8 [read_binary_file [metric_filename]]]
 }
 
-proc metric_go_to_page { pagename } {
+set ::metric_page_history "off"
+proc metric_history_push { pagename } {
+	if {$pagename == "off"} {
+		set ::metric_page_history "off"
+	} else {
+		lappend ::metric_page_history $pagename
+	}
+}
+proc metric_history_pop {} {
+	# remove last item
+	set ::metric_page_history [lreplace $::metric_page_history end end]
+
+	set pagename [lindex $::metric_page_history end]
+	if {$pagename == ""} {
+		set pagename "off"
+	} else {
+		# remove last item
+		set ::metric_page_history [lreplace $::metric_page_history end end]
+	}
+	return $pagename
+}
+
+proc metric_jump_to { pagename } {
 	set_next_page "off" $pagename
 	page_show "off"
 	start_idle
+	metric_history_push $pagename
 
 	# when tank is empty, stay on current page
 	set_next_page "tankempty" $pagename
+}
+
+proc metric_jump_back {} {
+	set pagename [metric_history_pop]
+	metric_jump_to $pagename
 }
 
 ### helper functions ###
@@ -163,6 +191,8 @@ proc do_start_espresso {} {
 		return
 	}
 	start_espresso
+	set_next_page "off" "espresso_done"
+	metric_history_push "espresso_done"
 }
 
 proc can_start_steam {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
