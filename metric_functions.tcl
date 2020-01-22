@@ -93,6 +93,8 @@ proc load_metric_settings {} {
     array set ::metric_settings [encoding convertfrom utf-8 [read_binary_file [metric_filename]]]
 }
 
+### page navigation and history functions ###
+
 set ::metric_page_history "off"
 proc metric_history_push { pagename } {
 	if {$pagename == "off"} {
@@ -100,6 +102,8 @@ proc metric_history_push { pagename } {
 	} else {
 		lappend ::metric_page_history $pagename
 	}
+	# when tank is empty, stay on current page
+	set_next_page "tankempty" $pagename
 }
 proc metric_history_pop {} {
 	# remove last item
@@ -120,9 +124,6 @@ proc metric_jump_to { pagename } {
 	page_show "off"
 	start_idle
 	metric_history_push $pagename
-
-	# when tank is empty, stay on current page
-	set_next_page "tankempty" $pagename
 }
 
 proc metric_jump_back {} {
