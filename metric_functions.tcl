@@ -97,6 +97,41 @@ proc load_metric_settings {} {
 
 ### helper functions ###
 
+proc get_status_text {} {
+	switch $::de1(substate) {
+		"-" { 
+			return "starting"
+		}
+		0 {
+			return "ready"
+		}
+		1 {
+			return "heating"
+		}
+		3 {
+			return "stabilising"
+		}
+		4 {
+			return "preinfusion"
+		}
+		5 {
+			return "pouring"
+		}
+		6 {
+			return "ending"
+		}
+		17 {
+			return "refilling"
+		}
+		default {
+			set result [de1_connected_state 0]
+			if {$result == ""} { return "unknown" }
+			return $result
+		}
+	}
+
+}
+
 # some handy boolean status functions
 proc is_heating {} { return [expr $::de1(substate) == 1] }
 proc has_water {} { return [expr $::de1(water_level) > $::settings(water_refill_point)] }

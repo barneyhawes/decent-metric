@@ -172,44 +172,8 @@ proc set_status_message_visibility {} {
 }
 add_de1_variable $status_bar_contexts -100 -100 -text "" -textvariable {[set_status_message_visibility]}
 
-proc get_status {} {
-	switch $::de1(substate) {
-		
-		"-" { 
-			return "starting"
-		}
-		0 {
-			return "ready"
-		}
-		1 {
-			return "heating"
-		}
-		3 {
-			return "stabilising"
-		}
-		4 {
-			return "preinfusion"
-		}
-		5 {
-			return "pouring"
-		}
-		6 {
-			return "ending"
-		}
-		17 {
-			return "refilling"
-		}
-		default {
-			set result [de1_connected_state 0]
-			if {$result == ""} { return "unknown" }
-			return $result
-		}
-	}
-
-}
-
-#Temporary display of machine state
-add_de1_variable $status_bar_contexts 2560 0 -anchor "ne" -text "" -font $font_setting_heading -fill $color_status_bar -textvariable {[get_status]} 
+# Display of machine state
+add_de1_variable $status_bar_contexts 2550 10 -anchor "ne" -text "" -font $font_setting_heading -fill $color_status_bar -textvariable {[get_status_text]} 
 
 
 ### back button / page title
