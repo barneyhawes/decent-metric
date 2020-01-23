@@ -205,7 +205,7 @@ add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_backgrou
 
 
 ### espresso_menu
-add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable { [translate "1. Grind $::metric_settings(bean_weight)g dose into the portafilter."] }
+add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable {[translate "1. Grind $::metric_settings(bean_weight)g dose into the portafilter."] }
 add_de1_text "espresso_menu" 180 480 -text [translate "2. Distribute grounds evenly, tamp and lock in the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 600 -text [translate "3. Place cup on scale and tare."] -font $font_setting_heading -fill $color_text -anchor "w" 
 add_de1_text "espresso_menu" 180 720 -text [translate "4. Press $::symbol_espresso to start espresso."] -font $font_setting_heading -fill $color_text -anchor "w" 
@@ -213,7 +213,7 @@ add_de1_variable "espresso_menu" 180 840 -text "" -font $font_setting_heading -f
 create_button "espresso_menu" 180 1020 780 1200 [translate "change weights"] $font_button $color_button $color_button_text { say [translate "weights"] $::settings(sound_button_in); metric_jump_to "espresso_config" }
 
 add_de1_text "espresso_menu" 2380 720 -text [translate "Profile:"] -font $font_setting_heading -fill $color_text -anchor "e" 
-add_de1_variable "espresso_menu" 2380 840 -text "" -font $font_setting_heading -fill $color_text -anchor "e" -textvariable { $::settings(profile_title) }
+add_de1_variable "espresso_menu" 2380 840 -text "" -font $font_setting_heading -fill $color_text -anchor "e" -textvariable {$::settings(profile_title)}
 create_button "espresso_menu" 1780 1020 2380 1200 [translate "change profile"] $font_button $color_button $color_button_text { say [translate "profile"] $::settings(sound_button_in); show_settings "settings_1" }
 
 set ::espresso_action_button_id [create_action_button "espresso_menu" 1280 1020 $::symbol_espresso $font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
@@ -377,21 +377,21 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Preset:"] 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::settings(profile_title)} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Date and time:"] -font $font_summary_text -fill $color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {"date & time"} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[clock format [expr $::timers(espresso_start) / 1000] -format "%R %d/%m/%Y" ]} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Temperature:"] -font $font_summary_text -fill $color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::de1(goal_temperature)[return_html_temperature_units]} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Dose:"] -font $font_summary_text -fill $color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::metric_settings(bean_weight)[translate "g"]} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::metric_settings(bean_weight)g} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target yield:"] -font $font_summary_text -fill $color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::metric_settings(cup_weight)[translate "g (1:2)"]} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {$::metric_settings(cup_weight)g (1:$::metric_settings(brew_ratio))} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Actual yield:"] -font $font_summary_text -fill $color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[get_weight][translate "g (1:2.2)"]} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[get_weight]g (1:2.2)} 
 incr summary_y $summary_y_step
-add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Time:"] -font $font_summary_text -fill $color_text -anchor "w" 
+add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Duration:"] -font $font_summary_text -fill $color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[expr {($::timers(espresso_stop) - $::timers(espresso_start))/1000}][translate "s"]} 
 
 

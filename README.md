@@ -11,8 +11,8 @@ TODO #2 - fonts
 - Add new symbols for clean, empty, etc.
 
 TODO #3 - post-shot page
-- implement actual date, time, ratio (currently placeholders)
 - Show the shot graph? (options to show different data?) (option to compare with historic shot?)
+- implement final weight and align with pre-shot configuration
 - access to post-shot page for most recent shot at any time
 
 TODO #4 - espresso page
