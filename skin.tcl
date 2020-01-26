@@ -32,7 +32,7 @@ set color_text "#eee"
 set color_grey_text "#777"
 set color_background "#1e1e1e"
 set color_menu_background "#333333"
-set color_status_bar "#333333"
+set color_status_bar "#252525"
 set color_water "#19BBFF"
 set color_temperature "#D34237"
 set color_pressure "#6A9949"
@@ -102,11 +102,15 @@ source "[homedir]/skins/default/de1_skin_settings.tcl"
 load_metric_settings
 
 # complete list of contexts
-set metric_contexts "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush machine_menu"
+set metric_contexts "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush"
+set status_bar_contexts "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush"
 
 ### background
 .can create rect 0 0 [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $color_background -width 0 -tag "background" -state "hidden"
 add_visual_items_to_contexts $metric_contexts "background"
+
+.can create rect 0 [rescale_y_skin 1260] [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $color_status_bar -width 0 -tag "status_background"
+add_visual_items_to_contexts $status_bar_contexts "status_background" 
 
 if {$::showgrid == 1} {
     for {set x 80} {$x < 2560} {incr x 100} {
@@ -121,13 +125,9 @@ if {$::showgrid == 1} {
 
 
 ### status bar
-set status_bar_contexts "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush machine_menu"
-
-.can create rect 0 [rescale_y_skin 1260] [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $color_status_bar -width 0 -tag "status_background"
-add_visual_items_to_contexts $status_bar_contexts "status_background" 
 
 # Water
-set ::refill_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 1780] [rescale_y_skin 1290] [rescale_x_skin 2530] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
+set ::refill_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 1780] [rescale_y_skin 1290] [rescale_x_skin 2530] [rescale_y_skin 1570] [rescale_x_skin 80] $color_status_bar ]
 set ::refill_message_text_id [ add_de1_text $status_bar_contexts 1990 1430 -text "" -font $font_setting_heading -fill $color_water -anchor "center" ]
 
 #TODO: embed this in the water meter command below.
@@ -138,7 +138,7 @@ set ::water_meter [meter new -x [rescale_x_skin 2200] -y [rescale_y_skin 1310] -
 add_de1_variable $status_bar_contexts -100 -100 -text "" -textvariable {[$::water_meter update]} 
 
 # Temperature
-set ::heating_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 30] [rescale_y_skin 1290] [rescale_x_skin 780] [rescale_y_skin 1570] [rescale_x_skin 80] $color_background ]
+set ::heating_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 30] [rescale_y_skin 1290] [rescale_x_skin 780] [rescale_y_skin 1570] [rescale_x_skin 80] $color_status_bar ]
 set ::heating_message_text_id [ add_de1_text $status_bar_contexts 570 1430 -text "" -font $font_setting_heading -fill $color_temperature -anchor "center" ]
 
 #TODO: should be group_head_heater_temperature but this is not useful in the simulator
@@ -151,7 +151,7 @@ proc set_status_message_visibility {} {
 	set color_background "#1e1e1e"
 	set color_status_bar "#333333"
 	if { [is_heating] } {
-		.can itemconfigure $::heating_message_background_id -fill $color_background
+		.can itemconfigure $::heating_message_background_id -fill $color_button
 		.can itemconfigure $::heating_message_text_id -text [translate "Heating"]
 	} else {
 		.can itemconfigure $::heating_message_background_id -fill $color_status_bar
@@ -162,7 +162,7 @@ proc set_status_message_visibility {} {
 		.can itemconfigure $::refill_message_background_id -fill $color_status_bar
 		.can itemconfigure $::refill_message_text_id -text ""
 	} else {
-		.can itemconfigure $::refill_message_background_id -fill $color_background
+		.can itemconfigure $::refill_message_background_id -fill $color_button
 		.can itemconfigure $::refill_message_text_id -text [translate "Refill water"]
 	}
 }
@@ -174,18 +174,13 @@ add_de1_variable $status_bar_contexts 2550 10 -anchor "ne" -text "" -font $font_
 
 ### back button / page title
 set item_id [.can create line [rescale_x_skin 120] [rescale_y_skin  60] [rescale_x_skin 60] [rescale_y_skin 120] [rescale_x_skin 120] [rescale_y_skin 180] -width [rescale_x_skin 24] -fill $color_text]
-add_visual_items_to_contexts "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush machine_menu" $item_id
+add_visual_items_to_contexts "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" $item_id
 add_de1_text "espresso_menu espresso espresso_done" 180 120 -text [translate "Espresso"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "espresso_config" 180 120 -text [translate "Espresso weights"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "machine_menu" 180 120 -text [translate "Menu"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_button "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush machine_menu" {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
-
-#add_de1_button "espresso_menu espresso steam_menu water_menu machine_menu" {say [translate "menu"] $::settings(sound_button_in); metric_jump_to "off" } 0 0 1280 240
-#add_de1_button "espresso_config espresso_done" {say [translate "espresso"] $::settings(sound_button_in); metric_jump_to "espresso_menu" } 0 0 1280 240
-#add_de1_button "flush_menu" {say [translate "menu"] $::settings(sound_button_in); metric_jump_to "machine_menu" } 0 0 1280 240
+add_de1_button "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
 
 #### Home page
 
@@ -198,11 +193,13 @@ proc add_home_button { contexts yoffset symbol text color_menu_background color_
 	add_visual_items_to_contexts $contexts "menu_arrow"
 }
 
-add_home_button "off" 60 $::symbol_espresso [translate "Espresso"] $color_menu_background $color_text {say [translate "espresso"] $::settings(sound_button_in); metric_jump_to "espresso_menu" }
-add_home_button "off" 360 $::symbol_steam [translate "Steam"] $color_menu_background $color_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
-add_home_button "off" 660 $::symbol_water [translate "Hot water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
-add_home_button "off" 960 $::symbol_menu [translate "Menu"] $color_menu_background $color_text {say [translate "menu"] $::settings(sound_button_in); metric_jump_to "machine_menu" }
+add_home_button "off" 120 $::symbol_espresso [translate "espresso"] $color_menu_background $color_text {say [translate "espresso"] $::settings(sound_button_in); metric_jump_to "espresso_menu" }
+add_home_button "off" 420 $::symbol_steam [translate "steam"] $color_menu_background $color_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
+add_home_button "off" 720 $::symbol_water [translate "hot water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
 
+create_button "off" 680 1020 1030 1200 [translate "flush"] $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu"}
+create_button "off" 1105 1020 1455 1200 [translate "settings"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); show_settings }
+create_button "off" 1530 1020 1880 1200 [translate "sleep"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); start_sleep }
 
 ### espresso_menu
 add_de1_variable "espresso_menu" 180 360 -text "" -font $font_setting_heading -fill $color_text -anchor "w" -textvariable {[translate "1. Grind $::metric_settings(bean_weight)g dose into the portafilter."] }
@@ -467,16 +464,6 @@ proc update_water_button {} {
 	}
 }
 add_de1_variable "water_menu" -100 -100 -textvariable {[update_water_button]} 
-
-### Machine menu
-create_button "machine_menu" 480 240 980 420 [translate "flush"] $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); set_next_page "off" "flush_menu"; page_show "off" }
-add_de1_text "machine_menu" 730 480 -text [translate "Run hot water through the head for cleaning."] -font $font_setting_description -fill $color_text -anchor "s" 
-
-create_button "machine_menu" 480 540 980 720 [translate "settings"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); show_settings }
-add_de1_text "machine_menu" 730 780 -text [translate "Open the DECENT settings menu."] -font $font_setting_description -fill $color_text -anchor "s" 
-
-create_button "machine_menu" 480 840 980 1020 [translate "sleep"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); start_sleep }
-add_de1_text "machine_menu" 730 1080 -text [translate "Turn off the coffee machine."] -font $font_setting_description -fill $color_text -anchor "s" 
 
 ### flush
 add_de1_text "flush_menu flush" 180 360 -text [translate "1. Remove the portafilter."] -font $font_setting_heading -fill $color_text -anchor "w" 
