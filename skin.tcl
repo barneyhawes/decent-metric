@@ -395,8 +395,8 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Duration:"
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[expr {($::timers(espresso_stop) - $::timers(espresso_start))/1000}][translate "s"]} 
 
 
-create_button "espresso_done" 180 840 680 1020 [translate "steam"] $font_button $color_button $color_button_text { say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
-create_button "espresso_done" 780 840 1280 1020 [translate "flush"] $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu" }
+create_button "espresso_done" 180 840 680 1020 "$::symbol_steam [translate {Steam}]" $font_button $color_button $color_button_text { say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
+create_button "espresso_done" 780 840 1280 1020 "$::symbol_flush [translate {Flush}]" $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu" }
 
 
 
