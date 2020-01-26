@@ -499,9 +499,7 @@ add_de1_button "saver" {say [translate "wake"] $::settings(sound_button_in); set
 
 # debug info
 if {$::debugging == 1} {
+	add_de1_variable $metric_contexts 1280 10 -text "" -font [metric_get_font "Mazzard Medium" 12] -fill #fff -anchor "n" -textvariable {[join $::::metric_page_history " > "]}
     #.can create rectangle [rescale_x_skin 0] [rescale_y_skin 210] [rescale_x_skin 1500] [rescale_y_skin 1150] -fill "#fff" 
     add_de1_variable $metric_contexts 10 220 -text "" -font Helv_6 -fill "#000" -anchor "nw" -justify left -width 440 -textvariable {$::debuglog}
 }
-
-
-
