@@ -175,19 +175,19 @@ add_de1_variable $status_bar_contexts 2550 10 -anchor "ne" -text "" -font $font_
 ### back button / page title
 set item_id [.can create line [rescale_x_skin 120] [rescale_y_skin  60] [rescale_x_skin 60] [rescale_y_skin 120] [rescale_x_skin 120] [rescale_y_skin 180] -width [rescale_x_skin 24] -fill $color_text]
 add_visual_items_to_contexts "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" $item_id
-add_de1_text "espresso_menu espresso espresso_done" 180 120 -text [translate "Espresso"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "espresso_config" 180 120 -text [translate "Espresso weights"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "steam_menu steam" 180 120 -text [translate "Steam"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "water_menu water" 180 120 -text [translate "Hot water"] -font $::font_main_menu -fill $color_text -anchor "w" 
-add_de1_text "flush_menu flush" 180 120 -text [translate "Flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "espresso_menu espresso espresso_done" 180 120 -text [translate "espresso"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "espresso_config" 180 120 -text [translate "espresso weights"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "steam_menu steam" 180 120 -text [translate "steam"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "water_menu water" 180 120 -text [translate "water"] -font $::font_main_menu -fill $color_text -anchor "w" 
+add_de1_text "flush_menu flush" 180 120 -text [translate "flush"] -font $::font_main_menu -fill $color_text -anchor "w" 
 add_de1_button "espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
 
 #### Home page
 
 proc add_home_button { contexts yoffset symbol text color_menu_background color_text action} {
 	rounded_rectangle $contexts .can [rescale_x_skin 680] [rescale_y_skin $yoffset] [rescale_x_skin 1880] [rescale_y_skin [expr $yoffset + 240]] [rescale_x_skin 80] $color_menu_background
-	add_de1_text $contexts 780 [expr $yoffset + 120] -text $symbol -font $::font_main_menu -fill $color_text -anchor "center" 
-	add_de1_text $contexts 880 [expr $yoffset + 120] -text $text -font $::font_main_menu -fill $color_text -anchor "w" 
+	add_de1_text $contexts 820 [expr $yoffset + 120] -text $symbol -font [metric_get_font "Mazzard SemiBold" 72] -fill $color_text -anchor "center" 
+	add_de1_text $contexts 1280 [expr $yoffset + 120] -text $text -font  [metric_get_font "Mazzard SemiBold" 48] -fill $color_text -anchor "center" 
 	.can create line [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 60]] [rescale_x_skin 1780] [rescale_y_skin [expr $yoffset + 120]] [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 180]] -width [rescale_x_skin 24] -fill $color_text -tag "menu_arrow" -state hidden
 	add_de1_button $contexts $action 680 $yoffset 1880 [expr $yoffset + 240]
 	add_visual_items_to_contexts $contexts "menu_arrow"
@@ -195,7 +195,7 @@ proc add_home_button { contexts yoffset symbol text color_menu_background color_
 
 add_home_button "off" 120 $::symbol_espresso [translate "espresso"] $color_menu_background $color_text {say [translate "espresso"] $::settings(sound_button_in); metric_jump_to "espresso_menu" }
 add_home_button "off" 420 $::symbol_steam [translate "steam"] $color_menu_background $color_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
-add_home_button "off" 720 $::symbol_water [translate "hot water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
+add_home_button "off" 720 $::symbol_water [translate "water"] $color_menu_background $color_text {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
 
 create_button "off" 680 1020 1030 1200 [translate "flush"] $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu"}
 create_button "off" 1105 1020 1455 1200 [translate "settings"] $font_button $color_button $color_button_text { say [translate "settings"] $::settings(sound_button_in); show_settings }
@@ -392,9 +392,8 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Duration:"
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $font_summary_text -fill $color_text -anchor "w" -textvariable {[expr {($::timers(espresso_stop) - $::timers(espresso_start))/1000}][translate "s"]} 
 
 
-create_button "espresso_done" 180 840 680 1020 "$::symbol_steam [translate {Steam}]" $font_button $color_button $color_button_text { say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
-create_button "espresso_done" 780 840 1280 1020 "$::symbol_flush [translate {Flush}]" $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu" }
-
+create_button "espresso_done" 180 840 480 1020 [translate "steam"] $font_button $color_button $color_button_text { say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
+create_button "espresso_done" 780 840 1280 1020 [translate "flush"] $font_button $color_button $color_button_text { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu" }
 
 
 ### steam_menu
