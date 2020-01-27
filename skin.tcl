@@ -1,5 +1,5 @@
 # Barney's Metric skin
-package provide metric 0.4
+package provide metric 0.5
 
 set ::skindebug 0
 set ::debugging 0
