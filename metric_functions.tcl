@@ -1,59 +1,5 @@
 package provide metric_functions 1.0
 
-# This is a drop-in replacement for John's load_font function in utils.tcl.  I'm hoping he'll update that and I can then delete this.
-proc metric_load_font {name fn pcsize {androidsize {}} } {
-    # calculate font size
-    if {($::android == 1 || $::undroid == 1) && $androidsize != ""} {
-        set pcsize $androidsize
-    }
-    set platform_font_size [expr {int(1.0 * $::fontm * $pcsize)}]
-
-    if {[language] == "zh-hant" || [language] == "zh-hans"} {
-        set fn ""
-        set familyname $::helvetica_font
-    } elseif {[language] == "th"} {
-        set fn "[homedir]/fonts/sarabun.ttf"
-    }
-
-    if {[info exists ::loaded_fonts] != 1} {
-        set ::loaded_fonts list
-    }
-    set fontindex [lsearch $::loaded_fonts $fn]
-    if {$fontindex != -1} {
-        set familyname [lindex $::loaded_fonts [expr $fontindex + 1]]
-    } elseif {($::android == 1 || $::undroid == 1) && $fn != ""} {
-        catch {
-            set familyname [lindex [sdltk addfont $fn] 0]
-        }
-        lappend ::loaded_fonts $fn $familyname
-    }
-
-    if {[info exists familyname] != 1 || $familyname == ""} {
-        msg "Font familyname not available; using name '$name'."
-        set familyname $name
-    }
-
-    catch {
-        font create $name -family $familyname -size $platform_font_size
-    }
-    msg "added font name: \"$name\" family: \"$familyname\" size: $platform_font_size filename: \"$fn\""
-}
-
-proc metric_get_font { font_name size } {
-	if {[info exists ::metric_fonts] != 1} {
-        set ::metric_fonts list
-    }
-
-	set font_key "$font_name $size"
-	set font_index [lsearch $::metric_fonts $font_key]
-	if {$font_index == -1} {
-		metric_load_font $font_key "[skin_directory]/fonts/$font_name.otf" $size
-		lappend ::metric_fonts $font_key
-	}
-
-	return $font_key
-}
-
 
 ### settings functions ###
 

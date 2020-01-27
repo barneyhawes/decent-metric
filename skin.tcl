@@ -11,13 +11,13 @@ package ifneeded metric_functions 1.0 [list source [file join "[skin_directory]/
 package require metric_functions 1.0
 
 # fonts
-set font_setting_heading [metric_get_font "Mazzard Regular" 24]
-set font_setting_description [metric_get_font "Mazzard Regular" 14]
-set font_setting [metric_get_font "Mazzard Regular" 36]
-set font_button [metric_get_font "Mazzard Regular" 24]
-set font_list [metric_get_font "Mazzard Regular" 24]
-set font_action_button [metric_get_font "Mazzard SemiBold" 80]
-set ::font_main_menu [metric_get_font "Mazzard SemiBold" 48]
+set font_setting_heading [get_font "Mazzard Regular" 24]
+set font_setting_description [get_font "Mazzard Regular" 14]
+set font_setting [get_font "Mazzard Regular" 36]
+set font_button [get_font "Mazzard Regular" 24]
+set font_list [get_font "Mazzard Regular" 24]
+set font_action_button [get_font "Mazzard SemiBold" 80]
+set ::font_main_menu [get_font "Mazzard SemiBold" 48]
 
 # special characters
 set ::symbol_espresso "\u00A2"
@@ -115,11 +115,11 @@ add_visual_items_to_contexts $status_bar_contexts "status_background"
 if {$::showgrid == 1} {
     for {set x 80} {$x < 2560} {incr x 100} {
         .can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts $x 0 -text $x -font [metric_get_font "Mazzard Regular" 12] -fill $::color_text -anchor "nw" 
+        add_de1_text $metric_contexts $x 0 -text $x -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "nw" 
     }
     for {set y 60} {$y < 1600} {incr y 60} {
         .can create line [rescale_x_skin 0] [rescale_y_skin $y] [rescale_x_skin 2560] [rescale_y_skin $y] -width [rescale_x_skin 1] -fill "#fff"
-        add_de1_text $metric_contexts 0 $y -text $y -font [metric_get_font "Mazzard Regular" 12] -fill $::color_text -anchor "sw" 
+        add_de1_text $metric_contexts 0 $y -text $y -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "sw" 
     }
 }
 
@@ -183,8 +183,8 @@ add_de1_button "espresso_menu espresso_config espresso espresso_done steam_menu 
 
 proc add_home_button { contexts yoffset symbol text color_menu_background color_text action} {
 	rounded_rectangle $contexts .can [rescale_x_skin 680] [rescale_y_skin $yoffset] [rescale_x_skin 1880] [rescale_y_skin [expr $yoffset + 240]] [rescale_x_skin 80] $::color_menu_background
-	add_de1_text $contexts 820 [expr $yoffset + 120] -text $symbol -font [metric_get_font "Mazzard SemiBold" 72] -fill $::color_text -anchor "center" 
-	add_de1_text $contexts 1280 [expr $yoffset + 120] -text $text -font  [metric_get_font "Mazzard SemiBold" 48] -fill $::color_text -anchor "center" 
+	add_de1_text $contexts 820 [expr $yoffset + 120] -text $symbol -font [get_font "Mazzard SemiBold" 72] -fill $::color_text -anchor "center" 
+	add_de1_text $contexts 1280 [expr $yoffset + 120] -text $text -font  [get_font "Mazzard SemiBold" 48] -fill $::color_text -anchor "center" 
 	.can create line [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 60]] [rescale_x_skin 1780] [rescale_y_skin [expr $yoffset + 120]] [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 180]] -width [rescale_x_skin 24] -fill $::color_text -tag "menu_arrow" -state hidden
 	add_de1_button $contexts $action 680 $yoffset 1880 [expr $yoffset + 240]
 	add_visual_items_to_contexts $contexts "menu_arrow"
@@ -359,7 +359,7 @@ add_de1_button "espresso_config" {say "" $::settings(sound_button_in); adjust_se
 create_button "espresso_config" 1880 1020 2380 1200 [translate "reset"] $font_button $::color_button $::color_button_text { say [translate "reset"] $::settings(sound_button_in); set ::metric_settings(bean_weight) "18.0"; set ::metric_settings(brew_ratio) "2.0"; recalculate_cup_weight; }
 
 ### espresso_done
-set font_summary_text [metric_get_font "Mazzard Regular" 14]
+set font_summary_text [get_font "Mazzard Regular" 14]
 set summary_x0 180
 set summary_x1 480
 set summary_y 360
@@ -482,7 +482,7 @@ add_de1_button "saver" {say [translate "wake"] $::settings(sound_button_in); set
 
 # debug info
 if {$::debugging == 1} {
-	add_de1_variable $metric_contexts 1280 10 -text "" -font [metric_get_font "Mazzard Medium" 12] -fill #fff -anchor "n" -textvariable {[join $::::metric_page_history " > "]}
+	add_de1_variable $metric_contexts 1280 10 -text "" -font [get_font "Mazzard Medium" 12] -fill #fff -anchor "n" -textvariable {[join $::::metric_page_history " > "]}
     #.can create rectangle [rescale_x_skin 0] [rescale_y_skin 210] [rescale_x_skin 1500] [rescale_y_skin 1150] -fill "#fff" 
     add_de1_variable $metric_contexts 10 220 -text "" -font Helv_6 -fill "#000" -anchor "nw" -justify left -width 440 -textvariable {$::debuglog}
 }

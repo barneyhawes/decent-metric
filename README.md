@@ -4,21 +4,19 @@ Metric skin for Decent Espresso
 Standing on the shoulders of giants: thanks to John (Insight), Damian (DSV), Sheldon (SWDark)
 
 TODO #1 - general
+- Not connected warning message
 - Skin colours (dark / light theme)
 
-TODO #2 - fonts
-- Remove metric_load_font if John adopts the improvements into the standard load_font function in utils.tcl
-
-TODO #3 - post-shot page
+TODO #2 - post-shot page
 - Show the shot graph? (options to show different data?) (option to compare with historic shot?)
 - implement final weight and align with pre-shot configuration
 - access to post-shot page for most recent shot at any time
 
-TODO #4 - espresso page
+TODO #3 - espresso page
 - Yield chart should show weight if a scale is connected
 - Test functionality of GHC somehow
 
-TODO #5 - shot history
+TODO #4 - shot history
 - Display history list as a table showing the key stats (profile, dose, yield, time, temp, date & time)
 - Could offer sorting and filtering?
 - Could offer "tick to compare" - allow up to 2 selections
