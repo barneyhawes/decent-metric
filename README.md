@@ -3,21 +3,21 @@ Metric skin for Decent Espresso
 
 Standing on the shoulders of giants: thanks to John (Insight), Damian (DSV), Sheldon (SWDark)
 
-TODO #1 - general
-- Not connected warning message
+TODO - general
 - Skin colours (dark / light theme)
-
-TODO #2 - post-shot page
-- Show the shot graph? (options to show different data?) (option to compare with historic shot?)
-- implement final weight and align with pre-shot configuration
-- access to post-shot page for most recent shot at any time
-
-TODO #3 - espresso page
-- Yield chart should show weight if a scale is connected
+- Add and test support for Bluetooth scale
 - Test functionality of GHC somehow
 
-TODO #4 - shot history
-- Display history list as a table showing the key stats (profile, dose, yield, time, temp, date & time)
+TODO - pre-espresso page
+- Duplicate summary table from post-shot page, and offer options to configure
+
+TODO - post-shot page
+- Option to show different data on chart?
+- Option to compare with historic shot?
+
+TODO - shot history
+- Access to post-shot page for most recent shot at any time
+- Display history list as a table showing the key stats (profile, dose, yield, time, temp, etc)
 - Could offer sorting and filtering?
 - Could offer "tick to compare" - allow up to 2 selections
 
