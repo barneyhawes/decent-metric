@@ -29,7 +29,7 @@ v0.4
 - Added post-shot page to show summary of shot, and buttons for steam and flush
 - Swapped water and temp meters on status bar so that they are closer to corresponding meters in Espresso window
 - When the water level runs out, it will stay on the most recent page
-- Detect when DE1 is not connected and disable start buttons (also prevents temp/water warnings and shows in status text)
+- Detect when DE1 is not connected, display a warning message and disable start buttons
 - Remove the "menu" page
 
 v0.3 15/01/2020

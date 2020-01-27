@@ -3,7 +3,7 @@ package provide metric 0.4
 
 set ::skindebug 0
 set ::debugging 0
-set ::showgrid 0
+set ::showgrid 1
 
 package require de1plus 1.0
 
@@ -126,6 +126,10 @@ if {$::showgrid == 1} {
 
 ### status bar
 
+# Connection
+set ::connection_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 880] [rescale_y_skin 1290] [rescale_x_skin 1680] [rescale_y_skin 1570] [rescale_x_skin 80] $::color_status_bar ]
+set ::connection_message_text_id [ add_de1_text $status_bar_contexts 1280 1430 -text "" -font $font_setting_heading -fill $::color_temperature -anchor "center" ]
+
 # Water
 set ::refill_message_background_id [ rounded_rectangle $status_bar_contexts .can [rescale_x_skin 1780] [rescale_y_skin 1290] [rescale_x_skin 2530] [rescale_y_skin 1570] [rescale_x_skin 80] $::color_status_bar ]
 set ::refill_message_text_id [ add_de1_text $status_bar_contexts 1990 1430 -text "" -font $font_setting_heading -fill $::color_water -anchor "center" ]
@@ -147,6 +151,14 @@ set ::temperature_meter [meter new -x [rescale_x_skin 80] -y [rescale_y_skin 131
 add_de1_variable $status_bar_contexts -100 -100 -text "" -textvariable {[$::temperature_meter update]} 
 
 proc set_status_message_visibility {} {
+	if {[is_connected]} {
+		.can itemconfigure $::connection_message_background_id -fill $::color_status_bar
+		.can itemconfigure $::connection_message_text_id -text ""
+	} else {
+		.can itemconfigure $::connection_message_background_id -fill $::color_button
+		.can itemconfigure $::connection_message_text_id -text [translate "Not connected"]
+	}
+
 	if { [is_heating] } {
 		.can itemconfigure $::heating_message_background_id -fill $::color_button
 		.can itemconfigure $::heating_message_text_id -text [translate "Heating"]

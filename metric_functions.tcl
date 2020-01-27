@@ -79,7 +79,7 @@ proc metric_jump_back {} {
 
 ### helper functions ###
 
-proc is_connected {} { return [expr {[clock seconds] - $::de1(last_ping)} < 5] }
+proc is_connected {} {return [expr {[clock seconds] - $::de1(last_ping)} < 5]}
 proc is_heating {} { return [expr [is_connected] && $::de1(substate) == 1] }
 proc has_water {} { return [expr ![is_connected] || $::de1(water_level) > $::settings(water_refill_point)] }
 
@@ -328,14 +328,14 @@ oo::class create meter {
 		named $args $defaults
 
 		if {$_width < [rescale_x_skin 300]} {
-			set _label_font [metric_get_font "Mazzard Medium" 12]
-			set _title_font [metric_get_font "Mazzard Regular" 12]
+			set _label_font [get_font "Mazzard Medium" 12]
+			set _title_font [get_font "Mazzard Regular" 12]
 		} elseif {$_width < [rescale_x_skin 600]} {
-			set _label_font [metric_get_font "Mazzard Medium" 18]
-			set _title_font [metric_get_font "Mazzard Regular" 20]
+			set _label_font [get_font "Mazzard Medium" 18]
+			set _title_font [get_font "Mazzard Regular" 20]
 		} else {
-			set _label_font [metric_get_font "Mazzard Medium" 22]
-			set _title_font [metric_get_font "Mazzard Regular" 24]
+			set _label_font [get_font "Mazzard Medium" 22]
+			set _title_font [get_font "Mazzard Regular" 24]
 		}
 		set _arc_width [expr [reverse_scale_x $_width] * 0.035]
 		set _center_x [expr ($_x + ($_width / 2.0))]
