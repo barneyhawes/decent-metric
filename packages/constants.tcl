@@ -1,5 +1,3 @@
-package provide metric_constants 1.0
-
 # special characters
 set ::symbol_espresso "\u00A2"
 set ::symbol_hand "\u00A3"
@@ -26,3 +24,12 @@ set ::color_action_button_start "#6A9949"
 set ::color_action_button_stop "#D34237"
 set ::color_action_button_disabled "#252525"
 set ::color_action_button_text "#eee"
+
+# fonts
+set ::font_setting_heading [get_font "Mazzard Regular" 24]
+set ::font_setting_description [get_font "Mazzard Regular" 14]
+set ::font_setting [get_font "Mazzard Regular" 36]
+set ::font_button [get_font "Mazzard Regular" 24]
+set ::font_list [get_font "Mazzard Regular" 24]
+set ::font_action_button [get_font "Mazzard SemiBold" 80]
+set ::font_main_menu [get_font "Mazzard SemiBold" 48]
