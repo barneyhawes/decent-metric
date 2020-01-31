@@ -25,6 +25,8 @@ TODO - shot history
 
 Release notes
 v0.5
+ - Head temperature meter reads the correct temperature
+ - Water empty warning displayed at slightly higher level (sometimes did not display when de1 refused to start due to low water)
 
 v0.4 
 - Added a timer to the Espresso page

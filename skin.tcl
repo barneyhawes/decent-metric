@@ -28,7 +28,7 @@ add_metric_page "steam"
 add_metric_page "water"
 add_metric_page "flush" 
 
-# add status bar at end to ensure it draws on top of everything else
+# add status bar after loading Metric pages to ensure it draws on top of everything else
 add_metric_package "statusbar"
 
 # standard pages
@@ -52,7 +52,7 @@ add_de1_text "ghc_flush" 1520 840 -text "\[      \]\n[translate {Tap here to flu
 add_de1_text "ghc_hotwater" 1630 600 -text "\[      \]\n[translate {Tap here for hot water}]" -font Helv_30_bold -fill "#FFFFFF" -anchor "ne" -justify right  -width 820
 add_de1_button "ghc_steam ghc_espresso ghc_flush ghc_hotwater" {say [translate {Ok}] $::settings(sound_button_in); page_show off;} 0 0 2560 1600 
 
-# when tank is empty, just return to menu
+# when tank is empty, return to menu (this is updated each time we jump)
 set_next_page "tankempty" "off"
 
 add_de1_button "tankempty refill" {say [translate {awake}] $::settings(sound_button_in);start_refill_kit} 0 0 2560 1400 

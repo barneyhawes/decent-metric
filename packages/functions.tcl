@@ -2,7 +2,23 @@
 
 proc is_connected {} {return [expr {[clock seconds] - $::de1(last_ping)} < 5]}
 proc is_heating {} { return [expr [is_connected] && $::de1(substate) == 1] }
-proc has_water {} { return [expr ![is_connected] || $::de1(water_level) > $::settings(water_refill_point)] }
+# multiple water refill point by 1.1 because the DE1 can shut off just before this is reached
+proc has_water {} { return [expr ![is_connected] || $::de1(water_level) > ($::settings(water_refill_point) * 1.1)] }
+
+proc get_water_level {} {
+	if {[expr ![is_connected]]} {return 0}
+	return $::de1(water_level) 
+}
+proc get_min_water_level {} {return $::settings(water_refill_point)}
+proc get_max_water_level {} {return [expr $::settings(water_level_sensor_max) * 0.9]}
+
+proc get_machine_temperature {} {
+		if {[expr ![is_connected]]} {return 0}
+		#TODO: watertemp works in simulator
+		return [group_head_heater_temperature]
+}
+proc get_min_machine_temperature {} {return $::settings(minimum_water_temperature)}
+
 
 proc get_status_text {} {
 	if {[expr ![is_connected]]} {
