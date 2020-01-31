@@ -7,8 +7,14 @@ set ::showgrid 0
 
 package require de1plus 1.0
 
-package ifneeded metric_functions 1.0 [list source [file join "[skin_directory]/metric_functions.tcl"]]
-package require metric_functions 1.0
+proc add_metric_package {name version} {
+	package ifneeded $name $version [list source [file join "[skin_directory]/packages/$name.tcl"]]
+	package require $name $version
+}
+
+add_metric_package "metric_constants" 1.0
+add_metric_package "metric_functions" 1.0
+
 
 # fonts
 set font_setting_heading [get_font "Mazzard Regular" 24]
@@ -18,33 +24,6 @@ set font_button [get_font "Mazzard Regular" 24]
 set font_list [get_font "Mazzard Regular" 24]
 set font_action_button [get_font "Mazzard SemiBold" 80]
 set ::font_main_menu [get_font "Mazzard SemiBold" 48]
-
-# special characters
-set ::symbol_espresso "\u00A2"
-set ::symbol_hand "\u00A3"
-set ::symbol_flush "\u00A4"
-set ::symbol_water "\u00A5"
-set ::symbol_steam "\u00A7"
-set ::symbol_menu "\u00A6"
-
-# colours
-set ::color_text "#eee"
-set ::color_grey_text "#777"
-set ::color_background "#1e1e1e"
-set ::color_menu_background "#333333"
-set ::color_status_bar "#252525"
-set ::color_water "#19BBFF"
-set ::color_temperature "#D34237"
-set ::color_pressure "#6A9949"
-set ::color_yield "#986F4A"
-set ::color_flow "#4237D3"
-set ::color_arrow "#666"
-set ::color_button "#333333"
-set ::color_button_text "#eee"
-set ::color_action_button_start "#6A9949"
-set ::color_action_button_stop "#D34237"
-set ::color_action_button_disabled "#252525"
-set ::color_action_button_text "#eee"
 
 # standard pages
 add_de1_page "sleep" "sleep.jpg" "default"
