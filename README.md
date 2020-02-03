@@ -7,6 +7,7 @@ TODO - general
 - Skin colours (dark / light theme)
 - Add and test support for Bluetooth scale
 - Test functionality of GHC somehow
+- bug: Head temperature reading in status bar reads 100+ when DE1 is starting
 
 TODO - pre-espresso page
 - Duplicate summary table from post-shot page, and offer options to configure
@@ -27,6 +28,8 @@ Release notes
 v0.5
  - Head temperature meter reads the correct temperature
  - Water empty warning displayed at slightly higher level (sometimes did not display when de1 refused to start due to low water)
+ - Water and temperature meters read zero when disconnected
+ - Jump back to previous menu after steam or flush functions
 
 v0.4 
 - Added a timer to the Espresso page
