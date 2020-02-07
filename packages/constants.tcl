@@ -8,6 +8,7 @@ set ::symbol_menu "\u00A6"
 set ::symbol_steam "\u00A7"
 set ::symbol_ratio "\u00A8"
 set ::symbol_bean "\u00A9"
+set ::symbol_grind "\u00AA"
 
 # colours
 set ::color_text "#eee"
