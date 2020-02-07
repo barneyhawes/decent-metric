@@ -26,10 +26,12 @@ TODO - shot history
 
 Release notes
 v0.5
+ - New espresso menu screen with parameters for dose, grind, temp, ratio and yield
+ - Reduced status bar to only show in corners
  - Head temperature meter reads the correct temperature
- - Water empty warning displayed at slightly higher level (sometimes did not display when de1 refused to start due to low water)
- - Water and temperature meters read zero when disconnected
- - Jump back to previous menu after steam or flush functions
+ - Water empty warning displayed at slightly higher level (sometimes did not display yet DE1 refused to start due to low water)
+ - Water and temperature meters now read zero when DE1 disconnected
+ - Automatically jump back to previous menu after steam or flush functions
 
 v0.4 
 - Added a timer to the Espresso page
