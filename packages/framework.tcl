@@ -52,7 +52,7 @@ proc create_action_button { contexts x y text font backcolor textcolor action fu
     set x2 [expr $x + $radius]
     set y2 [expr $y + $radius]
     .can create oval [rescale_x_skin $x1] [rescale_y_skin $y1] [rescale_x_skin $x2] [rescale_y_skin $y2] -fill $backcolor -width 0 -tag "button_$::_button_id" -state "hidden"
-    add_visual_item_to_context $contexts "button_$::_button_id"
+    add_visual_items_to_contexts $contexts "button_$::_button_id"
     add_de1_text $contexts $x $y -text $text -font $font -fill $textcolor -anchor "center" -state "hidden"
     if {$fullscreen != ""} {
         add_de1_button $contexts $action 0 0 2560 1600
@@ -97,7 +97,15 @@ proc metric_jump_to { pagename } {
 	set_next_page "off" $pagename
 	page_show "off"
 	start_idle
-	metric_history_push $pagename
+	if {[lindex $::metric_page_history end] != $pagename} {
+		metric_history_push $pagename
+	}
+}
+
+proc metric_jump_to_no_history { pagename } {
+	set_next_page "off" $pagename
+	page_show "off"
+	start_idle
 }
 
 proc metric_jump_back {} {
@@ -107,6 +115,7 @@ proc metric_jump_back {} {
 
 proc metric_jump_home {} {
 	metric_jump_to "off"
+	set ::metric_page_history "off"
 }
 
 proc metric_jump_current {} {

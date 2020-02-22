@@ -22,6 +22,10 @@ TODO - shot history
 - Could offer sorting and filtering?
 - Could offer "tick to compare" - allow up to 2 selections
 
+TODO - pourover / filter page
+ - Icon
+ - Separate selected profile
+ - Different information about shot for history
 
 
 Release notes

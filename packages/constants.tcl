@@ -41,3 +41,11 @@ set ::font_button [get_font "Mazzard Regular" 24]
 set ::font_list [get_font "Mazzard Regular" 24]
 set ::font_action_button [get_font "Mazzard SemiBold" 80]
 set ::font_main_menu [get_font "Mazzard SemiBold" 48]
+
+# settings limits
+set ::metric_setting_dose_min 10.0
+set ::metric_setting_dose_max 30.0
+set ::metric_setting_ratio_min 1.0
+set ::metric_setting_ratio_max 5.0
+set ::metric_setting_yield_min 10.0
+set ::metric_setting_yield_max 150.0

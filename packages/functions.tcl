@@ -132,18 +132,41 @@ proc do_start_flush {} {
 	start_hot_water_rinse
 }
 
+proc metric_dose_changed {} {
+	recalculate_cup_weight
+	save_metric_settings
+}
+
+proc metric_ratio_changed {} {
+	recalculate_cup_weight
+	save_metric_settings
+}
+
+proc metric_yield_changed {} {
+	recalculate_brew_ratio
+	save_metric_settings
+}
 
 proc recalculate_cup_weight {} {
     set new_weight [expr $::metric_settings(bean_weight) * $::metric_settings(brew_ratio)]
     set new_weight [round_to_one_digits $new_weight]
-    set ::metric_settings(cup_weight) [round_to_one_digits $new_weight]
-    save_metric_settings
+    set ::metric_settings(cup_weight) $new_weight
     update_cup_weight
 }
 
 proc recalculate_brew_ratio {} {
-    set ::metric_settings(brew_ratio) [round_to_one_digits [expr $::metric_settings(cup_weight) / $::metric_settings(bean_weight)]]
-    save_metric_settings
+    set new_ratio [round_to_one_digits [expr $::metric_settings(cup_weight) / $::metric_settings(bean_weight)]]
+	if {$new_ratio < $::metric_setting_ratio_min} {
+		set new_ratio $::metric_setting_ratio_min
+    	set ::metric_settings(brew_ratio) $new_ratio
+		recalculate_cup_weight
+	} elseif {$new_ratio > $::metric_setting_ratio_max} {
+		set new_ratio $::metric_setting_ratio_max
+    	set ::metric_settings(brew_ratio) $new_ratio
+		recalculate_cup_weight
+	} else {
+	    set ::metric_settings(brew_ratio) $new_ratio
+	}
 }
 
 # Set the DE settings' cup weight to the value for this skin

@@ -22,7 +22,6 @@ load_metric_settings
 add_metric_page "home"
 add_metric_page "espresso_menu"
 add_metric_page "espresso"
-add_metric_page "espresso_config"
 add_metric_page "espresso_done"
 add_metric_page "steam"
 add_metric_page "water"
