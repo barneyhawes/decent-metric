@@ -42,7 +42,7 @@ proc get_weight {} {
 set ::espresso_weight_meter [meter new -x [rescale_x_skin 1860] -y [rescale_y_skin 1000] -width [rescale_x_skin 500] -minvalue 0.0 -maxvalue 50.0 -get_meter_value get_weight -get_target_value get_target_weight -tick_frequency 5 -label_frequency 10 -needle_color $::color_yield -label_color $::color_meter_grey -tick_color $::color_background -contexts "espresso" -title [translate "Yield"] -units "g"]
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[$::espresso_weight_meter update]} 
 
-create_action_button "espresso" 1280 1320 $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
+create_action_button "espresso" 1280 1320 [translate "stop"] $::font_action_label $::color_text $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
 
 # timer on stop button
 # TODO: rounded ends (need to draw a circle at each endpoint)

@@ -36,6 +36,7 @@ v0.5
  - Water empty warning displayed at slightly higher level (sometimes did not display yet DE1 refused to start due to low water)
  - Water and temperature meters now read zero when DE1 disconnected
  - Automatically jump back to previous menu after steam or flush functions
+ - Added labels to action buttons
 
 v0.4 
 - Added a timer to the Espresso page

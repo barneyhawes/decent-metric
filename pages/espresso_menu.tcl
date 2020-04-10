@@ -98,7 +98,7 @@ create_2value_button $espresso_contexts $x [expr $y -90] 400 [translate "temp"] 
 
 
 
-set ::espresso_action_button_id [create_action_button $espresso_contexts 1280 1320 $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
+set ::espresso_action_button_id [create_action_button $espresso_contexts 1280 1320 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
 
 proc update_espresso_button {} {
 	if { [can_start_espresso] } {

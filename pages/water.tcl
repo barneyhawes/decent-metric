@@ -37,8 +37,8 @@ add_de1_button "water_menu" {say "" $::settings(sound_button_in); adjust_setting
 add_de1_button "water_menu" {say "" $::settings(sound_button_in); adjust_setting "::settings(water_temperature)" -10 60 100 } 1030 770 1280 960
 add_de1_button "water_menu" {say "" $::settings(sound_button_in); adjust_setting "::settings(water_temperature)" -1 60 100 } 1280 770 1530 960
 
-set ::water_action_button_id [create_action_button "water_menu" 1880 720 $::symbol_water $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "hot water"] $::settings(sound_button_in); do_start_water} ""]
-create_action_button "water" 1880 720 $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); set_next_page off water_menu; start_idle } "fullscreen"
+set ::water_action_button_id [create_action_button "water_menu" 1880 720 [translate "start"] $::font_action_label $::color_text $::symbol_water $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "hot water"] $::settings(sound_button_in); do_start_water} ""]
+create_action_button "water" 1880 720 [translate "stop"] $::font_action_label $::color_text $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); set_next_page off water_menu; start_idle } "fullscreen"
 
 proc update_water_button {} {
 	if { [can_start_water] } {

@@ -43,8 +43,8 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Actual yie
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {[format "%.1f" [get_weight]]g} 
 
 #steam and flush buttons
-set ::espresso_done_steam_action_button_id [create_action_button "espresso_done" 380 1300 $::symbol_steam $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam"; do_start_steam} ""]
-set ::espresso_done_flush_action_button_id [create_action_button "espresso_done" 880 1300 $::symbol_flush $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush } ""]
+set ::espresso_done_steam_action_button_id [create_action_button "espresso_done" 380 1300 [translate "steam"] $::font_action_label $::color_text $::symbol_steam $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam"; do_start_steam} ""]
+set ::espresso_done_flush_action_button_id [create_action_button "espresso_done" 880 1300 [translate "flush"] $::font_action_label $::color_text $::symbol_flush $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush } ""]
 
 proc update_espresso_done_buttons {} {
 	if { [can_start_steam] } {

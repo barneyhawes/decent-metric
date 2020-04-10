@@ -75,6 +75,7 @@ proc do_start_espresso {} {
 		return
 	}
 	start_espresso
+	# TODO: only execute following lines if start_espresso is successful
 	set_next_page "off" "espresso_done"
 	metric_history_push "espresso_done"
 }

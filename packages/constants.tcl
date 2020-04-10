@@ -41,6 +41,7 @@ set ::font_setting [get_font "Mazzard Regular" 36]
 set ::font_button [get_font "Mazzard Regular" 24]
 set ::font_list [get_font "Mazzard Regular" 24]
 set ::font_action_button [get_font "Mazzard SemiBold" 80]
+set ::font_action_label [get_font "Mazzard SemiBold" 36]
 set ::font_main_menu [get_font "Mazzard SemiBold" 48]
 
 # settings limits
