@@ -28,7 +28,7 @@ oo::class create meter {
 	variable _previous_value
 
 	constructor { args } {
-		set defaults {-x 0 -y 0 -width 100 -minvalue 0 -maxvalue 10 -arc_range 240 -arc_color #777 -needle_width 4 -needle_color #e00 -tick_width 2 -tick_frequency 1 -label_frequency 0 -label_color #fff -get_meter_value "" -show_empty_full 0 -tick_color #fff -contexts "x" -title "" -units "" -get_target_value ""}
+		set defaults {-x 0 -y 0 -width 100 -minvalue 0 -maxvalue 10 -arc_range 240 -arc_color "#dcdcdc" -needle_width 4 -needle_color #e00 -tick_width 2 -tick_frequency 1 -label_frequency 0 -label_color #fff -get_meter_value "" -show_empty_full 0 -tick_color #fff -contexts "x" -title "" -units "" -get_target_value ""}
 		named $args $defaults
 
 		if {$_width < [rescale_x_skin 300]} {

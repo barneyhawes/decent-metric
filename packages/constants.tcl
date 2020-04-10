@@ -32,6 +32,7 @@ set ::color_action_button_start "#6A9949"
 set ::color_action_button_stop "#D34237"
 set ::color_action_button_disabled "#252525"
 set ::color_action_button_text "#eee"
+set ::color_meter_grey "#bbb"
 
 # fonts
 set ::font_setting_heading [get_font "Mazzard Regular" 24]
