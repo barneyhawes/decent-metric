@@ -84,7 +84,7 @@ create_2value_button $espresso_contexts $x [expr $y -90] 400 [translate "ratio"]
 add_de1_button "espresso_menu_ratio" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 incr x 500
-create_arrow_buttons "espresso_menu_yield" $x $y "::metric_settings(cup_weight)" 0.1 10 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
+create_arrow_buttons "espresso_menu_yield" $x $y "::metric_settings(cup_weight)" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
 create_2value_button $espresso_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_settings(cup_weight)]} {.[get_exponent $::metric_settings(cup_weight)]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
 add_de1_button "espresso_menu_yield" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
