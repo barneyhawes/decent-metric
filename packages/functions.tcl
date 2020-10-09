@@ -134,12 +134,12 @@ proc do_start_flush {} {
 }
 
 proc metric_dose_changed {} {
-	recalculate_cup_weight
+	recalculate_yield
 	save_metric_settings
 }
 
 proc metric_ratio_changed {} {
-	recalculate_cup_weight
+	recalculate_yield
 	save_metric_settings
 }
 
@@ -148,11 +148,11 @@ proc metric_yield_changed {} {
 	save_metric_settings
 }
 
-proc recalculate_cup_weight {} {
+proc recalculate_yield {} {
     set new_weight [expr $::metric_settings(bean_weight) * $::metric_settings(brew_ratio)]
     set new_weight [round_to_one_digits $new_weight]
     set ::metric_settings(cup_weight) $new_weight
-    update_cup_weight
+    update_DE_yield
 }
 
 proc recalculate_brew_ratio {} {
@@ -160,21 +160,32 @@ proc recalculate_brew_ratio {} {
 	if {$new_ratio < $::metric_setting_ratio_min} {
 		set new_ratio $::metric_setting_ratio_min
     	set ::metric_settings(brew_ratio) $new_ratio
-		recalculate_cup_weight
+		recalculate_yield
 	} elseif {$new_ratio > $::metric_setting_ratio_max} {
 		set new_ratio $::metric_setting_ratio_max
     	set ::metric_settings(brew_ratio) $new_ratio
-		recalculate_cup_weight
+		recalculate_yield
 	} else {
 	    set ::metric_settings(brew_ratio) $new_ratio
 	}
 }
 
-# Set the DE settings' cup weight to the value for this skin
-proc update_cup_weight {} {
+# Set the DE1 settings' stop-at-weight or stop-at-volume to the value for this skin
+proc update_DE_yield {} {
+	set new_yield $::metric_settings(cup_weight)
     if {[ifexists ::settings(settings_profile_type)] == "settings_2c"} {
-        set $::settings(final_desired_shot_weight_advanced) $::metric_settings(cup_weight)]]
+		if {$::settings(scale_bluetooth_address) != ""} {
+        	set ::settings(final_desired_shot_weight_advanced) $new_yield
+		} else {
+			set ::settings(final_desired_shot_volume_advanced) $new_yield
+		}
     } else {
-        set $::settings(final_desired_shot_weight) $::metric_settings(cup_weight)]]
+		if {$::settings(scale_bluetooth_address) != ""} {
+        	set ::settings(final_desired_shot_weight) $new_yield
+		} else {
+			set ::settings(final_desired_shot_volume) $new_yield
+		}
     }
+	save_settings_to_de1
+	save_settings
 }
