@@ -4,7 +4,6 @@ package require de1plus 1.0
 
 set ::skindebug 0
 set ::debugging 0
-set ::showgrid 0
 
 proc add_metric_package {name} { source "[skin_directory]/packages/$name.tcl" }
 proc add_metric_page {name} { source "[skin_directory]/pages/$name.tcl" }
@@ -26,6 +25,7 @@ add_metric_page "espresso_done"
 add_metric_page "steam"
 add_metric_page "water"
 add_metric_page "flush" 
+add_metric_page "debug"
 
 # add status bar after loading Metric pages to ensure it draws on top of everything else
 add_metric_package "statusbar"
@@ -85,7 +85,9 @@ source "[homedir]/skins/default/de1_skin_settings.tcl"
 
 # debug info
 if {$::debugging == 1} {
-	add_de1_variable "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" 1280 10 -text "" -font [get_font "Mazzard Medium" 12] -fill #fff -anchor "n" -textvariable {[join $::::metric_page_history " > "]}
+	add_de1_variable "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush debug" 1280 10 -text "" -font [get_font "Mazzard Medium" 12] -fill #fff -anchor "n" -textvariable {[join $::::metric_page_history " > "]}
     #.can create rectangle [rescale_x_skin 0] [rescale_y_skin 210] [rescale_x_skin 1500] [rescale_y_skin 1150] -fill "#fff" 
-    add_de1_variable "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush" 10 220 -text "" -font Helv_6 -fill "#000" -anchor "nw" -justify left -width 440 -textvariable {$::debuglog}
+    add_de1_variable "off espresso_menu espresso_config espresso espresso_done steam_menu steam water_menu water flush_menu flush debug" 10 220 -text "" -font Helv_6 -fill "#000" -anchor "nw" -justify left -width 440 -textvariable {$::debuglog}
 }
+
+create_grid

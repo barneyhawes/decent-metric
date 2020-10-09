@@ -3,17 +3,6 @@
 proc add_background { contexts } {
 	set background_id [.can create rect 0 0 [rescale_x_skin 2560] [rescale_y_skin 1600] -fill $::color_background -width 0 -state "hidden"]
 	add_visual_items_to_contexts $contexts $background_id
-
-	if {$::showgrid == 1} {
-		for {set x 80} {$x < 2560} {incr x 100} {
-			.can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width 1 -fill "#fff"
-			add_de1_text $contexts $x 0 -text $x -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "nw" 
-		}
-		for {set y 60} {$y < 1600} {incr y 60} {
-			.can create line [rescale_x_skin 0] [rescale_y_skin $y] [rescale_x_skin 2560] [rescale_y_skin $y] -width 1 -fill "#fff"
-			add_de1_text $contexts 0 $y -text $y -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "sw" 
-		}
-	}
 }
 
 # add a back button and page title to a context
@@ -154,4 +143,15 @@ proc rounded_rectangle {contexts canvas x1 y1 x2 y2 radius colour } {
 	add_visual_items_to_contexts $contexts $tag
 	incr ::_rect_id
 	return $tag
+}
+
+proc create_grid { } {
+	for {set x 80} {$x < 2560} {incr x 100} {
+		.can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width 1 -fill "#fff" -tags "grid" -state "hidden"
+		.can create text [rescale_x_skin $x] 0 -text $x -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "nw" -tag "grid" -state "hidden"
+	}
+	for {set y 60} {$y < 1600} {incr y 60} {
+		.can create line [rescale_x_skin 0] [rescale_y_skin $y] [rescale_x_skin 2560] [rescale_y_skin $y] -width 1 -fill "#fff" -tags "grid" -state "hidden"
+		.can create text 0 [rescale_y_skin $y] -text $y -font [get_font "Mazzard Regular" 12] -fill $::color_text -anchor "nw" -tag "grid" -state "hidden"
+	}
 }
