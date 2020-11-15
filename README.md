@@ -10,10 +10,16 @@ TODO - general
 - bug: Head temperature reading in status bar reads 100+ when DE1 is starting
 
 TODO - pre-espresso page
-- Duplicate summary table from post-shot page, and offer options to configure
+- Add option for which bean
+- Implement grid size (with option to choose your grinder to set the range?)
+- Remove temperature and water level meters
+
+TODO - shot
+- Implement temperature modification
+- Save addition data to shot history
 
 TODO - post-shot page
-- Option to show different data on chart?
+- Button to show chart full screen
 - Option to compare with historic shot?
 
 TODO - shot history
@@ -23,12 +29,13 @@ TODO - shot history
 - Could offer "tick to compare" - allow up to 2 selections
 
 TODO - pourover / filter page
- - Icon
- - Separate selected profile
- - Different information about shot for history
-
+ - Add 2nd set of parameters for pourover coffee
+ - Allow name and icon for Espresso and Filter to be specified
+ - Shot history to be filtered by shot type
 
 Release notes
+ - Added UI for selecting which profile to use (submitted pull request for changes required to DE1 core code)
+
 v0.5
  - New espresso menu screen with parameters for dose, grind, temp, ratio and yield
  - Reduced status bar to only show in corners
