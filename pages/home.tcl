@@ -1,6 +1,6 @@
 add_background "off"
 add_home_button "off" 120 $::symbol_espresso [translate "espresso"] $::color_menu_background $::color_text {say [translate "espresso"] $::settings(sound_button_in); metric_jump_to "espresso_menu" }
-add_home_button "off" 420 $::symbol_espresso [translate "pour over"] $::color_menu_background $::color_grey_text { }
+add_home_button "off" 420 $::symbol_filter [translate "pour over"] $::color_menu_background $::color_grey_text { }
 add_home_button "off" 720 $::symbol_steam [translate "steam"] $::color_menu_background $::color_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
 add_home_button "off" 1020 $::symbol_water [translate "water"] $::color_menu_background $::color_text {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
 
