@@ -12,8 +12,6 @@ TODO - general
 TODO - pre-espresso page
 - Add option for which bean
 - Implement grid size (with option to choose your grinder to set the range?)
-- Remove temperature and water level meters
-- Remove "1:" from ratio value
 
 TODO - shot
 - Implement temperature modification

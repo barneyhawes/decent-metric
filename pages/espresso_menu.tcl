@@ -1,9 +1,7 @@
 set espresso_contexts "espresso_menu espresso_menu_profile espresso_menu_dose espresso_menu_ratio espresso_menu_yield"
 set espresso_setting_contexts "espresso_menu espresso_menu_dose espresso_menu_ratio espresso_menu_yield"
 add_background $espresso_contexts
-add_back_button $espresso_setting_contexts [translate "espresso"]
-add_back_button espresso_menu_profile [translate "choose profile"]
-#TODO: dose back button behaviour
+add_back_button $espresso_contexts [translate "espresso"]
 
 proc create_value_button {contexts x y width label symbol color value action} {
 	set font_symbol [get_font "Mazzard SemiBold" 64]
@@ -60,7 +58,16 @@ proc create_arrow_buttons { contexts x y varname smalldelta largedelta minval ma
 	create_arrow_button $contexts [expr $x + 200] [expr $y + 220] 100 12 -1 "say \"down\" $::settings(sound_button_in); adjust_setting $varname -$largedelta $minval $maxval; $after_adjust_action"
 }
 
-create_value_button $espresso_setting_contexts 80 240 2400 [translate "profile"] $::symbol_menu $::color_profile {$::metric_drink_settings(profile_title)} { say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile}
+create_value_button $espresso_contexts 80 240 2400 [translate "profile"] $::symbol_menu $::color_profile {$::metric_drink_settings(profile_title)} { say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to_no_history "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile}
+
+.can create line [rescale_x_skin 2350] [rescale_y_skin 310] [rescale_x_skin 2390] [rescale_y_skin 350] [rescale_x_skin 2430] [rescale_y_skin 310] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_down" -state "hidden"
+add_visual_items_to_contexts $espresso_setting_contexts "profile_dropdown_down"
+
+.can create line [rescale_x_skin 2350] [rescale_y_skin 350] [rescale_x_skin 2390] [rescale_y_skin 310] [rescale_x_skin 2430] [rescale_y_skin 350] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_up" -state "hidden"
+add_visual_items_to_contexts "espresso_menu_profile" "profile_dropdown_up"
+
+add_de1_button "espresso_menu_profile" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} 80 240 2480 420
+
 
 proc get_profile_title { profile_filename } {
 	set file_path "[homedir]/profiles/$profile_filename.tcl"
@@ -137,7 +144,7 @@ proc fill_metric_profiles_listbox { } {
 	$widget selection set $profile_index
 	unset -nocomplain ::filling_profiles
 
-	if {$profile_index > 5} {
+	if {$profile_index > 3} {
 		$widget see $profile_index
 	}
 
@@ -146,16 +153,17 @@ proc fill_metric_profiles_listbox { } {
 	}
 }
 
-add_de1_widget "espresso_menu_profile" listbox 80 240 {
+rounded_rectangle "espresso_menu_profile" .can [rescale_x_skin 80] [rescale_y_skin 450] [rescale_x_skin 2480] [rescale_y_skin 1180] [rescale_x_skin 30] $::color_menu_background
+add_de1_widget "espresso_menu_profile" listbox 105 480 {
 		set ::globals(metric_profiles_listbox) $widget
 	 	fill_metric_profiles_listbox
 		bind $::globals(metric_profiles_listbox) <<ListboxSelect>> ::metric_profile_changed
-	 } -background $::color_background -foreground $::color_text -selectbackground $::color_menu_background -font [get_font "Mazzard Regular" 32] -bd 0 -height [expr {int(15 * $::globals(listbox_length_multiplier))}] -width 45 -borderwidth 0 -selectborderwidth 0  -relief flat -highlightthickness 0 -selectmode single -xscrollcommand {scale_prevent_horiz_scroll $::globals(metric_profiles_listbox)} -yscrollcommand {scale_scroll_new $::globals(metric_profiles_listbox) ::metric_profiles_slider}   
+	 } -background $::color_menu_background -foreground $::color_text -selectbackground $::color_text -selectforeground $::color_background -font [get_font "Mazzard Regular" 32] -bd 0 -height [expr {int(8 * $::globals(listbox_length_multiplier))}] -width 44 -borderwidth 0 -selectborderwidth 0  -relief flat -highlightthickness 0 -selectmode single -xscrollcommand {scale_prevent_horiz_scroll $::globals(metric_profiles_listbox)} -yscrollcommand {scale_scroll_new $::globals(metric_profiles_listbox) ::metric_profiles_slider}   
 
 set ::metric_profiles_slider 0
 
 # draw the scrollbar off screen so that it gets resized and moved to the right place on the first draw
-set ::metric_profiles_scrollbar [add_de1_widget "espresso_menu_profile" scale 10000 1 {} -from 0 -to 1 -bigincrement 0.2 -background $::color_background -borderwidth 1 -showvalue 0 -resolution .01 -length [rescale_x_skin 400] -width [rescale_y_skin 150] -variable ::metric_profiles_slider -font Helv_10_bold -sliderlength [rescale_x_skin 125] -relief flat -command {listbox_moveto $::globals(metric_profiles_listbox) $::metric_profiles_slider} -foreground $::color_background -troughcolor $::color_menu_background -borderwidth 0 -highlightthickness 0]
+set ::metric_profiles_scrollbar [add_de1_widget "espresso_menu_profile" scale 10000 1 {} -from 0 -to 1 -bigincrement 0.2 -background $::color_menu_background -borderwidth 1 -showvalue 0 -resolution .01 -length [rescale_x_skin 400] -width [rescale_y_skin 150] -variable ::metric_profiles_slider -font Helv_10_bold -sliderlength [rescale_x_skin 125] -relief flat -command {listbox_moveto $::globals(metric_profiles_listbox) $::metric_profiles_slider} -foreground $::color_menu_background -troughcolor $::color_background -borderwidth 0 -highlightthickness 0]
 
 proc set_metric_profiles_scrollbar_dimensions {} {
 	# set the height of the scrollbar to be the same as the listbox
