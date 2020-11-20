@@ -13,6 +13,7 @@ TODO - pre-espresso page
 - Add option for which bean
 - Implement grid size (with option to choose your grinder to set the range?)
 - Remove temperature and water level meters
+- Remove "1:" from ratio value
 
 TODO - shot
 - Implement temperature modification
@@ -29,11 +30,11 @@ TODO - shot history
 - Could offer "tick to compare" - allow up to 2 selections
 
 TODO - pourover / filter page
- - Add 2nd set of parameters for pourover coffee
  - Allow name and icon for Espresso and Filter to be specified
  - Shot history to be filtered by shot type
 
 Release notes
+ - Moved drink settings into a separate file to allow multiple drinks to be configured
  - Added UI for selecting which profile to use (submitted pull request for changes required to DE1 core code)
 
 v0.5

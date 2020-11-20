@@ -60,7 +60,7 @@ proc create_arrow_buttons { contexts x y varname smalldelta largedelta minval ma
 	create_arrow_button $contexts [expr $x + 200] [expr $y + 220] 100 12 -1 "say \"down\" $::settings(sound_button_in); adjust_setting $varname -$largedelta $minval $maxval; $after_adjust_action"
 }
 
-create_value_button $espresso_setting_contexts 80 240 2400 [translate "profile"] $::symbol_menu $::color_profile {$::metric_settings(espresso_profile_title)} { say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile}
+create_value_button $espresso_setting_contexts 80 240 2400 [translate "profile"] $::symbol_menu $::color_profile {$::metric_drink_settings(profile_title)} { say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile}
 
 proc get_profile_title { profile_filename } {
 	set file_path "[homedir]/profiles/$profile_filename.tcl"
@@ -88,16 +88,18 @@ proc metric_profile_changed {} {
 	set selected_index [$widget curselection]
 
 	if {$selected_index != ""} {
-		set ::metric_settings(espresso_profile_filename) $::profile_number_to_directory($selected_index) 
-		set ::metric_settings(espresso_profile_title) [get_profile_title $::metric_settings(espresso_profile_filename)]
+		set ::metric_drink_settings(profile_filename) $::profile_number_to_directory($selected_index) 
+		set ::metric_drink_settings(profile_title) [get_profile_title $::metric_drink_settings(profile_filename)]
 		save_metric_settings
 
-		select_profile $::metric_settings(espresso_profile_filename)
+		if {$::settings(profile_filename) != $::metric_drink_settings(profile_filename)} {
+			select_profile $::metric_drink_settings(profile_title)
 
-		# send the settings to DE1. 
-		# This is necessary because select_profile will not send settings to non-GHC machines (possibile improvement to DE1 core code?)
-		# As well as ensuring the profile is loaded up when Start is pressed, this will start/stop preheating the water tank right away if required.
-		save_settings_to_de1
+			# send the settings to DE1. 
+			# This is necessary because select_profile will not send settings to non-GHC machines (possibile improvement to DE1 core code?)
+			# As well as ensuring the profile is loaded up when Start is pressed, this will start/stop preheating the water tank right away if required.
+			save_settings_to_de1
+		}
 
 		metric_jump_back
 	}
@@ -112,28 +114,26 @@ proc select_metric_profile {} {
 
 	set selected_index 0
 	for {set index 0} {$index < $itemcount} {incr index} {
-		if {$::profile_number_to_directory($selected_index) == $::metric_settings(espresso_profile_filename)} {
+		if {$::profile_number_to_directory($selected_index) == $::metric_drink_settings(profile_title)} {
 			set selected_index $index
 			continue
 		}
 	}
 
-	set ::filling_profiles 1
 	$::globals(metric_profiles_listbox) selection set $selected_index
-	unset -nocomplain ::filling_profiles
 }
 
 # populate the listbox with profiles
 proc fill_metric_profiles_listbox { } {
 	set widget $::globals(metric_profiles_listbox)
 
-	if {[ifexists ::metric_settings(espresso_profile_title)] == ""} {
-		set ::metric_settings(espresso_profile_title) $::settings(profile_title)
+	if {[ifexists ::metric_drink_settings(profile_title)] == ""} {
+		set ::metric_drink_settings(profile_title) $::settings(profile_title)
 		save_metric_settings
 	}
 
 	set ::filling_profiles 1
-	set profile_index [fill_specific_profiles_listbox $widget $::metric_settings(espresso_profile_title) 0]
+	set profile_index [fill_specific_profiles_listbox $widget $::metric_drink_settings(profile_title) 0]
 	$widget selection set $profile_index
 	unset -nocomplain ::filling_profiles
 
@@ -141,7 +141,7 @@ proc fill_metric_profiles_listbox { } {
 		$widget see $profile_index
 	}
 
-	if {[ifexists ::metric_settings(espresso_profile_filename)] == ""} {
+	if {[ifexists ::metric_drink_settings(profile_filename)] == ""} {
 		metric_profile_changed
 	}
 }
@@ -181,18 +181,18 @@ proc get_mantissa {value} {
 set x 80
 set y 770
 
-create_arrow_buttons "espresso_menu_dose" $x $y "::metric_settings(bean_weight)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::metric_settings(bean_weight)]} {.[get_exponent $::metric_settings(bean_weight)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
+create_arrow_buttons "espresso_menu_dose" $x $y "::metric_drink_settings(dose)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::metric_drink_settings(dose)]} {.[get_exponent $::metric_drink_settings(dose)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
 add_de1_button "espresso_menu_dose" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 incr x 500
-create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_settings(brew_ratio)" 0.1 1 $::::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {1:[get_mantissa $::metric_settings(brew_ratio)]} {.[get_exponent $::metric_settings(brew_ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
+create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_drink_settings(ratio)" 0.1 1 $::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {1:[get_mantissa $::metric_drink_settings(ratio)]} {.[get_exponent $::metric_drink_settings(ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
 add_de1_button "espresso_menu_ratio" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 incr x 500
-create_arrow_buttons "espresso_menu_yield" $x $y "::metric_settings(cup_weight)" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_settings(cup_weight)]} {.[get_exponent $::metric_settings(cup_weight)]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
+create_arrow_buttons "espresso_menu_yield" $x $y "::metric_drink_settings(yield)" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_drink_settings(yield)]} {.[get_exponent $::metric_drink_settings(yield)]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
 add_de1_button "espresso_menu_yield" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 incr x 500

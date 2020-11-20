@@ -149,30 +149,30 @@ proc metric_yield_changed {} {
 }
 
 proc recalculate_yield {} {
-    set new_weight [expr $::metric_settings(bean_weight) * $::metric_settings(brew_ratio)]
-    set new_weight [round_to_one_digits $new_weight]
-    set ::metric_settings(cup_weight) $new_weight
+    set new_yield [expr $::metric_drink_settings(dose) * $::metric_drink_settings(ratio)]
+    set new_yield [round_to_one_digits $new_yield]
+    set ::metric_drink_settings(yield) $new_yield
     update_DE_yield
 }
 
 proc recalculate_brew_ratio {} {
-    set new_ratio [round_to_one_digits [expr $::metric_settings(cup_weight) / $::metric_settings(bean_weight)]]
+    set new_ratio [round_to_one_digits [expr $::metric_drink_settings(yield) / $::metric_settings(bean_weight)]]
 	if {$new_ratio < $::metric_setting_ratio_min} {
 		set new_ratio $::metric_setting_ratio_min
-    	set ::metric_settings(brew_ratio) $new_ratio
+    	set ::metric_drink_settings(ratio) $new_ratio
 		recalculate_yield
 	} elseif {$new_ratio > $::metric_setting_ratio_max} {
 		set new_ratio $::metric_setting_ratio_max
-    	set ::metric_settings(brew_ratio) $new_ratio
+    	set ::metric_drink_settings(ratio) $new_ratio
 		recalculate_yield
 	} else {
-	    set ::metric_settings(brew_ratio) $new_ratio
+	    set ::metric_drink_settings(ratio) $new_ratio
 	}
 }
 
 # Set the DE1 settings' stop-at-weight or stop-at-volume to the value for this skin
 proc update_DE_yield {} {
-	set new_yield $::metric_settings(cup_weight)
+	set new_yield $::metric_drink_settings(yield)
     if {[ifexists ::settings(settings_profile_type)] == "settings_2c"} {
 		if {$::settings(scale_bluetooth_address) != ""} {
         	set ::settings(final_desired_shot_weight_advanced) $new_yield
