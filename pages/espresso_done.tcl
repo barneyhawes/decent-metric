@@ -4,10 +4,10 @@ add_back_button "espresso_done" [translate "espresso"]
 set ::font_summary_text [get_font "Mazzard Regular" 16]
 set summary_x0 240
 set summary_x1 540
-set summary_y 360
+set summary_y 330
 set summary_y_step 60
 
-rounded_rectangle "espresso_done" .can [rescale_x_skin 180] [rescale_y_skin 300] [rescale_x_skin 1180] [rescale_y_skin 780] [rescale_x_skin 80] $::color_menu_background
+rounded_rectangle "espresso_done" .can [rescale_x_skin 180] [rescale_y_skin 270] [rescale_x_skin 1180] [rescale_y_skin 810] [rescale_x_skin 80] $::color_menu_background
 
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Profile:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::settings(profile_title)} 
@@ -18,17 +18,20 @@ incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Time:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {[clock format [expr $::timers(espresso_start) / 1000] -format "%R" ]} 
 incr summary_y $summary_y_step
-add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Temperature:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::de1(goal_temperature)[return_html_temperature_units]} 
+add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Grind:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(grind)} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Dose:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(dose)g} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target ratio:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {1:$::metric_drink_settings(ratio)} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(ratio)x} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target yield:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(yield)g} 
+incr summary_y $summary_y_step
+add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Temperature:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::de1(goal_temperature)[return_html_temperature_units]} 
 
 rounded_rectangle "espresso_done" .can [rescale_x_skin 180] [rescale_y_skin 840] [rescale_x_skin 1180] [rescale_y_skin 1080] [rescale_x_skin 80] $::color_menu_background
 
