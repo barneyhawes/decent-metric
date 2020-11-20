@@ -22,13 +22,13 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Temperatur
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::de1(goal_temperature)[return_html_temperature_units]} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Dose:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_settings(bean_weight)g} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(dose)g} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target ratio:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {1:$::metric_settings(brew_ratio)} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {1:$::metric_drink_settings(ratio)} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target yield:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_settings(cup_weight)g} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_drink_settings(yield)g} 
 
 rounded_rectangle "espresso_done" .can [rescale_x_skin 180] [rescale_y_skin 840] [rescale_x_skin 1180] [rescale_y_skin 1080] [rescale_x_skin 80] $::color_menu_background
 
@@ -37,7 +37,7 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Duration:"
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {[expr {($::timers(espresso_stop) - $::timers(espresso_start))/1000}][translate "s"]} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Actual ratio:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {1:[format "%.1f" [expr [get_weight] / $::metric_settings(bean_weight)]]} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {1:[format "%.1f" [expr [get_weight] / $::metric_drink_settings(dose)]]} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Actual yield:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {[format "%.1f" [get_weight]]g} 

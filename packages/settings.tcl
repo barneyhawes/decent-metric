@@ -1,9 +1,5 @@
 ### settings functions ###
 
-proc metric_filename {} {
-    return "[skin_directory]/userdata/metric_usersettings.tdb"
-}
-
 proc metric_drink_filename {} {
     if {[info exists ::metric_drink] != 1} { set ::metric_drink "A" }
     return "[skin_directory]/userdata/drink-$::metric_drink.tdb"
@@ -34,7 +30,6 @@ proc save_metric_array_to_file {arrname fn} {
 }
 
 proc save_metric_settings {} {
-    save_metric_array_to_file ::metric_settings [metric_filename]
     save_metric_array_to_file ::metric_drink_settings [metric_drink_filename]
 }
 
@@ -43,8 +38,6 @@ proc set_default_setting { varname value } {
 }
 
 proc load_metric_settings {} {
-    array set ::metric_settings [encoding convertfrom utf-8 [read_binary_file [metric_filename]]]
-
     array set ::metric_drink_settings [encoding convertfrom utf-8 [read_binary_file [metric_drink_filename]]]
     set_default_setting ::metric_drink_settings(profile-title) "Default"
     set_default_setting ::metric_drink_settings(profile-filename) "default"
