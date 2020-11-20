@@ -156,7 +156,7 @@ proc recalculate_yield {} {
 }
 
 proc recalculate_brew_ratio {} {
-    set new_ratio [round_to_one_digits [expr $::metric_drink_settings(yield) / $::metric_settings(bean_weight)]]
+    set new_ratio [round_to_one_digits [expr $::metric_drink_settings(yield) / $::metric_drink_settings(dose)]]
 	if {$new_ratio < $::metric_setting_ratio_min} {
 		set new_ratio $::metric_setting_ratio_min
     	set ::metric_drink_settings(ratio) $new_ratio
