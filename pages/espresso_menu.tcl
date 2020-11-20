@@ -108,7 +108,7 @@ proc metric_profile_changed {} {
 			save_settings_to_de1
 		}
 
-		metric_jump_back
+		metric_jump_to_no_history "espresso_menu"
 	}
 }
 
