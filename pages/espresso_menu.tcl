@@ -187,7 +187,7 @@ add_de1_button "espresso_menu_dose" {say [translate "close"] $::settings(sound_b
 
 incr x 500
 create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_drink_settings(ratio)" 0.1 1 $::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {1:[get_mantissa $::metric_drink_settings(ratio)]} {.[get_exponent $::metric_drink_settings(ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {[get_mantissa $::metric_drink_settings(ratio)]} {.[get_exponent $::metric_drink_settings(ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
 add_de1_button "espresso_menu_ratio" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 incr x 500
