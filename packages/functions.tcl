@@ -133,6 +133,10 @@ proc do_start_flush {} {
 	start_hot_water_rinse
 }
 
+proc metric_grind_changed {} {
+	save_metric_settings
+}
+
 proc metric_dose_changed {} {
 	recalculate_yield
 	save_metric_settings

@@ -39,8 +39,9 @@ proc set_default_setting { varname value } {
 
 proc load_metric_settings {} {
     array set ::metric_drink_settings [encoding convertfrom utf-8 [read_binary_file [metric_drink_filename]]]
-    set_default_setting ::metric_drink_settings(profile-title) "Default"
+    set_default_setting ::metric_drink_settings(profile-title) [translate "Default"]
     set_default_setting ::metric_drink_settings(profile-filename) "default"
+    set_default_setting ::metric_drink_settings(beans) [translate "Unknown"]
     set_default_setting ::metric_drink_settings(grind) $::metric_setting_grind_default
     set_default_setting ::metric_drink_settings(dose) $::metric_setting_dose_default
     set_default_setting ::metric_drink_settings(ratio) $::metric_setting_ratio_default
