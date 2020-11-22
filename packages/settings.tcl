@@ -29,8 +29,20 @@ proc save_metric_array_to_file {arrname fn} {
     write_file $fn $metric_data
 }
 
+proc apply_metric_settings {} {
+    if {$::settings(profile_filename) != $::metric_drink_settings(profile_filename)} {
+        select_profile $::metric_drink_settings(profile_filename)
+
+        # send the settings to DE1. 
+        # This is necessary because select_profile will not send settings to non-GHC machines (possible improvement to DE1 core code?)
+        # As well as ensuring the profile is loaded up when Start is pressed, this will start/stop preheating the water tank right away if required.
+        save_settings_to_de1
+    }
+}
+
 proc save_metric_settings {} {
     save_metric_array_to_file ::metric_drink_settings [metric_drink_filename]
+    apply_metric_settings   
 }
 
 proc set_default_setting { varname value } {
@@ -39,13 +51,15 @@ proc set_default_setting { varname value } {
 
 proc load_metric_settings {} {
     array set ::metric_drink_settings [encoding convertfrom utf-8 [read_binary_file [metric_drink_filename]]]
-    set_default_setting ::metric_drink_settings(profile-title) [translate "Default"]
-    set_default_setting ::metric_drink_settings(profile-filename) "default"
+    set_default_setting ::metric_drink_settings(profile_title) [translate "Default"]
+    set_default_setting ::metric_drink_settings(profile_filename) "default"
     set_default_setting ::metric_drink_settings(beans) [translate "Unknown"]
     set_default_setting ::metric_drink_settings(grind) $::metric_setting_grind_default
     set_default_setting ::metric_drink_settings(dose) $::metric_setting_dose_default
     set_default_setting ::metric_drink_settings(ratio) $::metric_setting_ratio_default
     set_default_setting ::metric_drink_settings(yield) $::metric_setting_yield_default
+
+    apply_metric_settings
 }
 
 proc adjust_setting {varname delta minval maxval} {

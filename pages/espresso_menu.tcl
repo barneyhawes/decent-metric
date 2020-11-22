@@ -90,10 +90,10 @@ proc get_profile_title { profile_filename } {
 		return ""
 	}
 
-	set profile_title $profile_data(profile_title)
-	set profile_title [translate $profile_title]
+	set title $profile_data(profile_title)
+	set title [translate $title]
 
-	return $profile_title
+	return $title
 }
 
 proc metric_profile_changed {} {
@@ -107,17 +107,9 @@ proc metric_profile_changed {} {
 	if {$selected_index != ""} {
 		set ::metric_drink_settings(profile_filename) $::profile_number_to_directory($selected_index) 
 		set ::metric_drink_settings(profile_title) [get_profile_title $::metric_drink_settings(profile_filename)]
+		msg "Selected profile filename $::metric_drink_settings(profile_filename)"
+		msg "Selected profile title $::metric_drink_settings(profile_title)"
 		save_metric_settings
-
-		if {$::settings(profile_filename) != $::metric_drink_settings(profile_filename)} {
-			select_profile $::metric_drink_settings(profile_title)
-
-			# send the settings to DE1. 
-			# This is necessary because select_profile will not send settings to non-GHC machines (possibile improvement to DE1 core code?)
-			# As well as ensuring the profile is loaded up when Start is pressed, this will start/stop preheating the water tank right away if required.
-			save_settings_to_de1
-		}
-
 		metric_jump_to_no_history "espresso_menu"
 	}
 }
