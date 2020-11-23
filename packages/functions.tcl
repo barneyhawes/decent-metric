@@ -62,6 +62,10 @@ proc get_status_text {} {
 # for the main functions (espresso, steam, water, flush), each has can_start_action and do_start_action functions
 proc can_start_espresso {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_espresso {} {
+	if {[ifexists $::metric_pending_send_to_de1] == 1} {
+		save_settings_to_de1
+		unset -nocomplain ::metric_pending_send_to_de1
+	}
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
 		return
@@ -133,6 +137,10 @@ proc do_start_flush {} {
 	start_hot_water_rinse
 }
 
+proc metric_profile_changed {} {
+	save_metric_settings
+}
+
 proc metric_grind_changed {} {
 	save_metric_settings
 }
@@ -156,9 +164,8 @@ proc metric_temperature_changed {} {
 	if {[ifexists $::metric_temperature_delta] != 0} {
 		change_espresso_temperature $::metric_temperature_delta
 		set ::metric_temperature_delta 0
-		# TODO defer saving because this blocks
-		save_settings_to_de1	
 		save_profile
+		set ::metric_pending_send_to_de1 1
 	}
 }
 

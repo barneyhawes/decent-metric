@@ -69,7 +69,7 @@ add_de1_widget "espresso_menu_beans" entry 290 297 {
 
 
 
-create_value_button $espresso_contexts 1310 240 1170 [translate "profile"] $::symbol_menu $::color_profile {$::metric_drink_settings(profile_title)} { }
+create_value_button $espresso_contexts 1310 240 1170 [translate "profile"] $::symbol_menu $::color_profile {$::settings(profile_title)} { }
 
 .can create line [rescale_x_skin 2350] [rescale_y_skin 310] [rescale_x_skin 2390] [rescale_y_skin 350] [rescale_x_skin 2430] [rescale_y_skin 310] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_down" -state "hidden"
 add_visual_items_to_contexts $espresso_setting_contexts "profile_dropdown_down"
@@ -96,20 +96,15 @@ proc get_profile_title { profile_filename } {
 	return $title
 }
 
-proc metric_profile_changed {} {
-	if {[ifexists ::filling_profiles] == 1} {
-		return
-	}
+proc metric_profile_selected {} {
+	if {[ifexists ::metric_ignore_profile_selection] == 1} { return }
 
-	set widget $::globals(metric_profiles_listbox)
-	set selected_index [$widget curselection]
-
+	set selected_index [$::globals(metric_profiles_listbox) curselection]
 	if {$selected_index != ""} {
 		set ::metric_drink_settings(profile_filename) $::profile_number_to_directory($selected_index) 
-		set ::metric_drink_settings(profile_title) [get_profile_title $::metric_drink_settings(profile_filename)]
-		save_metric_settings
-		metric_jump_to_no_history "espresso_menu"
 	}
+	metric_profile_changed
+	metric_jump_to_no_history "espresso_menu"
 }
 
 # select the listbox item corresponding to the profile specified in metric settings
@@ -121,43 +116,32 @@ proc select_metric_profile {} {
 
 	set selected_index 0
 	for {set index 0} {$index < $itemcount} {incr index} {
-		if {$::profile_number_to_directory($selected_index) == $::metric_drink_settings(profile_title)} {
+		if {$::profile_number_to_directory($selected_index) == $::metric_drink_settings(profile_filename)} {
 			set selected_index $index
 			continue
 		}
 	}
 
-	$::globals(metric_profiles_listbox) selection set $selected_index
+	set widget $::globals(metric_profiles_listbox)
+
+	set ::metric_ignore_profile_selection 1
+	$widget selection set $selected_index
+	unset -nocomplain ::metric_ignore_profile_selection
+
+	$widget see $profile_index
 }
 
 # populate the listbox with profiles
 proc fill_metric_profiles_listbox { } {
-	set widget $::globals(metric_profiles_listbox)
-
-	if {[ifexists ::metric_drink_settings(profile_title)] == ""} {
-		set ::metric_drink_settings(profile_title) $::settings(profile_title)
-		save_metric_settings
-	}
-
-	set ::filling_profiles 1
-	set profile_index [fill_specific_profiles_listbox $widget $::metric_drink_settings(profile_title) 0]
-	$widget selection set $profile_index
-	unset -nocomplain ::filling_profiles
-
-	if {$profile_index > 3} {
-		$widget see $profile_index
-	}
-
-	if {[ifexists ::metric_drink_settings(profile_filename)] == ""} {
-		metric_profile_changed
-	}
+	fill_specific_profiles_listbox $::globals(metric_profiles_listbox) "" 0
+	select_metric_profile
 }
 
 rounded_rectangle "espresso_menu_profile" .can [rescale_x_skin 80] [rescale_y_skin 450] [rescale_x_skin 2480] [rescale_y_skin 1180] [rescale_x_skin 30] $::color_menu_background
 add_de1_widget "espresso_menu_profile" listbox 105 480 {
 		set ::globals(metric_profiles_listbox) $widget
 	 	fill_metric_profiles_listbox
-		bind $::globals(metric_profiles_listbox) <<ListboxSelect>> ::metric_profile_changed
+		bind $::globals(metric_profiles_listbox) <<ListboxSelect>> ::metric_profile_selected
 	 } -background $::color_menu_background -foreground $::color_text -selectbackground $::color_text -selectforeground $::color_background -font [get_font "Mazzard Regular" 32] -bd 0 -height [expr {int(8 * $::globals(listbox_length_multiplier))}] -width 44 -borderwidth 0 -selectborderwidth 0  -relief flat -highlightthickness 0 -selectmode single -xscrollcommand {scale_prevent_horiz_scroll $::globals(metric_profiles_listbox)} -yscrollcommand {scale_scroll_new $::globals(metric_profiles_listbox) ::metric_profiles_slider}   
 
 set ::metric_profiles_slider 0
