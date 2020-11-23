@@ -1,5 +1,5 @@
-set espresso_contexts "espresso_menu espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield"
-set espresso_setting_contexts "espresso_menu espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield"
+set espresso_contexts "espresso_menu espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
+set espresso_setting_contexts "espresso_menu espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
 add_background $espresso_contexts
 add_back_button $espresso_contexts [translate "espresso"]
 
@@ -73,11 +73,11 @@ create_value_button $espresso_contexts 1310 240 1170 [translate "profile"] $::sy
 
 .can create line [rescale_x_skin 2350] [rescale_y_skin 310] [rescale_x_skin 2390] [rescale_y_skin 350] [rescale_x_skin 2430] [rescale_y_skin 310] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_down" -state "hidden"
 add_visual_items_to_contexts $espresso_setting_contexts "profile_dropdown_down"
-add_de1_button $espresso_setting_contexts {say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to_no_history "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile} 1310 240 2400 480
+add_de1_button $espresso_setting_contexts {say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to_no_history "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile} 1310 240 2480 420
 
 .can create line [rescale_x_skin 2350] [rescale_y_skin 350] [rescale_x_skin 2390] [rescale_y_skin 310] [rescale_x_skin 2430] [rescale_y_skin 350] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_up" -state "hidden"
 add_visual_items_to_contexts "espresso_menu_profile" "profile_dropdown_up"
-add_de1_button "espresso_menu_profile" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} 2350 240 2430 420
+add_de1_button "espresso_menu_profile" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} 1310 240 2480 420
 
 proc get_profile_title { profile_filename } {
 	set file_path "[homedir]/profiles/$profile_filename.tcl"
@@ -107,8 +107,6 @@ proc metric_profile_changed {} {
 	if {$selected_index != ""} {
 		set ::metric_drink_settings(profile_filename) $::profile_number_to_directory($selected_index) 
 		set ::metric_drink_settings(profile_title) [get_profile_title $::metric_drink_settings(profile_filename)]
-		msg "Selected profile filename $::metric_drink_settings(profile_filename)"
-		msg "Selected profile title $::metric_drink_settings(profile_title)"
 		save_metric_settings
 		metric_jump_to_no_history "espresso_menu"
 	}
@@ -178,13 +176,12 @@ proc set_metric_profiles_scrollbar_dimensions {} {
 
 
 proc get_exponent {value} {
-	#TODO error check value contains a decimal
-	#TODO limit decimal places
-	return [lindex [split $value "."] 1]
+	set value1 [format "%.1f" $value]
+	return [lindex [split $value1 "."] 1]
 }
 proc get_mantissa {value} {
-	#TODO error check value contains a decimal
-	return [lindex [split $value "."] 0]
+	set value1 [format "%.1f" $value]
+	return [lindex [split $value1 "."] 0]
 }
 
 # config
@@ -194,27 +191,27 @@ set y 770
 create_arrow_buttons "espresso_menu_grind" $x $y "::metric_drink_settings(grind)" 0.5 1 $::metric_setting_grind_min $::metric_setting_grind_max metric_grind_changed
 create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "grind"] $::symbol_grind $::color_grind {[get_mantissa $::metric_drink_settings(grind)]} {.[get_exponent $::metric_drink_settings(grind)]} {say [translate "grind"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_grind"}
 add_de1_button "espresso_menu_grind" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
-
 incr x 500
+
 create_arrow_buttons "espresso_menu_dose" $x $y "::metric_drink_settings(dose)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
 create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::metric_drink_settings(dose)]} {.[get_exponent $::metric_drink_settings(dose)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
 add_de1_button "espresso_menu_dose" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
-
 incr x 500
+
 create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_drink_settings(ratio)" 0.1 1 $::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
 create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {[get_mantissa $::metric_drink_settings(ratio)]} {.[get_exponent $::metric_drink_settings(ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
 add_de1_button "espresso_menu_ratio" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
-
 incr x 500
+
 create_arrow_buttons "espresso_menu_yield" $x $y "::metric_drink_settings(yield)" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
 create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_drink_settings(yield)]} {.[get_exponent $::metric_drink_settings(yield)]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
 add_de1_button "espresso_menu_yield" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
-
 incr x 500
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "temp"] $::symbol_temperature $::color_temperature "90" ".0\u00B0C" { }
 
-
-
+set ::metric_temperature_delta 0
+create_arrow_buttons "espresso_menu_temperature" $x $y "::metric_temperature_delta" 0.5 1 -1 1 metric_temperature_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "temp"] $::symbol_temperature $::color_temperature {[get_mantissa $::settings(espresso_temperature)]} {.[get_exponent $::settings(espresso_temperature)]\u00B0C} {say [translate "temperature"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_temperature"}
+add_de1_button "espresso_menu_temperature" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 
 set ::espresso_action_button_id [create_action_button $espresso_setting_contexts 1280 1320 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); save_metric_settings; do_start_espresso} ""]

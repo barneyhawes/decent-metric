@@ -58,7 +58,6 @@ proc load_metric_settings {} {
     set_default_setting ::metric_drink_settings(dose) $::metric_setting_dose_default
     set_default_setting ::metric_drink_settings(ratio) $::metric_setting_ratio_default
     set_default_setting ::metric_drink_settings(yield) $::metric_setting_yield_default
-
     apply_metric_settings
 }
 

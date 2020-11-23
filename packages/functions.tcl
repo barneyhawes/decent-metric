@@ -152,6 +152,16 @@ proc metric_yield_changed {} {
 	save_metric_settings
 }
 
+proc metric_temperature_changed {} {
+	if {[ifexists $::metric_temperature_delta] != 0} {
+		change_espresso_temperature $::metric_temperature_delta
+		set ::metric_temperature_delta 0
+		# TODO defer saving because this blocks
+		save_settings_to_de1	
+		save_profile
+	}
+}
+
 proc recalculate_yield {} {
     set new_yield [expr $::metric_drink_settings(dose) * $::metric_drink_settings(ratio)]
     set new_yield [round_to_one_digits $new_yield]
