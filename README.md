@@ -17,7 +17,6 @@ TODO - pre-espresso page
 - Allow name and icon for Espresso and Filter to be specified
 
 TODO - shot
-- Implement temperature modification
 - Save additional data to shot history
 
 TODO - post-shot page
@@ -32,11 +31,12 @@ TODO - shot history
  - Shot history to be filtered by shot type (espresso / filter)
 
 Release notes
- - Implemented filter button on Home menu
- - Select profile within Metric
- - Enter details of the beans being used
- - Implemented grind size setting
  - Support multiple settings files to allow multiple drinks to be configured
+ - Implemented filter button on Home menu
+ - Implemented selecting a profile
+ - Implemented grind size setting
+ - Implemented temperature setting
+ - Added text for details of the beans being used
 
 v0.5
  - New espresso menu screen with parameters for dose, grind, temp, ratio and yield
