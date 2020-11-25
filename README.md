@@ -11,14 +11,8 @@ TODO - general
 
 TODO - pre-espresso page
 - Change page title depending on home menu option selected
-- Bean details should allow for longer text
-- Bean details are not saved when edited
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
 - Allow name and icon for Espresso and Filter to be specified
-- Update stop-at volume in the profile.
-
-TODO - shot
-- Save additional data to shot history
 
 TODO - post-shot page
 - Button to show chart full screen
@@ -32,7 +26,7 @@ TODO - shot history
  - Shot history to be filtered by shot type (espresso / filter)
 
 Release notes
- - Support multiple settings files to allow multiple drinks to be configured
+ - Support for two profiles
  - Implemented filter button on Home menu
  - Implemented selecting a profile
  - Implemented grind size setting

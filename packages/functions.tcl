@@ -2,7 +2,7 @@
 
 proc is_connected {} {return [expr {[clock seconds] - $::de1(last_ping)} < 5]}
 proc is_heating {} { return [expr [is_connected] && $::de1(substate) == 1] }
-# multiple water refill point by 1.1 because the DE1 can shut off just before this is reached
+# multiply water refill point by 1.1 because the DE1 can shut off just before this is reached
 proc has_water {} { return [expr ![is_connected] || $::de1(water_level) > ($::settings(water_refill_point) * 1.1)] }
 
 proc get_water_level {} {
@@ -62,7 +62,6 @@ proc get_status_text {} {
 # for the main functions (espresso, steam, water, flush), each has can_start_action and do_start_action functions
 proc can_start_espresso {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_espresso {} {
-	save_metric_settings_async 1
 	update_de1_async 1
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
@@ -136,11 +135,12 @@ proc do_start_flush {} {
 }
 
 proc metric_load_profile { profile_filename } {
-	if {$::settings(profile_filename) != $profile_filename} {
-        select_profile $profile_filename
-		save_settings
-        update_de1_async
-    }
+	select_profile $profile_filename
+	metric_copy_yield_from_settings
+	#TODO: check that the settings for grind size, dose and yield are numbers and are within range
+	recalculate_brew_ratio
+	save_settings_async
+	update_de1_async
 }
 
 proc metric_switch_drink { id } {
@@ -149,9 +149,6 @@ proc metric_switch_drink { id } {
 		metric_load_profile $::metric_settings(profile_filename_a)
 	} elseif { $::metric_drink == "B" } {
 		metric_load_profile $::metric_settings(profile_filename_b)
-	} else {
-		msg "Invalid drink id " $id
-		metric_switch_drink "A"
 	}
 }
 
@@ -160,30 +157,36 @@ proc metric_profile_changed { profile_filename } {
 		set ::metric_settings(profile_filename_a) $profile_filename
 	} elseif { $::metric_drink == "B" } {
 		set ::metric_settings(profile_filename_b) $profile_filename
-	} else { msg "Invalid drink id " }
+	}
 	save_metric_settings
 
 	metric_load_profile $profile_filename
 }
 
 proc metric_grind_changed {} {
-	save_metric_settings_async
+	save_settings_async
 }
 
 proc metric_dose_changed {} {
 	recalculate_yield
-	save_metric_settings_async
+	save_settings_async
+	save_profile_async
+	update_de1_async
 }
 
 proc metric_ratio_changed {} {
 	recalculate_yield
-	save_metric_settings_async
+	save_settings_async
+	save_profile_async
+	update_de1_async
 }
 
 proc metric_yield_changed {} {
+	metric_copy_yield_to_settings
 	recalculate_brew_ratio
-	update_DE_yield
-	save_metric_settings_async
+	save_settings_async
+	save_profile_async
+	update_de1_async
 }
 
 proc metric_temperature_changed {} {
@@ -196,43 +199,31 @@ proc metric_temperature_changed {} {
 }
 
 proc recalculate_yield {} {
-    set new_yield [expr $::metric_drink_settings(dose) * $::metric_drink_settings(ratio)]
+    set new_yield [expr $::settings(grinder_dose_weight) * $::metric_ratio]
     set new_yield [round_to_one_digits $new_yield]
-    set ::metric_drink_settings(yield) $new_yield
-    update_DE_yield
+	if {$new_yield < $::metric_setting_yield_min} {
+		set ::metric_yield $::metric_setting_yield_min
+		recalculate_brew_ratio
+	} elseif {$new_yield > $::metric_setting_yield_max} {
+		set ::metric_yield $::metric_setting_yield_max
+		recalculate_brew_ratio
+	} else {
+		set ::metric_yield $new_yield
+	}
+
+	metric_copy_yield_to_settings
 }
 
 proc recalculate_brew_ratio {} {
-    set new_ratio [round_to_one_digits [expr $::metric_drink_settings(yield) / $::metric_drink_settings(dose)]]
+    set new_ratio [round_to_one_digits [expr $::metric_yield / $::settings(grinder_dose_weight)]]
 	if {$new_ratio < $::metric_setting_ratio_min} {
-		set new_ratio $::metric_setting_ratio_min
-    	set ::metric_drink_settings(ratio) $new_ratio
+    	set ::metric_ratio $::metric_setting_ratio_min
 		recalculate_yield
 	} elseif {$new_ratio > $::metric_setting_ratio_max} {
-		set new_ratio $::metric_setting_ratio_max
-    	set ::metric_drink_settings(ratio) $new_ratio
+    	set ::metric_ratio  $::metric_setting_ratio_max
 		recalculate_yield
 	} else {
-	    set ::metric_drink_settings(ratio) $new_ratio
+	    set ::metric_ratio $new_ratio
 	}
 }
 
-# Set the DE1 settings' stop-at-weight or stop-at-volume to the value for this skin
-proc update_DE_yield {} {
-	set new_yield $::metric_drink_settings(yield)
-    if {[ifexists ::settings(settings_profile_type)] == "settings_2c"} {
-		if {$::settings(scale_bluetooth_address) != ""} {
-        	set ::settings(final_desired_shot_weight_advanced) $new_yield
-		} else {
-			set ::settings(final_desired_shot_volume_advanced) $new_yield
-		}
-    } else {
-		if {$::settings(scale_bluetooth_address) != ""} {
-        	set ::settings(final_desired_shot_weight) $new_yield
-		} else {
-			set ::settings(final_desired_shot_volume) $new_yield
-		}
-    }
-	update_de1_async
-	save_metric_settings_async
-}

@@ -67,12 +67,18 @@ proc create_arrow_buttons { contexts x y varname smalldelta largedelta minval ma
 }
 
 
-create_dropdown_button "$espresso_setting_contexts espresso_menu_profile" "espresso_menu_beans" 80 240 1170 [translate "beans"] $::symbol_bean $::color_dose {$::metric_drink_settings(beans)} {say [translate "beans"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_beans"; focus $::metric_bean_name_editor} {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"}
+create_dropdown_button "$espresso_setting_contexts espresso_menu_profile" "espresso_menu_beans" 80 240 1170 [translate "beans"] $::symbol_bean $::color_dose {$::settings(bean_brand)\n$::settings(bean_type)} {say [translate "beans"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_beans"; focus $::metric_bean_name_editor} {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"}
 
 rounded_rectangle "espresso_menu_beans" .can [rescale_x_skin 80] [rescale_y_skin 450] [rescale_x_skin 2480] [rescale_y_skin 1180] [rescale_x_skin 30] $::color_menu_background
-add_de1_widget "espresso_menu_beans" multiline_entry 105 475 {
+add_de1_text "espresso_menu_beans" 130 540 -text [translate "Roaster name:"] -font [get_font "Mazzard Regular" 22] -fill $::color_text -anchor "w" -state "hidden"
+add_de1_widget "espresso_menu_beans" entry 780 510 {
 		set ::metric_bean_name_editor $widget
-	} -width [expr {int(69 * $::globals(entry_length_multiplier))}] -height 12 -font [get_font "Mazzard Regular" 22] -borderwidth 1 -bg $::color_menu_background -foreground $::color_text -textvariable ::metric_drink_settings(beans) -relief flat -highlightthickness 1 -selectbackground $::color_background 
+	} -width [expr {int(22 * $::globals(entry_length_multiplier))}]  -font [get_font "Mazzard Regular" 22] -borderwidth 1 -bg $::color_menu_background -foreground $::color_text -textvariable ::settings(bean_brand) -relief flat -highlightthickness 1 -selectbackground $::color_background 
+
+add_de1_text "espresso_menu_beans" 130 660 -text [translate "Bean type:"] -font [get_font "Mazzard Regular" 22] -fill $::color_text -anchor "w" -state "hidden"
+add_de1_widget "espresso_menu_beans" entry 780 630 {
+		set ::metric_bean_name_editor $widget
+	} -width [expr {int(22 * $::globals(entry_length_multiplier))}]  -font [get_font "Mazzard Regular" 22] -borderwidth 1 -bg $::color_menu_background -foreground $::color_text -textvariable ::settings(bean_type) -relief flat -highlightthickness 1 -selectbackground $::color_background 
 
 
 create_dropdown_button "$espresso_setting_contexts espresso_menu_beans" "espresso_menu_profile" 1310 240 1170 [translate "profile"] $::symbol_menu $::color_profile {$::settings(profile_title)} {say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to_no_history "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile} {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"}
@@ -169,23 +175,23 @@ proc get_mantissa {value} {
 set x 80
 set y 770
 
-create_arrow_buttons "espresso_menu_grind" $x $y "::metric_drink_settings(grind)" 0.5 1 $::metric_setting_grind_min $::metric_setting_grind_max metric_grind_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "grind"] $::symbol_grind $::color_grind {[get_mantissa $::metric_drink_settings(grind)]} {.[get_exponent $::metric_drink_settings(grind)]} {say [translate "grind"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_grind"}
+create_arrow_buttons "espresso_menu_grind" $x $y "::settings(grinder_setting)" 0.5 1 $::metric_setting_grind_min $::metric_setting_grind_max metric_grind_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "grind"] $::symbol_grind $::color_grind {[get_mantissa $::settings(grinder_setting)]} {.[get_exponent $::settings(grinder_setting)]} {say [translate "grind"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_grind"}
 add_de1_button "espresso_menu_grind" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
-create_arrow_buttons "espresso_menu_dose" $x $y "::metric_drink_settings(dose)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::metric_drink_settings(dose)]} {.[get_exponent $::metric_drink_settings(dose)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
+create_arrow_buttons "espresso_menu_dose" $x $y "::settings(grinder_dose_weight)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::settings(grinder_dose_weight)]} {.[get_exponent $::settings(grinder_dose_weight)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
 add_de1_button "espresso_menu_dose" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
-create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_drink_settings(ratio)" 0.1 1 $::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {[get_mantissa $::metric_drink_settings(ratio)]} {.[get_exponent $::metric_drink_settings(ratio)]} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
+create_arrow_buttons "espresso_menu_ratio" $x $y "::metric_ratio" 0.1 1 $::metric_setting_ratio_min $::metric_setting_ratio_max metric_ratio_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "ratio"] $::symbol_ratio $::color_ratio {[get_mantissa $::metric_ratio]} {.[get_exponent $::metric_ratio]x} {say [translate "ratio"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_ratio"}
 add_de1_button "espresso_menu_ratio" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
-create_arrow_buttons "espresso_menu_yield" $x $y "::metric_drink_settings(yield)" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_drink_settings(yield)]} {.[get_exponent $::metric_drink_settings(yield)]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
+create_arrow_buttons "espresso_menu_yield" $x $y "::metric_yield" 0.1 1 $::metric_setting_yield_min $::metric_setting_yield_max metric_yield_changed
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "yield"] $::symbol_espresso $::color_yield {[get_mantissa $::metric_yield]} {.[get_exponent $::metric_yield]g} {say [translate "yield"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_yield"}
 add_de1_button "espresso_menu_yield" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
