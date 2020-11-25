@@ -99,13 +99,12 @@ proc metric_profile_selected {} {
 
 	set selected_index [$::globals(metric_profiles_listbox) curselection]
 	if {$selected_index != ""} {
-		set ::metric_drink_settings(profile_filename) $::profile_number_to_directory($selected_index) 
+		metric_profile_changed $::profile_number_to_directory($selected_index)
 	}
-	metric_profile_changed
 	metric_jump_to_no_history "espresso_menu"
 }
 
-# select the listbox item corresponding to the profile specified in metric settings
+# select the listbox item corresponding to the current profile
 proc select_metric_profile {} {
 	set itemcount [array size profile_number_to_directory]
 	if {$itemcount == 0} {
@@ -114,7 +113,7 @@ proc select_metric_profile {} {
 
 	set selected_index 0
 	for {set index 0} {$index < $itemcount} {incr index} {
-		if {$::profile_number_to_directory($selected_index) == $::metric_drink_settings(profile_filename)} {
+		if {$::profile_number_to_directory($selected_index) == $::settings(profile_filename)} {
 			set selected_index $index
 			continue
 		}

@@ -135,8 +135,35 @@ proc do_start_flush {} {
 	start_hot_water_rinse
 }
 
-proc metric_profile_changed {} {
-	save_metric_settings_async
+proc metric_load_profile { profile_filename } {
+	if {$::settings(profile_filename) != $profile_filename} {
+        select_profile $profile_filename
+		save_settings
+        update_de1_async
+    }
+}
+
+proc metric_switch_drink { id } {
+	set ::metric_drink $id
+	if {$::metric_drink == "A"} {
+		metric_load_profile $::metric_settings(profile_filename_a)
+	} elseif { $::metric_drink == "B" } {
+		metric_load_profile $::metric_settings(profile_filename_b)
+	} else {
+		msg "Invalid drink id " $id
+		metric_switch_drink "A"
+	}
+}
+
+proc metric_profile_changed { profile_filename } {
+	if {$::metric_drink == "A"} {
+		set ::metric_settings(profile_filename_a) $profile_filename
+	} elseif { $::metric_drink == "B" } {
+		set ::metric_settings(profile_filename_b) $profile_filename
+	} else { msg "Invalid drink id " }
+	save_metric_settings
+
+	metric_load_profile $profile_filename
 }
 
 proc metric_grind_changed {} {
