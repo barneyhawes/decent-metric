@@ -1,7 +1,7 @@
 set espresso_contexts "espresso_menu espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
 set espresso_setting_contexts "espresso_menu espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
 add_background $espresso_contexts
-add_back_button $espresso_contexts [translate "espresso"]
+set ::espresso_page_title_id [add_back_button $espresso_contexts [translate "espresso"]]
 
 proc create_dropdown_button {contexts_closed context_open x y width label symbol color value action_open action_close} {
 	set contexts "$context_open $contexts_closed"

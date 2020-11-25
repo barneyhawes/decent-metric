@@ -25,10 +25,10 @@ add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Dose:"] -f
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::settings(grinder_dose_weight)g} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target ratio:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {{$::metric_ratio}x} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_ratio x}
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Target yield:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
-add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {{$::metric_yield}g} 
+add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::metric_yield g} 
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Temperature:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {$::de1(goal_temperature)[return_html_temperature_units]} 

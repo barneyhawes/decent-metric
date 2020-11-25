@@ -10,9 +10,8 @@ TODO - general
 - bug: Head temperature reading in status bar reads 100+ when DE1 is starting
 
 TODO - pre-espresso page
-- Change page title depending on home menu option selected
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
-- Allow name and icon for Espresso and Filter to be specified
+- Allow name and icon for drinks to be specified (currently hard coded to "Espresso" and "Pour over")
 
 TODO - post-shot page
 - Button to show chart full screen
@@ -26,12 +25,10 @@ TODO - shot history
  - Shot history to be filtered by shot type (espresso / filter)
 
 Release notes
- - Support for two profiles
- - Implemented filter button on Home menu
- - Implemented selecting a profile
- - Implemented grind size setting
- - Implemented temperature setting
- - Added text for details of the beans being used
+ - Implemented Pour Over button on Home menu
+ - Added space for writing the bean details
+ - Implemented changing a profile within skin
+ - All Metric settings are now effective
 
 v0.5
  - New espresso menu screen with parameters for dose, grind, temp, ratio and yield

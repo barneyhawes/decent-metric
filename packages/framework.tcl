@@ -9,8 +9,9 @@ proc add_background { contexts } {
 proc add_back_button { contexts text } {
 	set item_id [.can create line [rescale_x_skin 120] [rescale_y_skin  60] [rescale_x_skin 60] [rescale_y_skin 120] [rescale_x_skin 120] [rescale_y_skin 180] -width [rescale_x_skin 24] -fill $::color_text -state "hidden"]
 	add_visual_items_to_contexts $contexts $item_id
-	add_de1_text $contexts 180 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "w" -state "hidden"
+	set page_title_id [add_de1_text $contexts 180 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "w" -state "hidden"]
 	add_de1_button $contexts {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
+	return $page_title_id
 }
 
 # add a home-page style button
