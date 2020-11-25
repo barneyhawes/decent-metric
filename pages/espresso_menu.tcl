@@ -71,11 +71,11 @@ add_de1_widget "espresso_menu_beans" entry 290 297 {
 
 create_value_button $espresso_contexts 1310 240 1170 [translate "profile"] $::symbol_menu $::color_profile {$::settings(profile_title)} { }
 
-.can create line [rescale_x_skin 2350] [rescale_y_skin 310] [rescale_x_skin 2390] [rescale_y_skin 350] [rescale_x_skin 2430] [rescale_y_skin 310] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_down" -state "hidden"
+.can create line [rescale_x_skin 2350] [rescale_y_skin 310] [rescale_x_skin 2390] [rescale_y_skin 350] [rescale_x_skin 2430] [rescale_y_skin 310] -width [rescale_x_skin 18] -fill $::color_text -tag "profile_dropdown_down" -state "hidden"
 add_visual_items_to_contexts $espresso_setting_contexts "profile_dropdown_down"
 add_de1_button $espresso_setting_contexts {say [translate "profile"] $::settings(sound_button_in); fill_metric_profiles_listbox; metric_jump_to_no_history "espresso_menu_profile"; set_metric_profiles_scrollbar_dimensions; select_metric_profile} 1310 240 2480 420
 
-.can create line [rescale_x_skin 2350] [rescale_y_skin 350] [rescale_x_skin 2390] [rescale_y_skin 310] [rescale_x_skin 2430] [rescale_y_skin 350] -width [rescale_x_skin 24] -fill $::color_text -tag "profile_dropdown_up" -state "hidden"
+.can create line [rescale_x_skin 2350] [rescale_y_skin 350] [rescale_x_skin 2390] [rescale_y_skin 310] [rescale_x_skin 2430] [rescale_y_skin 350] -width [rescale_x_skin 18] -fill $::color_text -tag "profile_dropdown_up" -state "hidden"
 add_visual_items_to_contexts "espresso_menu_profile" "profile_dropdown_up"
 add_de1_button "espresso_menu_profile" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu"} 1310 240 2480 420
 
