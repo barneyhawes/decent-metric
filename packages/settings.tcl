@@ -32,7 +32,7 @@ proc save_metric_array_to_file {arrname fn} {
 proc apply_metric_settings {} {
     if {$::settings(profile_filename) != $::metric_drink_settings(profile_filename)} {
         select_profile $::metric_drink_settings(profile_filename)
-        set ::metric_pending_send_to_de1 1
+        update_de1_async
     }
 }
 
