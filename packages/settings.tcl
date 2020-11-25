@@ -41,6 +41,14 @@ proc save_metric_settings {} {
     apply_metric_settings   
 }
 
+proc save_metric_settings_async { } {
+    if {[info exists ::metric_pending_save_settings] == 1} {
+        after cancel $::metric_pending_save_settings; 
+        unset -nocomplain ::metric_pending_save_settings
+    }
+    set ::metric_pending_save_settings [after 100 save_metric_settings]
+}
+
 proc set_default_setting { varname value } {
     if {[info exists $varname] != 1} { set $varname $value }
 }
@@ -69,4 +77,12 @@ proc adjust_setting {varname delta minval maxval} {
 		set $varname [round_one_digits $newval]
 	}
 	return $newval
+}
+
+proc save_profile_async { } {
+    if {[info exists ::metric_pending_save_profile] == 1} {
+        after cancel $::metric_pending_save_profile; 
+        unset -nocomplain ::metric_pending_save_profile
+    }
+    set ::metric_pending_save_profile [after 500 save_profile]
 }

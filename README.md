@@ -15,6 +15,7 @@ TODO - pre-espresso page
 - Bean details are not saved when edited
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
 - Allow name and icon for Espresso and Filter to be specified
+- Update stop-at volume in the profile.
 
 TODO - shot
 - Save additional data to shot history

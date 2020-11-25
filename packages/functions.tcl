@@ -138,33 +138,33 @@ proc do_start_flush {} {
 }
 
 proc metric_profile_changed {} {
-	save_metric_settings
+	save_metric_settings_async
 }
 
 proc metric_grind_changed {} {
-	save_metric_settings
+	save_metric_settings_async
 }
 
 proc metric_dose_changed {} {
 	recalculate_yield
-	save_metric_settings
+	save_metric_settings_async
 }
 
 proc metric_ratio_changed {} {
 	recalculate_yield
-	save_metric_settings
+	save_metric_settings_async
 }
 
 proc metric_yield_changed {} {
 	recalculate_brew_ratio
-	save_metric_settings
+	save_metric_settings_async
 }
 
 proc metric_temperature_changed {} {
 	if {[ifexists ::metric_temperature_delta] != 0} {
 		change_espresso_temperature $::metric_temperature_delta
 		set ::metric_temperature_delta 0
-		save_profile
+		save_profile_async
 		set ::metric_pending_send_to_de1 1
 	}
 }
