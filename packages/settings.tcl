@@ -41,12 +41,17 @@ proc save_metric_settings {} {
     apply_metric_settings   
 }
 
-proc save_metric_settings_async { } {
+proc save_metric_settings_async { {flush_queue 0 } } {
     if {[info exists ::metric_pending_save_settings] == 1} {
         after cancel $::metric_pending_save_settings; 
         unset -nocomplain ::metric_pending_save_settings
+        if {$flush_queue == 1} {
+			save_metric_settings
+		}
     }
-    set ::metric_pending_save_settings [after 100 save_metric_settings]
+    if {$flush_queue == 0} {
+        set ::metric_pending_save_settings [after 100 { save_metric_settings; unset -nocomplain ::metric_pending_save_settings}]
+    }
 }
 
 proc set_default_setting { varname value } {
@@ -85,4 +90,19 @@ proc save_profile_async { } {
         unset -nocomplain ::metric_pending_save_profile
     }
     set ::metric_pending_save_profile [after 500 save_profile]
+}
+
+# defer sending update to DE1 in case there are multiple calls
+# if called with flush parameter, send now if there are any pending updates
+proc update_de1_async { {flush_queue 0 } } {
+    if {[info exists ::metric_pending_update_de1] == 1} {
+        after cancel $::metric_pending_update_de1; 
+        unset -nocomplain ::metric_pending_update_de1
+		if {$flush_queue == 1} {
+			save_settings_to_de1
+		}
+    }
+	if {$flush_queue == 0} {
+    	set ::metric_pending_update_de1 [after 500 {save_settings_to_de1; unset -nocomplain ::metric_pending_update_de1}]
+	}
 }

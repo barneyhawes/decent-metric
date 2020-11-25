@@ -62,6 +62,7 @@ proc get_status_text {} {
 # for the main functions (espresso, steam, water, flush), each has can_start_action and do_start_action functions
 proc can_start_espresso {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }
 proc do_start_espresso {} {
+	save_metric_settings_async 1
 	update_de1_async 1
 	if {[is_heating]} { 
 		borg toast [translate "Please wait for heating"]
@@ -207,19 +208,4 @@ proc update_DE_yield {} {
     }
 	update_de1_async
 	save_metric_settings_async
-}
-
-# defer sending update to DE1 in case there are multiple calls
-# if called with flush parameter, send now if there are any pending updates
-proc update_de1_async { {flush_queue 0 } } {
-    if {[info exists ::metric_pending_update_de1] == 1} {
-        after cancel $::metric_pending_update_de1; 
-        unset -nocomplain ::metric_pending_update_de1
-		if {flush_queue == 1} {
-			save_settings_to_de1
-		}
-    }
-	if {flush_queue == 0} {
-    	set ::metric_pending_update_de1 [after 500 {save_settings_to_de1; unset -nocomplain ::metric_pending_update_de1}]
-	}
 }
