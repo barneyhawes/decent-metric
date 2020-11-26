@@ -137,7 +137,11 @@ proc do_start_flush {} {
 proc metric_load_profile { profile_filename } {
 	select_profile $profile_filename
 	metric_copy_yield_from_settings
-	#TODO: check that the settings for grind size, dose and yield are numbers and are within range
+	if {[ifexists ::settings(bean_brand)] == ""} { set ::settings(bean_brand) [translate "Unknown roaster"]}
+	if {[ifexists ::settings(bean_type)] == ""} { set ::settings(bean_type) [translate "Unknown bean"]}
+    set ::settings(grinder_setting) [validate_setting $::settings(grinder_setting) $::metric_setting_grind_min $::metric_setting_grind_max $::metric_setting_grind_default]
+    set ::settings(grinder_dose_weight) [validate_setting $::settings(grinder_dose_weight) $::metric_setting_dose_min $::metric_setting_dose_max $::metric_setting_dose_default]
+    set ::metric_yield [validate_setting $::metric_yield $::metric_setting_yield_min $::metric_setting_yield_max $::metric_setting_yield_default]
 	recalculate_brew_ratio
 	save_settings_async
 	update_de1_async

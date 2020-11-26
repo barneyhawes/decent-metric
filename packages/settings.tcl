@@ -54,6 +54,13 @@ proc adjust_setting {varname delta minval maxval} {
 	return $newval
 }
 
+proc validate_setting {value minval maxval defaultval} {
+    if {$value == ""} { return $defaultval }
+	if {$value < $minval} { return $minval }
+    if {$value > $maxval} { return $maxval }
+    return $value
+}
+
 proc metric_copy_yield_from_settings {} {
     if {[ifexists ::settings(settings_profile_type)] == "settings_2c"} {
 		if {$::settings(scale_bluetooth_address) != ""} {
