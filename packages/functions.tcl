@@ -167,6 +167,7 @@ proc metric_profile_changed { profile_filename } {
 
 proc metric_grind_changed {} {
 	save_settings_async
+	save_profile_async
 }
 
 proc metric_dose_changed {} {
