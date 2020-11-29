@@ -169,6 +169,11 @@ proc metric_profile_changed { profile_filename } {
 	metric_load_profile $profile_filename
 }
 
+proc metric_bean_details_changed {} {
+	save_settings_async
+	save_profile_async
+}
+
 proc metric_grind_changed {} {
 	save_settings_async
 	save_profile_async

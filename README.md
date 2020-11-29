@@ -12,6 +12,7 @@ TODO - general
 TODO - pre-espresso page
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
 - Allow name and icon for drinks to be specified (currently hard coded to "Espresso" and "Pour over")
+- Smart up/down arrows which change increment for larger numbers (eg yield delta is 1.0/0.1 when under <=20, 5.0/0.5 when 21..99, 10/1 for >=100)
 
 TODO - post-shot page
 - Button to show chart full screen

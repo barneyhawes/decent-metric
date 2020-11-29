@@ -73,11 +73,15 @@ rounded_rectangle "espresso_menu_beans" .can [rescale_x_skin 80] [rescale_y_skin
 add_de1_text "espresso_menu_beans" 130 540 -text [translate "Roaster name:"] -font [get_font "Mazzard Regular" 22] -fill $::color_text -anchor "w" -state "hidden"
 add_de1_widget "espresso_menu_beans" entry 780 510 {
 		set ::metric_bean_name_editor $widget
+		bind $widget <Leave> { hide_android_keyboard; metric_bean_details_changed }
+		bind $widget <Return> { hide_android_keyboard; metric_bean_details_changed }
 	} -width [expr {int(22 * $::globals(entry_length_multiplier))}]  -font [get_font "Mazzard Regular" 22] -borderwidth 1 -bg $::color_menu_background -foreground $::color_text -textvariable ::settings(bean_brand) -relief flat -highlightthickness 1 -selectbackground $::color_background 
 
 add_de1_text "espresso_menu_beans" 130 660 -text [translate "Bean type:"] -font [get_font "Mazzard Regular" 22] -fill $::color_text -anchor "w" -state "hidden"
 add_de1_widget "espresso_menu_beans" entry 780 630 {
 		set ::metric_bean_name_editor $widget
+		bind $widget <Leave> { hide_android_keyboard; metric_bean_details_changed }
+		bind $widget <Return> { hide_android_keyboard; metric_bean_details_changed }
 	} -width [expr {int(22 * $::globals(entry_length_multiplier))}]  -font [get_font "Mazzard Regular" 22] -borderwidth 1 -bg $::color_menu_background -foreground $::color_text -textvariable ::settings(bean_type) -relief flat -highlightthickness 1 -selectbackground $::color_background 
 
 
