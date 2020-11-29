@@ -23,6 +23,8 @@ set ::symbol_battery_25 "\uE014"
 set ::symbol_battery_50 "\uE015"
 set ::symbol_battery_75 "\uE016"
 set ::symbol_battery_100 "\uE017"
+set ::symbol_bluetooth "\uE018"
+set ::symbol_wifi "\uE019"
 
 # colours
 set ::color_text "#eee"
