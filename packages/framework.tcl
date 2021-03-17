@@ -14,6 +14,12 @@ proc add_back_button { contexts text } {
 	return $page_title_id
 }
 
+proc add_page_title { contexts text} {
+	set page_title_id [add_de1_text $contexts 1280 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "center" -state "hidden"]
+	add_de1_button $contexts {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
+	return $page_title_id
+}
+
 # add a home-page style button
 proc add_home_button { contexts yoffset symbol text color_menu_background color_text action} {
 	rounded_rectangle $contexts .can [rescale_x_skin 680] [rescale_y_skin $yoffset] [rescale_x_skin 1880] [rescale_y_skin [expr $yoffset + 240]] [rescale_x_skin 80] $::color_menu_background

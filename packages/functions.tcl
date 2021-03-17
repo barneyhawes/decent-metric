@@ -151,10 +151,10 @@ proc metric_switch_drink { id } {
 	set ::metric_drink $id
 	if {$::metric_drink == "A"} {
 		metric_load_profile $::metric_settings(profile_filename_a)
-		.can itemconfigure $::espresso_page_title_id -text [translate "espresso"]
+		#.can itemconfigure $::espresso_page_title_id -text [translate "espresso"]
 	} elseif { $::metric_drink == "B" } {
 		metric_load_profile $::metric_settings(profile_filename_b)
-		.can itemconfigure $::espresso_page_title_id -text [translate "pour over"]
+		#.can itemconfigure $::espresso_page_title_id -text [translate "pour over"]
 	}
 }
 
