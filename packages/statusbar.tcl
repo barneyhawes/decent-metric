@@ -31,7 +31,7 @@ create_symbol_button $status_function_contexts 750 1400 250 220 $::symbol_water 
 
 rounded_rectangle $status_function_contexts .can [rescale_x_skin 1560] [rescale_y_skin 1380] [rescale_x_skin 2040] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 create_symbol_button $status_function_contexts 1560 1400 250 220 $::symbol_flush [translate "flush"] {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush }
-create_symbol_button $status_function_contexts 1780 1400 250 220 "s" [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
+create_symbol_button $status_function_contexts 1780 1400 250 220 $::symbol_settings [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
 
 rounded_rectangle "espresso_done water_menu" .can [rescale_x_skin 1140] [rescale_y_skin 1380] [rescale_x_skin 1420] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 create_symbol_button "espresso_done water_menu" 1155 1400 250 220 $::symbol_espresso [translate "espresso"] {say [translate "espresso"] $::settings(sound_button_in); metric_jump_home }
