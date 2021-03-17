@@ -54,13 +54,13 @@ add_visual_items_to_contexts "espresso" "espresso_timer"
 
 proc update_espresso_timer {} {
 	if {$::timers(espresso_start) == 0} {
-		set duration 0.0
+		set weight 0.0
 	} elseif {$::timers(espresso_stop) == 0} {
-		set duration [expr {[clock milliseconds] - $::timers(espresso_start)}]
+		set weight [expr [get_weight] / [get_target_weight]]
 	} else {
-		set duration [expr {$::timers(espresso_stop) - $::timers(espresso_start)}]
+		set weight 1.0
 	}
-	set angle [expr $duration / 1000.0 / 60.0 * -360.0]
+	set angle [expr $weight * -360.0]
 	.can itemconfigure "espresso_timer"	-extent $angle
 }
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[update_espresso_timer]} 
