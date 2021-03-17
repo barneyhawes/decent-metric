@@ -1,5 +1,5 @@
 add_background "espresso_done"
-add_back_button "espresso_done" [translate "espresso"]
+add_page_title_left "espresso_done" [translate "espresso"]
 
 set ::font_summary_text [get_font "Mazzard Regular" 16]
 set summary_x0 240
@@ -44,25 +44,6 @@ add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_te
 incr summary_y $summary_y_step
 add_de1_text "espresso_done" $summary_x0 $summary_y -text [translate "Actual yield:"] -font $::font_summary_text -fill $::color_text -anchor "w" 
 add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_text -fill $::color_text -anchor "w" -textvariable {[format "%.1f" [get_weight]]g} 
-
-#steam and flush buttons
-set ::espresso_done_steam_action_button_id [create_action_button "espresso_done" 380 1300 [translate "steam"] $::font_action_label $::color_text $::symbol_steam $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam"; do_start_steam} ""]
-set ::espresso_done_flush_action_button_id [create_action_button "espresso_done" 880 1300 [translate "flush"] $::font_action_label $::color_text $::symbol_flush $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush } ""]
-
-proc update_espresso_done_buttons {} {
-	if { [can_start_steam] } {
-		update_button_color $::espresso_done_steam_action_button_id $::color_action_button_start
-	} else {
-		update_button_color $::espresso_done_steam_action_button_id $::color_action_button_disabled
-	}
-	if { [can_start_flush] } {
-		update_button_color $::flush_action_button_id $::color_action_button_start
-	} else {
-		update_button_color $::flush_action_button_id $::color_action_button_disabled
-	}
-}
-add_de1_variable "espresso_done" -100 -100 -textvariable {[update_espresso_done_buttons]} 
-
 
 # chart
 set ::font_chart [get_font "Mazzard Regular" 14]

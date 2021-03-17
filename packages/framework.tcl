@@ -14,8 +14,13 @@ proc add_back_button { contexts text } {
 	return $page_title_id
 }
 
-proc add_page_title { contexts text} {
+proc add_page_title { contexts text } {
 	set page_title_id [add_de1_text $contexts 1280 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "center" -state "hidden"]
+	return $page_title_id
+}
+
+proc add_page_title_left { contexts text } {
+	set page_title_id [add_de1_text $contexts 180 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "w" -state "hidden"]
 	return $page_title_id
 }
 

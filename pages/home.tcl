@@ -1,7 +1,6 @@
 set espresso_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
 set espresso_setting_contexts "off espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature"
 add_background $espresso_contexts
-#set ::espresso_page_title_id [add_back_button $espresso_contexts [translate "decent espresso"]]
 add_page_title $espresso_contexts [translate "decent espresso"]
 
 proc create_dropdown_button {contexts_closed context_open x y width label symbol color value action_open action_close} {
@@ -65,16 +64,6 @@ proc create_arrow_buttons { contexts x y varname smalldelta largedelta minval ma
 	create_arrow_button $contexts [expr $x + 200] [expr $y - 140] 60 8 1 "say \"up\" $::settings(sound_button_in); adjust_setting $varname $smalldelta $minval $maxval; $after_adjust_action"
 	create_arrow_button $contexts [expr $x + 200] [expr $y + 140] 60 8 -1 "say \"down\" $::settings(sound_button_in); adjust_setting $varname -$smalldelta $minval $maxval; $after_adjust_action"
 	create_arrow_button $contexts [expr $x + 200] [expr $y + 220] 100 12 -1 "say \"down\" $::settings(sound_button_in); adjust_setting $varname -$largedelta $minval $maxval; $after_adjust_action"
-}
-
-proc create_symbol_button {contexts x y width height symbol label action} {
-	set font_symbol [get_font "Mazzard SemiBold" 64]
-	set font_label [get_font "Mazzard Regular" 14]
-	add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + ($height / 2) - 40] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"
-
-	add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + $height - 40] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
-	add_de1_button $contexts $action $x $y [expr $x + $width] [expr $y + $height]
-
 }
 
 create_dropdown_button "$espresso_setting_contexts espresso_menu_profile" "espresso_menu_beans" 80 240 1170 [translate "beans"] $::symbol_bean $::color_dose {$::settings(bean_brand)\n$::settings(bean_type)} {say [translate "beans"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_beans"; focus $::metric_bean_name_editor} {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "off"}
@@ -215,7 +204,7 @@ create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate 
 add_de1_button "espresso_menu_temperature" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "off"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 
-set ::espresso_action_button_id [create_action_button $espresso_setting_contexts 1280 1320 [translate "espresso"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
+set ::espresso_action_button_id [create_action_button $espresso_setting_contexts 1280 1280 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
 
 proc update_espresso_button {} {
 	if { [can_start_espresso] } {
@@ -225,15 +214,5 @@ proc update_espresso_button {} {
 	}
 }
 add_de1_variable $espresso_setting_contexts -100 -100 -textvariable {[update_espresso_button]} 
-
-# Function bar
-
-rounded_rectangle $espresso_contexts .can [rescale_x_skin 520] [rescale_y_skin 1380] [rescale_x_skin 1000] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-create_symbol_button $espresso_contexts 520 1400 250 220 $::symbol_steam [translate "steam"] {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam_menu" }
-create_symbol_button $espresso_contexts 750 1400 250 220 $::symbol_water [translate "water"] {say [translate "water"] $::settings(sound_button_in); metric_jump_to "water_menu" }
-
-rounded_rectangle $espresso_contexts .can [rescale_x_skin 1560] [rescale_y_skin 1380] [rescale_x_skin 2040] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-create_symbol_button $espresso_contexts 1560 1400 250 220 $::symbol_flush [translate "flush"] { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu"}
-create_symbol_button $espresso_contexts 1780 1400 250 220 "s" [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
 
 #create_button "off" 2280 60 2480 180 [translate "debug"] $::font_button $::color_button $::color_button_text { say [translate "debug"] $::settings(sound_button_in); metric_jump_to "debug"}
