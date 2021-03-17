@@ -19,16 +19,6 @@ proc add_page_title { contexts text} {
 	return $page_title_id
 }
 
-# add a home-page style button
-proc add_home_button { contexts yoffset symbol text color_menu_background color_text action} {
-	rounded_rectangle $contexts .can [rescale_x_skin 680] [rescale_y_skin $yoffset] [rescale_x_skin 1880] [rescale_y_skin [expr $yoffset + 240]] [rescale_x_skin 80] $::color_menu_background
-	add_de1_text $contexts 820 [expr $yoffset + 120] -text $symbol -font [get_font "Mazzard SemiBold" 72] -fill $color_text -anchor "center" -state "hidden"
-	add_de1_text $contexts 1280 [expr $yoffset + 120] -text $text -font  [get_font "Mazzard SemiBold" 48] -fill $color_text -anchor "center" -state "hidden"
-	.can create line [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 60]] [rescale_x_skin 1780] [rescale_y_skin [expr $yoffset + 120]] [rescale_x_skin 1720] [rescale_y_skin [expr $yoffset + 180]] -width [rescale_x_skin 24] -fill $color_text -tag "menu_arrow" -state "hidden"
-	add_de1_button $contexts $action 680 $yoffset 1880 [expr $yoffset + 240]
-	add_visual_items_to_contexts $contexts "menu_arrow"
-}
-
 # add a regular button
 proc create_button { contexts x1 y1 x2 y2 text font backcolor textcolor action } {
 	if { [info exists ::_button_id] != 1 } { set ::_button_id 0 }

@@ -1,44 +1,5 @@
 ### settings functions ###
 
-proc metric_settings_filename {} {
-    return "[skin_directory]/userdata/metric settings.tdb"
-}
-
-proc append_file {filename data} {
-    set success 0
-    set errcode [catch {
-        set fn [open $filename a]
-        puts $fn $data
-        close $fn
-        set success 1
-    }]
-    if {$errcode != 0} {
-        msg "append_file $::errorInfo"
-    }
-    return $success
-}
-
-proc save_metric_array_to_file {arrname fn} {
-    upvar $arrname item
-    set metric_data {}
-    foreach k [lsort -dictionary [array names item]] {
-        set v $item($k)
-        append metric_data [subst {[list $k] [list $v]\n}]
-    }
-    write_file $fn $metric_data
-}
-
-proc save_metric_settings {} {
-    save_metric_array_to_file ::metric_settings [metric_settings_filename]
-}
-
-proc load_metric_settings {} {
-    array set ::metric_settings [encoding convertfrom utf-8 [read_binary_file [metric_settings_filename]]]
-
-    if {[info exists ::metric_settings(profile_filename_a)] != 1} { set ::metric_settings(profile_filename_a) "default" }
-    if {[info exists ::metric_settings(profile_filename_b)] != 1} { set ::metric_settings(profile_filename_b) "default" }
-}
-
 proc adjust_setting {varname delta minval maxval} {
 	if {[info exists $varname] != 1} { set $varname 0 }
 	set currentval [subst \$$varname]

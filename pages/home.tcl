@@ -77,8 +77,6 @@ proc create_symbol_button {contexts x y width height symbol label action} {
 
 }
 
-create_button "off" 2280 60 2480 180 [translate "debug"] $::font_button $::color_button $::color_button_text { say [translate "debug"] $::settings(sound_button_in); metric_jump_to "debug"}
-
 create_dropdown_button "$espresso_setting_contexts espresso_menu_profile" "espresso_menu_beans" 80 240 1170 [translate "beans"] $::symbol_bean $::color_dose {$::settings(bean_brand)\n$::settings(bean_type)} {say [translate "beans"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_beans"; focus $::metric_bean_name_editor} {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "off"}
 
 rounded_rectangle "espresso_menu_beans" .can [rescale_x_skin 80] [rescale_y_skin 450] [rescale_x_skin 2480] [rescale_y_skin 1180] [rescale_x_skin 30] $::color_menu_background
@@ -121,7 +119,7 @@ proc metric_profile_selected {} {
 
 	set selected_index [$::globals(metric_profiles_listbox) curselection]
 	if {$selected_index != ""} {
-		metric_profile_changed $::profile_number_to_directory($selected_index)
+		metric_load_profile $::profile_number_to_directory($selected_index)
 	}
 	metric_jump_to_no_history "off"
 }
@@ -236,4 +234,6 @@ create_symbol_button $espresso_contexts 750 1400 250 220 $::symbol_water [transl
 
 rounded_rectangle $espresso_contexts .can [rescale_x_skin 1560] [rescale_y_skin 1380] [rescale_x_skin 2040] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 create_symbol_button $espresso_contexts 1560 1400 250 220 $::symbol_flush [translate "flush"] { say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush_menu"}
-create_symbol_button $espresso_contexts 1780 1400 250 220 "s" [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings }
+create_symbol_button $espresso_contexts 1780 1400 250 220 "s" [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
+
+#create_button "off" 2280 60 2480 180 [translate "debug"] $::font_button $::color_button $::color_button_text { say [translate "debug"] $::settings(sound_button_in); metric_jump_to "debug"}

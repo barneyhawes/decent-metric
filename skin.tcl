@@ -15,9 +15,6 @@ add_metric_package "functions"
 add_metric_package "framework"
 add_metric_package "meter"
 
-# load settings for this skin
-load_metric_settings
-
 add_metric_page "home"
 #add_metric_page "espresso_menu"
 add_metric_page "espresso"
@@ -91,3 +88,5 @@ if {$::debugging == 1} {
 }
 
 create_grid
+
+metric_load_profile $::settings(profile_filename) 
