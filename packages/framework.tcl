@@ -16,7 +16,6 @@ proc add_back_button { contexts text } {
 
 proc add_page_title { contexts text} {
 	set page_title_id [add_de1_text $contexts 1280 120 -text $text -font $::font_main_menu -fill $::color_text -anchor "center" -state "hidden"]
-	add_de1_button $contexts {say [translate "back"] $::settings(sound_button_in); metric_jump_back } 0 0 1280 240
 	return $page_title_id
 }
 
