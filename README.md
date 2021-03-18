@@ -3,29 +3,27 @@ Metric skin for Decent Espresso
 
 Standing on the shoulders of giants: thanks to John (Insight), Damian (DSV), Sheldon (SWDark)
 
-TODO - general
-- Skin colours (dark / light theme)
-- Add and test support for Bluetooth scale
+TODO
+- Sleep button
+- Test support for Bluetooth scale
 - Test functionality of GHC somehow
+- Test translations
+- Test Fahrenheit temperatures
 - bug: Head temperature reading in status bar reads 100+ when DE1 is starting
 
-TODO - pre-espresso page
+IDEAS
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
-- Allow name and icon for drinks to be specified (currently hard coded to "Espresso" and "Pour over")
 - Smart up/down arrows which change increment for larger numbers (eg yield delta is 1.0/0.1 when under <=20, 5.0/0.5 when 21..99, 10/1 for >=100)
-
-TODO - post-shot page
-- Button to show chart full screen
-- Option to compare with historic shot?
-
-TODO - shot history
-- Access to post-shot page for most recent shot at any time
-- Display history list as a table showing the key stats (profile, dose, yield, time, temp, etc)
-- Could offer sorting and filtering?
-- Could offer "tick to compare" - allow up to 2 selections
- - Shot history to be filtered by shot type (espresso / filter)
+- Add button to post-shot page to show chart full screen
 
 Release notes
+v2.0
+ - Removed the main menu
+ - Added a bar at the bottom for steam, water, flush and settings
+ - Made the flush and steam buttons start immediately
+ - Visual updates
+
+v0.6
  - Implemented Pour Over button on Home menu
  - Added space for writing the bean details
  - Implemented changing a profile within skin
