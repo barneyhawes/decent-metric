@@ -36,6 +36,7 @@ create_symbol_button $status_function_contexts 1780 1400 250 220 $::symbol_setti
 rounded_rectangle "espresso_done water_menu" .can [rescale_x_skin 1140] [rescale_y_skin 1380] [rescale_x_skin 1420] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 create_symbol_button "espresso_done water_menu" 1155 1400 250 220 $::symbol_espresso [translate "espresso"] {say [translate "espresso"] $::settings(sound_button_in); metric_jump_home }
 
+create_button "off" 2400 20 2500 120 "sleep" [get_font "Mazzard Regular" 14] $::color_menu_background $::color_text { say [translate "settings"] $::settings(sound_button_in); start_sleep }
 
 # status message
 set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso espresso_done steam_menu steam water_menu water flush_menu flush"
@@ -60,4 +61,4 @@ proc set_status_message_visibility {} {
 add_de1_variable $status_message_contexts -100 -100 -text "" -textvariable {[set_status_message_visibility]}
 
 # Display of machine state (mostly for debugging)
-add_de1_variable $status_message_contexts 2550 10 -anchor "ne" -text "" -font $::font_setting_heading -fill $::color_status_bar -textvariable {[get_status_text]} 
+#add_de1_variable $status_message_contexts 2550 10 -anchor "ne" -text "" -font $::font_setting_heading -fill $::color_status_bar -textvariable {[get_status_text]} 
