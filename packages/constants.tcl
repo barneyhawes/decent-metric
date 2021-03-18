@@ -47,7 +47,7 @@ set ::color_button "#333333"
 set ::color_button_text "#eee"
 set ::color_action_button_start "#6A9949"
 set ::color_action_button_stop "#D34237"
-set ::color_action_button_disabled "#252525"
+set ::color_action_button_disabled "#333333"
 set ::color_action_button_text "#eee"
 set ::color_meter_grey "#bbb"
 
