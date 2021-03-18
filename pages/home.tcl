@@ -179,12 +179,12 @@ set x 80
 set y 770
 
 create_arrow_buttons "espresso_menu_grind" $x $y "::settings(grinder_setting)" 0.5 1 $::metric_setting_grind_min $::metric_setting_grind_max metric_grind_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "grind"] $::symbol_grind $::color_grind {[get_mantissa $::settings(grinder_setting)]} {.[get_exponent $::settings(grinder_setting)]} {say [translate "grind"] $::settings(sound_button_in); metric_jump_to_no_history "off_grind"}
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "grind"] $::symbol_grind $::color_grind {[get_mantissa $::settings(grinder_setting)]} {.[get_exponent $::settings(grinder_setting)]} {say [translate "grind"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_grind"}
 add_de1_button "espresso_menu_grind" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "off"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
 create_arrow_buttons "espresso_menu_dose" $x $y "::settings(grinder_dose_weight)" 0.1 1 $::metric_setting_dose_min $::metric_setting_dose_max metric_dose_changed
-create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::settings(grinder_dose_weight)]} {.[get_exponent $::settings(grinder_dose_weight)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "off_dose"}
+create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate "dose"] $::symbol_bean $::color_dose {[get_mantissa $::settings(grinder_dose_weight)]} {.[get_exponent $::settings(grinder_dose_weight)]g} {say [translate "dose"] $::settings(sound_button_in); metric_jump_to_no_history "espresso_menu_dose"}
 add_de1_button "espresso_menu_dose" {say [translate "close"] $::settings(sound_button_in); metric_jump_to_no_history "off"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 incr x 500
 
