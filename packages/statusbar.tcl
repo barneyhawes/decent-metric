@@ -40,21 +40,16 @@ create_button $status_function_contexts 2440 20 2540 120 "sleep" [get_font "Mazz
 
 # status message
 set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso espresso_done steam water flush"
-set ::connection_message_background_id [rounded_rectangle $status_message_contexts .can [rescale_x_skin 880] [rescale_y_skin 1430] [rescale_x_skin 1680] [rescale_y_skin 1570] [rescale_x_skin 80] $::color_status_bar ]
-set ::connection_message_text_id [add_de1_text $status_message_contexts 1280 1500 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "center" ]
+set ::connection_message_text_id [add_de1_text $status_message_contexts 2480 140 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "e" ]
 
 proc set_status_message_visibility {} {
 	if {![is_connected]} {
-		.can itemconfigure $::connection_message_background_id -state ""
 		.can itemconfigure $::connection_message_text_id -text [translate "Not connected"]
 	} elseif {![has_water]} {
-		.can itemconfigure $::connection_message_background_id -state ""
 		.can itemconfigure $::connection_message_text_id -text [translate "Refill water"]
 	} elseif {[is_heating]} {
-		.can itemconfigure $::connection_message_background_id -state ""
 		.can itemconfigure $::connection_message_text_id -text [translate "Heating"]
 	} else {
-		.can itemconfigure $::connection_message_background_id -state "hidden"
 		.can itemconfigure $::connection_message_text_id -text ""
 	}
 }
