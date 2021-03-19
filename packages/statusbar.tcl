@@ -25,10 +25,10 @@ proc create_symbol_button {contexts x y width height symbol label action} {
 	add_de1_button $contexts $action $x $y [expr $x + $width] [expr $y + $height]
 }
 
-rounded_rectangle $status_function_contexts .can [rescale_x_skin 500] [rescale_y_skin 1380] [rescale_x_skin 1020] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-create_symbol_button $status_function_contexts 520 1400 150 220 $::symbol_steam [translate "steam"] {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam"; do_start_steam}
-create_symbol_button $status_function_contexts 685 1400 150 220 $::symbol_water [translate "water"] {say [translate "hot water"] $::settings(sound_button_in); metric_jump_to "water"; do_start_water}
-create_symbol_button $status_function_contexts 850 1400 150 220 $::symbol_flush [translate "flush"] {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush }
+rounded_rectangle $status_function_contexts .can [rescale_x_skin 460] [rescale_y_skin 1380] [rescale_x_skin 1060] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
+create_symbol_button $status_function_contexts 480 1400 150 220 $::symbol_water [translate "water"] {say [translate "hot water"] $::settings(sound_button_in); metric_jump_to "water"; do_start_water}
+create_symbol_button $status_function_contexts 685 1400 150 220 $::symbol_steam [translate "steam"] {say [translate "steam"] $::settings(sound_button_in); metric_jump_to "steam"; do_start_steam}
+create_symbol_button $status_function_contexts 890 1400 150 220 $::symbol_flush [translate "flush"] {say [translate "flush"] $::settings(sound_button_in); metric_jump_to "flush"; do_start_flush }
 
 rounded_rectangle $status_function_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1380] [rescale_x_skin 2050] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 create_symbol_button $status_function_contexts 1590 1400 200 220 $::symbol_settings [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
