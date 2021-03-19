@@ -18,6 +18,12 @@ IDEAS
 
 Release notes
 
+v2.1
+ - Moved start/stop text inside action buttons
+ - Repositioned Sleep button
+ - Repositioned status messages
+ - Made water button start immediately
+
 v2.0
  - Removed the main menu
  - Added a bar at the bottom for steam, water, flush and settings
