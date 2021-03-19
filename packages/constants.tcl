@@ -69,7 +69,7 @@ set ::metric_setting_grind_min 0.0
 set ::metric_setting_grind_max 50.0
 set ::metric_setting_grind_default 18.0
 
-set ::metric_setting_dose_min 10.0
+set ::metric_setting_dose_min 5.0
 set ::metric_setting_dose_max 30.0
 set ::metric_setting_dose_default 15.0
 
