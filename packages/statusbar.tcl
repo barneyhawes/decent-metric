@@ -44,11 +44,11 @@ set ::connection_message_text_id [add_de1_text $status_message_contexts 2480 140
 
 proc set_status_message_visibility {} {
 	if {![is_connected]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "Not connected"]
+		.can itemconfigure $::connection_message_text_id -text [translate "not connected"]
 	} elseif {![has_water]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "Refill water"]
+		.can itemconfigure $::connection_message_text_id -text [translate "refill water"]
 	} elseif {[is_heating]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "Heating"]
+		.can itemconfigure $::connection_message_text_id -text [translate "heating"]
 	} else {
 		.can itemconfigure $::connection_message_text_id -text ""
 	}
