@@ -17,6 +17,7 @@ IDEAS
 - Add button to post-shot page to show chart full screen
 
 Release notes
+
 v2.0
  - Removed the main menu
  - Added a bar at the bottom for steam, water, flush and settings
