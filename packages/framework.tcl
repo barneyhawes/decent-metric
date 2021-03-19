@@ -43,8 +43,8 @@ proc create_action_button { contexts x y label_text label_font label_textcolor i
     set y2 [expr $y + $radius]
     .can create oval [rescale_x_skin $x1] [rescale_y_skin $y1] [rescale_x_skin $x2] [rescale_y_skin $y2] -fill $backcolor -width 0 -tag "button_$::_button_id" -state "hidden"
     add_visual_items_to_contexts $contexts "button_$::_button_id"
-    add_de1_text $contexts $x $y -text $icon_text -font $icon_font -fill $icon_textcolor -anchor "center" -state "hidden"
-	add_de1_text $contexts $x [expr $y + $radius] -text $label_text -font $label_font -fill $label_textcolor -anchor "n" -state "hidden"
+    add_de1_text $contexts $x [expr $y - ($radius * 0.2)] -text $icon_text -font $icon_font -fill $icon_textcolor -anchor "center" -state "hidden"
+	add_de1_text $contexts $x [expr $y + ($radius * 0.2)] -text $label_text -font $label_font -fill $label_textcolor -anchor "n" -state "hidden"
     if {$fullscreen != ""} {
         add_de1_button $contexts $action 0 0 2560 1600
     } else {

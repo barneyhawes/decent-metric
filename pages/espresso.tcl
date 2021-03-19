@@ -47,8 +47,8 @@ create_action_button "espresso" 1280 1280 [translate "stop"] $::font_action_labe
 # timer on stop button
 # TODO: rounded ends (need to draw a circle at each endpoint)
 # TODO: create a reusable function (or add as an option to create_action_button?)
-add_de1_variable "espresso" 1300 1350 -text "" -font $::font_setting_heading -fill $::color_action_button_text -anchor "ne" -textvariable {[espresso_elapsed_timer]}
-add_de1_text "espresso" 1310 1350 -text [translate "s"] -font $::font_setting_heading -fill $::color_action_button_text -anchor "nw"
+add_de1_variable "espresso" 1300 1500 -text "" -font $::font_setting_heading -fill $::color_action_button_text -anchor "ne" -textvariable {[espresso_elapsed_timer]}
+add_de1_text "espresso" 1310 1500 -text [translate "s"] -font $::font_setting_heading -fill $::color_action_button_text -anchor "nw"
 .can create arc [rescale_x_skin 1100] [rescale_y_skin 1100] [rescale_x_skin 1460] [rescale_y_skin 1460] -start 90 -extent 0 -style arc -width [rescale_x_skin 15] -outline $::color_action_button_text -tag "espresso_timer"
 add_visual_items_to_contexts "espresso" "espresso_timer"
 
