@@ -16,27 +16,33 @@ add_de1_variable $status_meter_contexts -100 -100 -text "" -textvariable {[$::te
 
 # Function bar
 set status_function_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso_done"
-proc create_symbol_button {contexts x y width height symbol label action} {
-	set font_symbol [get_font "Mazzard SemiBold" 64]
-	set font_label [get_font "Mazzard Regular" 14]
-	set button_id [add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + ($height / 2) - 40] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"]
+# proc create_symbol_button {contexts x y width height symbol label action} {
+# 	set font_symbol [get_font "Mazzard SemiBold" 64]
+# 	set font_label [get_font "Mazzard Regular" 14]
+# 	set button_id [add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + ($height / 2) - 40] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"]
 
-	add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + $height - 40] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
-	add_de1_button $contexts $action $x $y [expr $x + $width] [expr $y + $height]
+# 	add_de1_text $contexts [expr $x + ($width / 2.0)] [expr $y + $height - 40] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
+# 	add_de1_button $contexts $action $x $y [expr $x + $width] [expr $y + $height]
+# 	return $button_id
+# }
+
+proc create_symbol_button {contexts x y label symbol color action} {
+	set button_id [create_symbol_box $contexts $x $y $label $symbol $color]
+	add_de1_button $contexts $action $x $y [expr $x + 180] [expr $y + 180]
 	return $button_id
 }
 
-rounded_rectangle $status_function_contexts .can [rescale_x_skin 460] [rescale_y_skin 1380] [rescale_x_skin 1060] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-set ::water_button_id [create_symbol_button $status_function_contexts 480 1400 150 220 $::symbol_water [translate "water"] {say [translate "hot water"] $::settings(sound_button_in); do_start_water}]
-set ::steam_button_id [create_symbol_button $status_function_contexts 685 1400 150 220 $::symbol_steam [translate "steam"] {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
-set ::flush_button_id [create_symbol_button $status_function_contexts 890 1400 150 220 $::symbol_flush [translate "flush"] {say [translate "flush"] $::settings(sound_button_in); do_start_flush }]
+rounded_rectangle $status_function_contexts .can [rescale_x_skin 520] [rescale_y_skin 1380] [rescale_x_skin 1010] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
+set ::espresso_button_id [create_symbol_button $status_function_contexts 560 1400 [translate "espresso"] $::symbol_espresso $::color_menu_background {say [translate "espresso"] $::settings(sound_button_in); metric_jump_home }]
+set ::steam_button_id [create_symbol_button $status_function_contexts 790 1400 [translate "steam"] $::symbol_steam $::color_menu_background {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
 
-rounded_rectangle $status_function_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1380] [rescale_x_skin 2050] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-create_symbol_button $status_function_contexts 1590 1400 200 220 $::symbol_settings [translate "settings"] { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
-create_symbol_button $status_function_contexts 1810 1400 200 220 $::symbol_power [translate "sleep"] { say [translate "settings"] $::settings(sound_button_in); start_sleep }
+rounded_rectangle $status_function_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1380] [rescale_x_skin 2040] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
+set ::water_button_id [create_symbol_button $status_function_contexts 1590 1400 [translate "hot water"] $::symbol_water $::color_menu_background {say [translate "hot water"] $::settings(sound_button_in); do_start_water}]
+set ::flush_button_id [create_symbol_button $status_function_contexts 1820 1400 [translate "flush"] $::symbol_flush $::color_menu_background {say [translate "flush"] $::settings(sound_button_in); do_start_flush}]
 
-rounded_rectangle "espresso_done" .can [rescale_x_skin 1130] [rescale_y_skin 1380] [rescale_x_skin 1430] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
-create_symbol_button "espresso_done" 1155 1400 250 220 $::symbol_espresso [translate "espresso"] {say [translate "espresso"] $::settings(sound_button_in); metric_jump_home }
+create_symbol_button $status_function_contexts 2080 20 [translate "settings"] $::symbol_settings $::color_menu_background { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_profile $::settings(profile_filename) }
+create_symbol_button $status_function_contexts 2300 20 [translate "sleep"] $::symbol_power $::color_menu_background { say [translate "sleep"] $::settings(sound_button_in); start_sleep }
+
 
 proc update_function_buttons {} {
 	if { [can_start_water] } {
@@ -62,7 +68,7 @@ add_de1_variable $status_function_contexts -100 -100 -textvariable {[update_func
 
 # status message
 set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso espresso_done steam water flush"
-set ::connection_message_text_id [add_de1_text $status_message_contexts 2480 140 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "e" ]
+set ::connection_message_text_id [add_de1_text $status_message_contexts 80 140 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "w" ]
 
 proc set_status_message_visibility {} {
 	if {![is_connected]} {

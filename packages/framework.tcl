@@ -146,6 +146,15 @@ proc rounded_rectangle {contexts canvas x1 y1 x2 y2 radius colour } {
 	return $tag
 }
 
+proc create_symbol_box {contexts x y label symbol color} {
+	set font_symbol [get_font "Mazzard SemiBold" 64]
+	set font_label [get_font "Mazzard Regular" 14]
+	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + 180]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $color
+	set button_id [add_de1_text $contexts [expr $x + 90] [expr $y + 70] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"]
+	add_de1_text $contexts [expr $x + 90] [expr $y + 170] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
+	return $button_id
+}
+
 proc create_grid { } {
 	for {set x 80} {$x < 2560} {incr x 100} {
 		.can create line [rescale_x_skin $x] [rescale_y_skin 0] [rescale_x_skin $x] [rescale_y_skin 1600] -width 1 -fill "#fff" -tags "grid" -state "hidden"

@@ -47,7 +47,7 @@ add_de1_variable "espresso_done" $summary_x1 $summary_y -font $::font_summary_te
 
 # chart
 set ::font_chart [get_font "Mazzard Regular" 14]
-add_de1_widget "espresso_done" graph 1280 60 {
+add_de1_widget "espresso_done" graph 1280 260 {
 	$widget axis configure x -color $::color_grey_text -tickfont $::font_chart -subdivisions 1; 
 	$widget axis configure y -color $::color_grey_text -tickfont $::font_chart -stepsize 1 -subdivisions 1 -min 0 -max 12; 
 	$widget grid configure -hide true;
@@ -61,9 +61,9 @@ add_de1_widget "espresso_done" graph 1280 60 {
 
 	$widget element create line_espresso_total_flow -xdata espresso_elapsed -ydata espresso_water_dispensed -symbol none -label "" -linewidth [rescale_x_skin 10] -color ::color_yield -smooth $::settings(live_graph_smoothing_technique) -pixels 0;
 
-} -plotbackground $::color_background -width [rescale_x_skin 1200] -height [rescale_y_skin 1080] -borderwidth 1 -background $::color_background -plotrelief flat
+} -plotbackground $::color_background -width [rescale_x_skin 1200] -height [rescale_y_skin 880] -borderwidth 1 -background $::color_background -plotrelief flat
 
-add_de1_text "espresso_done" 1280 60 -text [translate "Flow (mL/s)"] -font $::font_chart -fill $::color_flow -justify "left" -anchor "ne"
-add_de1_text "espresso_done" 1280 120 -text [translate "Pressure (bar)"] -font $::font_chart -fill $::color_pressure -justify "left" -anchor "ne"
-add_de1_text "espresso_done" 1280 180 -text [translate "Yield (g)"] -font $::font_chart -fill $::color_yield -justify "left" -anchor "ne"
+add_de1_text "espresso_done" 1280 60 -text [translate "Flow (mL/s)"] -font $::font_chart -fill $::color_flow -justify "left" -anchor "nw"
+add_de1_text "espresso_done" 1280 120 -text [translate "Pressure (bar)"] -font $::font_chart -fill $::color_pressure -justify "left" -anchor "nw"
+add_de1_text "espresso_done" 1280 180 -text [translate "Yield (g)"] -font $::font_chart -fill $::color_yield -justify "left" -anchor "nw"
 add_de1_text "espresso_done" 2480 1140 -text [translate "Time (s)"] -font $::font_chart -fill $::color_text -justify "left" -anchor "ne"
