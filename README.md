@@ -18,6 +18,10 @@ IDEAS
 
 Release notes
 
+v2.2
+ - Rearrange function buttons
+ - Show when function buttons are disabled
+
 v2.1
  - Moved start/stop text inside action buttons
  - Repositioned Sleep button
