@@ -3,16 +3,20 @@ set espresso_setting_contexts "off espresso_menu_grind espresso_menu_dose espres
 add_background $espresso_contexts
 add_page_title $espresso_contexts [translate "decent espresso"]
 
-proc create_dropdown_button {contexts_closed context_open x y width label symbol color value action_open action_close} {
-	set contexts "$context_open $contexts_closed"
+proc create_icon_box {contexts x y label symbol color} {
 	set font_symbol [get_font "Mazzard SemiBold" 64]
-	set font_value [get_font "Mazzard Regular" 22]
 	set font_label [get_font "Mazzard Regular" 14]
-
-	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + $width]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $::color_menu_background
 	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + 180]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $color
 	add_de1_text $contexts [expr $x + 90] [expr $y + 70] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"
 	add_de1_text $contexts [expr $x + 90] [expr $y + 170] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
+}
+
+proc create_dropdown_button {contexts_closed context_open x y width label symbol color value action_open action_close} {
+	set contexts "$context_open $contexts_closed"
+	set font_value [get_font "Mazzard Regular" 22]
+
+	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + $width]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $::color_menu_background
+	create_icon_box $contexts $x $y $label $symbol $color
 	add_de1_variable $contexts [expr $x + ($width / 2.0)] [expr $y + 90] -text "" -font $font_value -fill $::color_text -anchor "center" -state "hidden" -textvariable $value
 
 	set down_arrow_id [.can create line [rescale_x_skin [expr $x + $width - 130]] [rescale_y_skin [expr $y + 70]] [rescale_x_skin [expr $x + $width - 90]] [rescale_y_skin [expr $y + 110]] [rescale_x_skin [expr $x + $width - 50]] [rescale_y_skin [expr $y + 70]] -width [rescale_x_skin 18] -fill $::color_text -state "hidden"]
@@ -35,15 +39,11 @@ proc create_2value_label {contexts x y value1 value2} {
 
 
 proc create_2value_button {contexts x y width label symbol color value1 value2 action} {
-	set font_symbol [get_font "Mazzard SemiBold" 64]
 	set font_value [get_font "Mazzard Regular" 32]
 	set font_value_small [get_font "Mazzard Regular" 22]
-	set font_label [get_font "Mazzard Regular" 14]
 
 	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + $width]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $::color_menu_background
-	rounded_rectangle $contexts .can [rescale_x_skin $x] [rescale_y_skin $y] [rescale_x_skin [expr $x + 180]] [rescale_y_skin [expr $y + 180]] [rescale_x_skin 30] $color
-	add_de1_text $contexts [expr $x + 90] [expr $y + 70] -text $symbol -font $font_symbol -fill $::color_text -anchor "center" -state "hidden"
-	add_de1_text $contexts [expr $x + 90] [expr $y + 170] -text $label -font $font_label -fill $::color_text -anchor "s" -state "hidden"
+	create_icon_box $contexts $x $y $label $symbol $color
 	create_2value_label $contexts [expr $x + 90 + ($width / 2.0)] [expr $y + 90] $value1 $value2
 
 	add_de1_button $contexts $action $x $y [expr $x + $width] [expr $y + 180]
