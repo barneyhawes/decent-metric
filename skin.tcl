@@ -27,7 +27,10 @@ add_metric_page "debug"
 # add status bar after loading Metric pages to ensure it draws on top of everything else
 add_metric_package "statusbar"
 
+# standard includes
 source "[homedir]/skins/default/standard_includes.tcl"
+# override "tankempty" because we don't want to move you off the espresso page just because you ran out of water.
+set_next_page "tankempty" "off"
 
 # include the settings screens.  
 source "[homedir]/skins/default/de1_skin_settings.tcl"
