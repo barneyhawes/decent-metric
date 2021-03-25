@@ -26,6 +26,8 @@ set ::symbol_battery_100 "\uE017"
 set ::symbol_bluetooth "\uE018"
 set ::symbol_wifi "\uE019"
 set ::symbol_usb "\uE01A"
+set ::symbol_settings "\uE01B"
+set ::symbol_power "\uE01C"
 
 # colours
 set ::color_text "#eee"
@@ -47,7 +49,7 @@ set ::color_button "#333333"
 set ::color_button_text "#eee"
 set ::color_action_button_start "#6A9949"
 set ::color_action_button_stop "#D34237"
-set ::color_action_button_disabled "#252525"
+set ::color_action_button_disabled "#333333"
 set ::color_action_button_text "#eee"
 set ::color_meter_grey "#bbb"
 
@@ -57,8 +59,8 @@ set ::font_setting_description [get_font "Mazzard Regular" 14]
 set ::font_setting [get_font "Mazzard Regular" 36]
 set ::font_button [get_font "Mazzard Regular" 24]
 set ::font_list [get_font "Mazzard Regular" 24]
-set ::font_action_button [get_font "Mazzard SemiBold" 80]
-set ::font_action_label [get_font "Mazzard SemiBold" 36]
+set ::font_action_button [get_font "Mazzard Regular" 80]
+set ::font_action_label [get_font "Mazzard Regular" 30]
 set ::font_main_menu [get_font "Mazzard SemiBold" 48]
 
 # settings 
@@ -67,7 +69,7 @@ set ::metric_setting_grind_min 0.0
 set ::metric_setting_grind_max 50.0
 set ::metric_setting_grind_default 18.0
 
-set ::metric_setting_dose_min 10.0
+set ::metric_setting_dose_min 5.0
 set ::metric_setting_dose_max 30.0
 set ::metric_setting_dose_default 15.0
 

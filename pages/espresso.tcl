@@ -1,5 +1,5 @@
 add_background "espresso"
-add_back_button "espresso" [translate "espresso"]
+add_page_title_left "espresso" [translate "espresso"]
 add_de1_variable "espresso" 2480 120 -text "" -font $::font_setting_heading -fill $::color_text -anchor "e" -textvariable { $::settings(profile_title) }
 
 proc get_target_pressure {} { return $::de1(goal_pressure) }
@@ -42,25 +42,25 @@ proc get_weight {} {
 set ::espresso_weight_meter [meter new -x [rescale_x_skin 1860] -y [rescale_y_skin 1000] -width [rescale_x_skin 500] -minvalue 0.0 -maxvalue 50.0 -get_meter_value get_weight -get_target_value get_target_weight -tick_frequency 5 -label_frequency 10 -needle_color $::color_yield -label_color $::color_meter_grey -tick_color $::color_background -contexts "espresso" -title [translate "Yield"] -units "g"]
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[$::espresso_weight_meter update]} 
 
-create_action_button "espresso" 1280 1320 [translate "stop"] $::font_action_label $::color_text $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
+create_action_button "espresso" 1280 1380 [translate "stop"] $::font_action_label $::color_text $::symbol_hand $::font_action_button $::color_action_button_stop $::color_action_button_text {say [translate "stop"] $::settings(sound_button_in); start_idle } "fullscreen"
 
 # timer on stop button
 # TODO: rounded ends (need to draw a circle at each endpoint)
 # TODO: create a reusable function (or add as an option to create_action_button?)
-add_de1_variable "espresso" 1300 1390 -text "" -font $::font_setting_heading -fill $::color_action_button_text -anchor "ne" -textvariable {[espresso_elapsed_timer]}
-add_de1_text "espresso" 1310 1390 -text [translate "s"] -font $::font_setting_heading -fill $::color_action_button_text -anchor "nw"
-.can create arc [rescale_x_skin 1100] [rescale_y_skin 1140] [rescale_x_skin 1460] [rescale_y_skin 1500] -start 90 -extent 0 -style arc -width [rescale_x_skin 15] -outline $::color_action_button_text -tag "espresso_timer"
+add_de1_variable "espresso" 1300 1100 -text "" -font $::font_setting_heading -fill $::color_action_button_text -anchor "ne" -textvariable {[espresso_elapsed_timer]}
+add_de1_text "espresso" 1310 1100 -text [translate "s"] -font $::font_setting_heading -fill $::color_action_button_text -anchor "nw"
+.can create arc [rescale_x_skin 1100] [rescale_y_skin 1200] [rescale_x_skin 1460] [rescale_y_skin 1560] -start 90 -extent 0 -style arc -width [rescale_x_skin 15] -outline $::color_action_button_text -tag "espresso_timer"
 add_visual_items_to_contexts "espresso" "espresso_timer"
 
 proc update_espresso_timer {} {
 	if {$::timers(espresso_start) == 0} {
-		set duration 0.0
+		set weight 0.0
 	} elseif {$::timers(espresso_stop) == 0} {
-		set duration [expr {[clock milliseconds] - $::timers(espresso_start)}]
+		set weight [expr [get_weight] / [get_target_weight]]
 	} else {
-		set duration [expr {$::timers(espresso_stop) - $::timers(espresso_start)}]
+		set weight 1.0
 	}
-	set angle [expr $duration / 1000.0 / 60.0 * -360.0]
+	set angle [expr $weight * -360.0]
 	.can itemconfigure "espresso_timer"	-extent $angle
 }
 add_de1_variable "espresso" -100 -100 -text "" -textvariable {[update_espresso_timer]} 
