@@ -18,16 +18,17 @@ add_de1_variable $status_meter_contexts -100 -100 -text "" -textvariable {[$::te
 set status_function_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso_done"
 
 proc create_symbol_button {contexts x y label symbol color action} {
+	set padding 20
 	set button_id [create_symbol_box $contexts $x $y $label $symbol $color]
-	add_de1_button $contexts $action $x $y [expr $x + 180] [expr $y + 180]
+	add_de1_button $contexts $action [expr $x - $padding] [expr $y - $padding] [expr $x + 180 + $padding] [expr $y + 180 + $padding]
 	return $button_id
 }
 
-rounded_rectangle $status_function_contexts .can [rescale_x_skin 500] [rescale_y_skin 1380] [rescale_x_skin 1010] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
+rounded_rectangle $status_function_contexts .can [rescale_x_skin 500] [rescale_y_skin 1360] [rescale_x_skin 1010] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 set ::espresso_button_id [create_symbol_button $status_function_contexts 540 1400 [translate "espresso"] $::symbol_espresso $::color_menu_background {say [translate "espresso"] $::settings(sound_button_in); metric_jump_home }]
 set ::steam_button_id [create_symbol_button $status_function_contexts 790 1400 [translate "steam"] $::symbol_steam $::color_menu_background {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
 
-rounded_rectangle $status_function_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1380] [rescale_x_skin 2060] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
+rounded_rectangle $status_function_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1360] [rescale_x_skin 2060] [rescale_y_skin 2680] [rescale_x_skin 80] $::color_menu_background
 set ::water_button_id [create_symbol_button $status_function_contexts 1590 1400 [translate "hot water"] $::symbol_water $::color_menu_background {say [translate "hot water"] $::settings(sound_button_in); do_start_water}]
 set ::flush_button_id [create_symbol_button $status_function_contexts 1840 1400 [translate "flush"] $::symbol_flush $::color_menu_background {say [translate "flush"] $::settings(sound_button_in); do_start_flush}]
 
