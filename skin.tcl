@@ -46,4 +46,5 @@ if {$::debugging == 1} {
 
 create_grid
 
-metric_load_profile $::settings(profile_filename) 
+
+metric_load_profile [ifexists $::settings(profile_filename)]
