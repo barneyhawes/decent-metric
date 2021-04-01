@@ -67,3 +67,14 @@ add_de1_text "espresso_done" 1280 60 -text [translate "Flow (mL/s)"] -font $::fo
 add_de1_text "espresso_done" 1280 120 -text [translate "Pressure (bar)"] -font $::font_chart -fill $::color_pressure -justify "left" -anchor "nw"
 add_de1_text "espresso_done" 1280 180 -text [translate "Yield (g)"] -font $::font_chart -fill $::color_yield -justify "left" -anchor "nw"
 add_de1_text "espresso_done" 2480 1140 -text [translate "Time (s)"] -font $::font_chart -fill $::color_text -justify "left" -anchor "ne"
+
+set ::espresso_done_action_button_id [create_action_button "espresso_done" 1280 1340 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {restart}] $::settings(sound_button_in); do_start_espresso} ""]
+
+proc update_espresso_done_button {} {
+	if { [can_start_espresso] } {
+		update_button_color $::espresso_done_action_button_id $::color_action_button_start
+	} else {
+		update_button_color $::espresso_done_action_button_id $::color_action_button_disabled
+	}
+}
+add_de1_variable "espresso_done" -100 -100 -textvariable {[update_espresso_done_button]} 
