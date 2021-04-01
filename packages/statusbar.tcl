@@ -64,19 +64,31 @@ proc update_function_buttons {} {
 add_de1_variable $status_function_contexts -100 -100 -textvariable {[update_function_buttons]}
 
 
-# status message
-set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso espresso_done steam water flush"
+# status messages
+set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature espresso_done steam water flush"
 set ::connection_message_text_id [add_de1_text $status_message_contexts 80 160 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "w" ]
+set ::temperature_message_text_id  [add_de1_text $status_message_contexts 200 1180 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "center" ]
+set ::water_message_text_id  [add_de1_text $status_message_contexts 2360 1180 -text "" -font $::font_setting_heading -fill $::color_water -anchor "center" ]
 
 proc set_status_message_visibility {} {
-	if {![is_connected]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "not connected"]
-	} elseif {![has_water]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "refill water"]
-	} elseif {[is_heating]} {
-		.can itemconfigure $::connection_message_text_id -text [translate "heating"]
-	} else {
+	# if {![is_connected]} {
+	# 	.can itemconfigure $::connection_message_text_id -text [translate "not connected"]
+	# 	.can itemconfigure $::water_message_text_id -text ""
+	# 	.can itemconfigure $::temperature_message_text_id -text ""
+	# } else {
 		.can itemconfigure $::connection_message_text_id -text ""
+
+		# if {![has_water]} {
+			.can itemconfigure $::water_message_text_id -text [translate "refill water"]
+		# } else {
+		# 	.can itemconfigure $::water_message_text_id -text ""
+		# }
+
+		# if {[is_heating]} {
+			.can itemconfigure $::temperature_message_text_id -text [translate "heating"]
+		# } else {
+		# 	.can itemconfigure $::temperature_message_text_id -text ""
+		# }
 	}
 }
 add_de1_variable $status_message_contexts -100 -100 -text "" -textvariable {[set_status_message_visibility]}
