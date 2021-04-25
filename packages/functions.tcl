@@ -76,9 +76,8 @@ proc do_start_espresso {} {
 		return
 	}
 	start_espresso
-	# TODO: only execute following lines if start_espresso is successful
-	set_next_page "off" "espresso_done"
-	metric_history_push "espresso_done"
+	set_next_page "off" "off"
+	metric_jump_clear_history
 }
 
 proc can_start_steam {} { return [expr [is_connected] && ($::de1(substate) == 0) && [has_water]] }

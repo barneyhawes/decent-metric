@@ -114,6 +114,10 @@ proc metric_jump_current {} {
 	metric_jump_to $pagename
 }
 
+proc metric_jump_clear_history {} {
+	set ::metric_page_history "off"
+}
+
 
 ### drawing functions ###
 
