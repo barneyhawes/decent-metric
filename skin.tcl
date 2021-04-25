@@ -32,7 +32,7 @@ source "[homedir]/skins/default/standard_includes.tcl"
 # override "tankempty" because we don't want to move you off the espresso page just because you ran out of water.
 set_next_page "tankempty" "off"
 # tap to close screen saver
-add_de1_button "saver" {say [translate "wake"] $::settings(sound_button_in); metric_jump_current} 0 0 2560 1600
+add_de1_button "saver" {say [translate "wake"] $::settings(sound_button_in); metric_jump_to "off"} 0 0 2560 1600
 
 # include the settings screens.  
 source "[homedir]/skins/default/de1_skin_settings.tcl"
