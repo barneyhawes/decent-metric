@@ -59,7 +59,7 @@ add_de1_widget "espresso_done" graph 1280 260 {
 	$widget element create line_espresso_flow_2x -xdata espresso_elapsed -ydata espresso_flow -symbol none -label "" -linewidth [rescale_x_skin 10] -color $::color_flow -smooth $::settings(live_graph_smoothing_technique) -pixels 0;
 	$widget element create line_espresso_flow_goal_2x -xdata espresso_elapsed -ydata espresso_flow_goal -symbol none -label "" -linewidth [rescale_x_skin 5] -color $::color_flow -smooth $::settings(live_graph_smoothing_technique) -pixels 0 -dashes {1 3};
 
-	$widget element create line_espresso_total_flow -xdata espresso_elapsed -ydata espresso_water_dispensed -symbol none -label "" -linewidth [rescale_x_skin 10] -color ::color_yield -smooth $::settings(live_graph_smoothing_technique) -pixels 0;
+	$widget element create line_espresso_total_flow -xdata espresso_elapsed -ydata espresso_water_dispensed -symbol none -label "" -linewidth [rescale_x_skin 10] -color $::color_yield -smooth $::settings(live_graph_smoothing_technique) -pixels 0;
 
 } -plotbackground $::color_background -width [rescale_x_skin 1200] -height [rescale_y_skin 840] -borderwidth 1 -background $::color_background -plotrelief flat
 
