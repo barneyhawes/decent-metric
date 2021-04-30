@@ -17,7 +17,8 @@ proc get_machine_temperature {} {
 		#TODO: watertemp works in simulator
 		return [group_head_heater_temperature]
 }
-proc get_min_machine_temperature {} {return $::settings(minimum_water_temperature)}
+proc get_min_machine_temperature {} {return $::de1(goal_temperature)}
+
 
 
 proc get_status_text {} {

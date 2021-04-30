@@ -8,7 +8,6 @@ TODO
 - Test functionality of GHC somehow
 - Test translations
 - Test Fahrenheit temperatures
-- bug: Head temperature reading in status bar reads 100+ when DE1 is starting
 
 IDEAS
 - Option to choose your grinder to set the range of values for grid size (and also save which grinder to the results file)
@@ -17,8 +16,10 @@ IDEAS
 Release notes
 
 v2.5
+ - Display current step name during shot.
  - Changed workflow to jump home after shot completed.
  - Added button to view previous shot chart.
+ - Fixed target temperature stuck at zero.
 
 v2.4
  - Added button to make another espresso to the results page
