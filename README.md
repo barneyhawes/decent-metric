@@ -15,6 +15,9 @@ IDEAS
 
 Release notes
 
+v2.6
+ - Raise function bar away from bottom of screen and increase button size.
+
 v2.5
  - Display current step name during shot.
  - Changed workflow to jump home after shot completed.
