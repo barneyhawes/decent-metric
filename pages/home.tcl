@@ -196,15 +196,58 @@ create_2value_button $espresso_setting_contexts $x [expr $y -90] 400 [translate 
 add_de1_button "espresso_menu_temperature" {say [translate "close"] $::settings(sound_button_in); metric_jump_to "off"} $x [expr $y - 90] [expr $x + 400] [expr $y + 90]
 
 
+# Function bar
+
+proc create_symbol_button {contexts x y padding label symbol color action} {
+	set button_id [create_symbol_box $contexts $x $y $label $symbol $color]
+	add_de1_button $contexts $action [expr $x - $padding] [expr $y - $padding] [expr $x + 180 + $padding] [expr $y + 180 + $padding]
+	return $button_id
+}
+
+rounded_rectangle $espresso_contexts .can [rescale_x_skin 500] [rescale_y_skin 1210] [rescale_x_skin 1010] [rescale_y_skin 1470] [rescale_x_skin 50] $::color_menu_background
+set ::steam_button_id [create_symbol_button $espresso_contexts 540 1250 30 [translate "steam"] $::symbol_steam $::color_menu_background {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
+set ::water_button_id [create_symbol_button $espresso_contexts 790 1250 30 [translate "hot water"] $::symbol_water $::color_menu_background {say [translate "hot water"] $::settings(sound_button_in); do_start_water}]
+
 set ::espresso_action_button_id [create_action_button $espresso_setting_contexts 1280 1340 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
 
-proc update_espresso_button {} {
+rounded_rectangle $espresso_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1210] [rescale_x_skin 2060] [rescale_y_skin 1470] [rescale_x_skin 50] $::color_menu_background
+set ::flush_button_id [create_symbol_button $espresso_contexts 1590 1250 30 [translate "flush"] $::symbol_flush $::color_menu_background {say [translate "flush"] $::settings(sound_button_in); do_start_flush}]
+set ::lastshot_button_id [create_symbol_button $espresso_contexts 1840 1250 30 [translate "analysis"] $::symbol_chart $::color_menu_background {say [translate "analysis"] $::settings(sound_button_in); do_show_last_shot }]
+
+create_symbol_button $espresso_contexts 2080 40 20 [translate "settings"] $::symbol_settings $::color_menu_background { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_current_profile }
+create_symbol_button $espresso_contexts 2300 40 20 [translate "sleep"] $::symbol_power $::color_menu_background { say [translate "sleep"] $::settings(sound_button_in); start_sleep}
+
+proc update_function_buttons {} {
+	if { [can_start_water] } {
+		.can itemconfigure $::water_button_id -fill $::color_text
+	} else {
+		.can itemconfigure $::water_button_id -fill $::color_grey_text
+	}
+
+	if { [can_start_steam] } {
+		.can itemconfigure $::steam_button_id -fill $::color_text
+	} else {
+		.can itemconfigure $::steam_button_id -fill $::color_grey_text
+	}	
+
 	if { [can_start_espresso] } {
 		update_button_color $::espresso_action_button_id $::color_action_button_start
 	} else {
 		update_button_color $::espresso_action_button_id $::color_action_button_disabled
 	}
+
+	if { [can_start_flush] } {
+		.can itemconfigure $::flush_button_id -fill $::color_text
+	} else {
+		.can itemconfigure $::flush_button_id -fill $::color_grey_text
+	}
+
+	if { [can_show_last_shot] } {
+		.can itemconfigure $::lastshot_button_id -fill $::color_text
+	} else {
+		.can itemconfigure $::lastshot_button_id -fill $::color_grey_text
+	}
 }
-add_de1_variable $espresso_setting_contexts -100 -100 -textvariable {[update_espresso_button]} 
+add_de1_variable $espresso_contexts -100 -100 -textvariable {[update_function_buttons]}
 
 #create_button "off" 2280 60 2480 180 [translate "debug"] $::font_button $::color_button $::color_button_text { say [translate "debug"] $::settings(sound_button_in); metric_jump_to "debug"}
