@@ -17,16 +17,26 @@ add_de1_variable $status_meter_contexts -100 -100 -text "" -textvariable {[$::te
 # status messages
 set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature steam water flush"
 set ::connection_message_text_id [add_de1_text $status_message_contexts 80 180 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "w" ]
+set ::update_message_text_id [add_de1_text $status_message_contexts 80 180 -text "" -font $::font_setting_heading -fill $::color_grey_text -anchor "w" ]
+add_de1_button $status_message_contexts {say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_current_profile } 80 120 640 240
+
 set ::temperature_message_text_id  [add_de1_text $status_message_contexts 200 1180 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "center" ]
 set ::water_message_text_id  [add_de1_text $status_message_contexts 2360 1180 -text "" -font $::font_setting_heading -fill $::color_water -anchor "center" ]
 
 proc set_status_message_visibility {} {
 	if {![is_connected]} {
 		.can itemconfigure $::connection_message_text_id -text [translate "not connected"]
+		.can itemconfigure $::update_message_text_id -text ""
+		.can itemconfigure $::water_message_text_id -text ""
+		.can itemconfigure $::temperature_message_text_id -text ""
+	} elseif {$::app_update_available == 1} {
+		.can itemconfigure $::connection_message_text_id -text ""
+		.can itemconfigure $::update_message_text_id -text [translate "update available"]
 		.can itemconfigure $::water_message_text_id -text ""
 		.can itemconfigure $::temperature_message_text_id -text ""
 	} else {
 		.can itemconfigure $::connection_message_text_id -text ""
+		.can itemconfigure $::update_message_text_id -text ""
 
 		if {![has_water]} {
 			.can itemconfigure $::water_message_text_id -text [translate "refill water"]
