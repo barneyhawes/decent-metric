@@ -15,6 +15,8 @@ IDEAS
 
 Release notes
 
+ - Adjust spacings to make it easier to hit the buttons
+
 v2.6
  - Raise function bar away from bottom of screen and increase button size.
 

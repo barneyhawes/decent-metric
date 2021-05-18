@@ -16,7 +16,7 @@ add_de1_variable $status_meter_contexts -100 -100 -text "" -textvariable {[$::te
 
 # status messages
 set status_message_contexts "off espresso_menu_profile espresso_menu_beans espresso_menu_grind espresso_menu_dose espresso_menu_ratio espresso_menu_yield espresso_menu_temperature steam water flush"
-set ::connection_message_text_id [add_de1_text $status_message_contexts 80 160 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "w" ]
+set ::connection_message_text_id [add_de1_text $status_message_contexts 80 180 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "w" ]
 set ::temperature_message_text_id  [add_de1_text $status_message_contexts 200 1180 -text "" -font $::font_setting_heading -fill $::color_temperature -anchor "center" ]
 set ::water_message_text_id  [add_de1_text $status_message_contexts 2360 1180 -text "" -font $::font_setting_heading -fill $::color_water -anchor "center" ]
 
