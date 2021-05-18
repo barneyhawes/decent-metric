@@ -14,8 +14,8 @@ IDEAS
 - Smart up/down arrows which change increment for larger numbers (eg yield delta is 1.0/0.1 when under <=20, 5.0/0.5 when 21..99, 10/1 for >=100)
 
 Release notes
-
- - Adjust spacings to make it easier to hit the buttons
+ - Added message to tell you when an update is available.
+ - Adjust spacings to make it easier to hit the buttons.
 
 v2.6
  - Raise function bar away from bottom of screen and increase button size.
