@@ -29,14 +29,14 @@ proc set_status_message_visibility {} {
 		.can itemconfigure $::update_message_text_id -text ""
 		.can itemconfigure $::water_message_text_id -text ""
 		.can itemconfigure $::temperature_message_text_id -text ""
-	} elseif {$::app_update_available == 1} {
-		.can itemconfigure $::connection_message_text_id -text ""
-		.can itemconfigure $::update_message_text_id -text [translate "update available"]
-		.can itemconfigure $::water_message_text_id -text ""
-		.can itemconfigure $::temperature_message_text_id -text ""
 	} else {
 		.can itemconfigure $::connection_message_text_id -text ""
+
+		if {$::app_update_available == 1} {
+			.can itemconfigure $::update_message_text_id -text [translate "update available"]
+		} else {
 		.can itemconfigure $::update_message_text_id -text ""
+		}
 
 		if {![has_water]} {
 			.can itemconfigure $::water_message_text_id -text [translate "refill water"]
