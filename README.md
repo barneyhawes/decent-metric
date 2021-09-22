@@ -14,6 +14,8 @@ IDEAS
 - Smart up/down arrows which change increment for larger numbers (eg yield delta is 1.0/0.1 when under <=20, 5.0/0.5 when 21..99, 10/1 for >=100)
 
 Release notes
+ - Updated order of function buttons to reflect the real-world location of the coffee machine water, group and steam heads
+
 v2.12
  - Low water and low temperature messages were not displayed if an update was available
  - Status messages were not working when app had not successfully checked for an update
