@@ -3,8 +3,8 @@ set espresso_setting_contexts "off espresso_menu_grind espresso_menu_dose espres
 add_background $espresso_contexts
 add_page_title $espresso_contexts [translate "decent espresso"]
 
-create_symbol_button $espresso_contexts 2040 60 20 [translate "settings"] $::symbol_settings $::color_menu_background { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_current_profile }
-create_symbol_button $espresso_contexts 2300 60 20 [translate "sleep"] $::symbol_power $::color_menu_background { say [translate "sleep"] $::settings(sound_button_in); start_sleep}
+create_symbol_button $espresso_contexts 80 60 20 [translate "sleep"] $::symbol_power $::color_menu_background { say [translate "sleep"] $::settings(sound_button_in); start_sleep}
+create_symbol_button $espresso_contexts 2300 60 20 [translate "settings"] $::symbol_settings $::color_menu_background { say [translate "settings"] $::settings(sound_button_in); show_settings; metric_load_current_profile }
 
 proc create_dropdown_button {contexts_closed context_open x y width label symbol color value action_open action_close} {
 	set contexts "$context_open $contexts_closed"
