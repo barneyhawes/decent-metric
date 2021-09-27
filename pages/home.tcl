@@ -204,14 +204,12 @@ add_de1_button "espresso_menu_temperature" {say [translate "close"] $::settings(
 # Function bar
 
 rounded_rectangle $espresso_contexts .can [rescale_x_skin 500] [rescale_y_skin 1210] [rescale_x_skin 1010] [rescale_y_skin 1470] [rescale_x_skin 50] $::color_menu_background
-#set ::steam_button_id [create_symbol_button $espresso_contexts 540 1250 30 [translate "steam"] $::symbol_steam $::color_menu_background {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
 set ::water_button_id [create_symbol_button $espresso_contexts 540 1250 30 [translate "hot water"] $::symbol_water $::color_menu_background {say [translate "hot water"] $::settings(sound_button_in); do_start_water}]
 set ::flush_button_id [create_symbol_button $espresso_contexts 790 1250 30 [translate "flush"] $::symbol_flush $::color_menu_background {say [translate "flush"] $::settings(sound_button_in); do_start_flush}]
 
 set ::espresso_action_button_id [create_action_button $espresso_contexts 1280 1340 [translate "start"] $::font_action_label $::color_text $::symbol_espresso $::font_action_button $::color_action_button_start $::color_action_button_text {say [translate {start}] $::settings(sound_button_in); do_start_espresso} ""]
 
 rounded_rectangle $espresso_contexts .can [rescale_x_skin 1550] [rescale_y_skin 1210] [rescale_x_skin 2060] [rescale_y_skin 1470] [rescale_x_skin 50] $::color_menu_background
-#set ::flush_button_id [create_symbol_button $espresso_contexts 1590 1250 30 [translate "flush"] $::symbol_flush $::color_menu_background {say [translate "flush"] $::settings(sound_button_in); do_start_flush}]
 set ::steam_button_id [create_symbol_button $espresso_contexts 1590 1250 30 [translate "steam"] $::symbol_steam $::color_menu_background {say [translate "steam"] $::settings(sound_button_in); do_start_steam}]
 set ::lastshot_button_id [create_symbol_button $espresso_contexts 1840 1250 30 [translate "analysis"] $::symbol_chart $::color_menu_background {say [translate "analysis"] $::settings(sound_button_in); do_show_last_shot }]
 
