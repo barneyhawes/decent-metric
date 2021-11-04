@@ -1,0 +1,19 @@
+1280x800/icon.jpg
+2560x1600/icon.jpg
+fonts/Mazzard Light.otf
+fonts/Mazzard Medium.otf
+fonts/Mazzard Regular.otf
+fonts/Mazzard SemiBold.otf
+packages/constants.tcl
+packages/framework.tcl
+packages/functions.tcl
+packages/meter.tcl
+packages/settings.tcl
+packages/statusbar.tcl
+pages/espresso.tcl
+pages/espresso_done.tcl
+pages/flush.tcl
+pages/home.tcl
+pages/steam.tcl
+pages/water.tcl
+skin.tcl

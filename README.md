@@ -14,6 +14,8 @@ IDEAS
 - Smart up/down arrows which change increment for larger numbers (eg yield delta is 1.0/0.1 when under <=20, 5.0/0.5 when 21..99, 10/1 for >=100)
 
 Release notes
+ - Added filelist.txt
+
 v2.13
  - Updated order of function buttons to reflect the real-world location of the coffee machine water, group and steam heads
  - Relocated sleep button to top left, adjacent to tablet's sleep button
