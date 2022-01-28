@@ -44,3 +44,5 @@ if {$::debugging == 1} {
 create_grid
 
 metric_load_current_profile
+
+bind Canvas <KeyPress> {handle_keypress %k}
