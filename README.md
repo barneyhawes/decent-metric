@@ -15,6 +15,8 @@ IDEAS
 
 Release notes
  - Added filelist.txt
+ - Added support for keyboard shortcuts
+ - Added alias for Flush page to support GHC
 
 v2.13
  - Updated order of function buttons to reflect the real-world location of the coffee machine water, group and steam heads
